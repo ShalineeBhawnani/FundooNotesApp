@@ -4,7 +4,6 @@ import pdb
 import jwt
 import requests
 from project.settings import SECRET_KEY, AUTH_ENDPOINT
-
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils import six
 
