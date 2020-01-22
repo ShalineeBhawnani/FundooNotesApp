@@ -1,10 +1,3 @@
-# ******************************************************************************************************************
-# @purpose :Creating LoginPage using Django Backend.
-# @file    :views.py
-# @author  :ShalineeBhawnani
-# *******************************************************************************************************************
-
-
 import datetime
 import json
 import django
@@ -41,7 +34,7 @@ from project.settings import EMAIL_HOST_USER
 from django.core.mail import send_mail
 from snippets.token import token_activation,token_validation,account_activation_token
 from rest_framework.response import Response
-from .serializers import EmailSerializer,LoginSerializer, RegistrationSerializer, UserSerializer,ResetPasswordSerializer
+from .serializers import EmailSerializer,LoginSerializer, RegistrationSerializer, UserSerializer,ResetPasswordSerializers
 #from django.core.validators import validate_email
 from django_short_url.views import get_surl
 from django_short_url.models import ShortURL
@@ -75,14 +68,17 @@ class Login(GenericAPIView):
         if user:
             if user.is_active:
                 login(request,user)
+                token = token_activation(username, password)
+                cache.set(user.username, token)
+                print(cache.get(user.username))
                 return Response({'details': 'user succesfully loggedin,thakyou'})
-            else:
-                print("inactive")
-                return Response({'details': 'Your account was inactive'})
+        else:
+            print("inactive")
+            return Response({'details': 'Your account was inactive'})
 
-            print("Failed, Not the Registered username or password")
-            # print("They used username: {} and password: {}".format(username,password))
-            return Response("Invalid login details given")
+            # print("Failed, Not the Registered username or password")
+            # # print("They used username: {} and password: {}".format(username,password))
+            # return Response("Invalid login details given")
 
 
 
@@ -97,12 +93,11 @@ class Registrations(GenericAPIView):
         if request.user.is_authenticated:
             pass
             #return Response("your are already registred")
-        data = request.data
-             
+        data = request.data     
         name = data.get('name')
         username = data.get('username') 
         email = data.get('email')
-        password1 = data.get('password1')
+        password = data.get('password')
         password2 = data.get('password2')
 
         smd = {
@@ -111,9 +106,9 @@ class Registrations(GenericAPIView):
             'data': [],
         }
 
-        if username == "" or name == "" or email == "" or password1 == "" or password2 == "":
+        if username == "" or name == "" or email == "" or password == "" or password2 == "":
             messages.warning(request, "Fields cannot be empty")
-        elif password1 != password2:
+        elif password != password2:
             messages.warning(request, "password fields not matching")
 
         try:
@@ -136,7 +131,7 @@ class Registrations(GenericAPIView):
 
         try:
             user_created = User.objects.create_user(username=username, email=email, 
-                                                    password=password1,
+                                                    password=password,
                                                     is_active=False)
             
             user_created.save()
@@ -151,7 +146,7 @@ class Registrations(GenericAPIView):
             domain = current_site.domain 
             print(current_site)
             print('domain:', domain)                
-            token = token_activation(username, password1)
+            token = token_activation(username, password)
             print('return from tokens.py:', token)
             cache.set(username, token)
             print("stroged token in cache:  ",cache.get(username))
@@ -191,8 +186,8 @@ class ForgotPassword(GenericAPIView):
  
     serializer_class = EmailSerializer
 
-    def get(self, request):
-        return render(request,'forgot_password.html')
+    # def get(self, request):
+    #     return render(request,'forgot_password.html')
 
     def post(self, request):
 
@@ -273,75 +268,57 @@ def activate(request, surl):
      
     
 def reset_password(request, surl):
-    
     try:
-
         tokenobject = ShortURL.objects.get(surl=surl)
         token = tokenobject.lurl
         decode = jwt.decode(token, settings.SECRET_KEY)
         username = decode['username']
         user = User.objects.get(username=username)
+        print("user",user)
 
         if user is not None:
-            context = {'reset_password': user.username}
+            context = {'userReset': user.username}
             print(context)
-            return redirect('reset_password' + str(user))
+            return redirect('/resetpassword/' + str(user)+'/')
         else:
             messages.info(request, 'was not able to sent the email')
-            return redirect('forgot_password')
+            return redirect('/api/forgotpassword')
     except KeyError:
         messages.info(request, 'was not able to sent the email')
-        return redirect('forgot_password')
+        return redirect('/api/forgotpassword')
     except Exception as e:
         print(e)
         messages.info(request, 'activation link expired')
-        return redirect('forgot_password')
+        return redirect('/api/forgotpassword')
 
 
 class ResetPassword(GenericAPIView):
-    
-    serializer_class = ResetPasswordSerializer
-
+    serializer_class = ResetPasswordSerializers
 
     def post(self, request, user_reset):
-        password = request.data['password']
+        password1 = request.data['password']
 
-
-        smd = {
-            'success': False,
-            'message': 'password reset not done',
-            'data': [],
-        }
         if user_reset is None:
-            smd['message'] = 'not a vaild user'
-            return HttpResponse(json.dumps(smd), status=404)
-
-        elif password == "":
-            smd['message'] = 'one of the fields are empty'
-            return HttpResponse(json.dumps(smd), status=400)
-
-        elif len(password) <= 4:
-            smd['message'] = 'password should be 4 or  more than 4 character'
-            return HttpResponse(json.dumps(smd), status=400)
-
+            return Response({'details': 'not a valid user'})
+        elif (password1 or password2) == "":
+            return Response({'details': 'password should not be empty'})
+            # elif (password1 != password2):
+            #     return Response({'details': 'password are should match'})
         else:
             try:
-
                 user = User.objects.get(username=user_reset)
-                user.set_password(password)
+                user.set_password(password1)
                 user.save()
-
-                smd = {
-                    'success': True,
-                    'message': 'password reset done',
-                    'data': [],
-                }
-                return HttpResponse(json.dumps(smd), status=201)
-            except User.DoesNotExist:
-                smd['message'] = 'not a vaild user '
-                return HttpResponse(json.dumps(smd), status=400)
+                return Response({'details': 'your password has been Reset'})
+                #messages.info(request, "your password has been reset")
+                #return redirect('/login')
+            except Exception:
+                return Response({'details': 'not a valid user'})
 
 
 def session(request):
-  
+    """
+    if user seeion is closed
+    redirect user to session page
+    """
     return render(request, 'session.html')

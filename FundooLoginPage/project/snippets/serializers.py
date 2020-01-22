@@ -26,7 +26,7 @@ class EmailSerializer(serializers.ModelSerializer):
         model =User
         fields = ['email']
 
-class ResetPasswordSerializer(serializers.ModelSerializer):
+class ResetPasswordSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = User
