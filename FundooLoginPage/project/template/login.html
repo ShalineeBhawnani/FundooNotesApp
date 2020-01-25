@@ -17,9 +17,17 @@
             <input id="pass" type = "password" name = "password">
             <br><br>
             
-            <button onclick="myFunction()" id="button" >Submit</button>
-            
-        </form>
+            {% comment %} <button onclick="myFunction()" id="button" >Submit</button>
+            <button class="btn btn-danger  mb-2">
+                <a href="#">Login with Google</a>
+            </button> {% endcomment %}
+            <button class="btn btn-primary mb-2">
+                <a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
+            </button>
+            <button class="btn btn-info mb-2">
+            <a href="{% url 'social:begin' 'github' %}">Login with GitHub</a>
+            </button>
+          </form>
     </body>
 
         <script>
@@ -41,4 +49,6 @@
                 }
             
         </script>
+
+
 </html>

@@ -45,7 +45,8 @@ from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from django.core.cache import cache
 from django.views.decorators.cache import cache_page
 from django.conf import settings
-
+from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
@@ -56,6 +57,7 @@ class Login(GenericAPIView):
     # def get(self, request):
     #     return render(request, 'login.html')
 
+    
     def post(self, request):
         permission_classes = [permissions.AllowAny]
         if request.user.is_authenticated:
@@ -80,7 +82,9 @@ class Login(GenericAPIView):
             # # print("They used username: {} and password: {}".format(username,password))
             # return Response("Invalid login details given")
 
-
+@login_required
+def home(request):
+    return render(request, 'home.html')
 
 class Registrations(GenericAPIView):
 
@@ -322,3 +326,18 @@ def session(request):
     redirect user to session page
     """
     return render(request, 'session.html')
+
+
+class Logout(GenericAPIView):
+    serializer_class = LoginSerializer
+
+    def get(self, request):
+        try:
+            user = request.user
+            logout(request)
+            cache.delete(user.username)
+            return Response({'details': 'your succefully loggeg out,thankyou'})
+        except Exception:
+            return Response({'details': 'something went wrong while logout'})
+
+

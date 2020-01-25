@@ -10,8 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 import datetime
-import os
+from decouple import config
 import logging
+import sys
+import os
+
+sys.path.append(os.path.abspath("/home/secrets"))
+from snippets import secrets
+from snippets.secrets import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,7 +27,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '$tfjbd&bm&#+!cbj5ldd*5l@o$3xy7yh&+&j+3z!(1buw2w)%*'
+#SECRET_KEY = '$tfjbd&bm&#+!cbj5ldd*5l@o$3xy7yh&+&j+3z!(1buw2w)%*'
+
+ 
+SECRET_KEY = os.environ.get('SECRET_KEY')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -42,18 +52,19 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_jwt',
     'django_short_url',
+    'social_django',
     
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
+   'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',
+  
 ]
 
 ROOT_URLCONF = 'project.urls'
@@ -62,14 +73,17 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR,'template')],
-        'APP_DIRS': True,
-        'OPTIONS': {
+         'APP_DIRS': True,
+         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-            ],
+                'social_django.context_processors.backends',  # <--
+                'social_django.context_processors.login_redirect', # <--
+              
+            ]
         },
     },
 ]
@@ -82,8 +96,12 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'myproject',
+        'USER': 'myprojectuser',
+        'PASSWORD': 'Shalinee5@',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
@@ -126,10 +144,16 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_USER = 'shalineebhawnani80@gmail.com'
+# EMAIL_HOST_PASSWORD = 'ShalineeShalu5@5@'
+
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'shalineebhawnani80@gmail.com'
-EMAIL_HOST_PASSWORD = 'ShalineeShalu5@5@'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
 
 JWT_AUTH = {
@@ -181,6 +205,27 @@ CACHES = {
     }
 }
 
+AUTHENTICATION_BACKENDS = [
+        'social_core.backends.google.GoogleOAuth2',
+        'social_core.backends.facebook.FacebookOAuth2',
+        'social_core.backends.github.GithubOAuth2',
+        'django.contrib.auth.backends.ModelBackend',
+        'social_django.middleware.SocialAuthExceptionMiddleware',
+    ]
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_URL = 'logout'
+LOGOUT_REDIRECT_URL = 'login'
+
+SOCIAL_AUTH_GITHUB_KEY = os.environ.get('SOCIAL_AUTH_GITHUB_KEY')
+SOCIAL_AUTH_GITHUB_SECRET = os.environ.get('SOCIAL_AUTH_GITHUB_SECRET')
+
+SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')    
+SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')
+
+
 AUTH_ENDPOINT = os.getenv('AUTH_ENDPOINT')
 AUTH_ENDPOINT = "http://127.0.0.1:8000/api-token-auth/"
     # path('api-token-auth/', obtain_jwt_token), 
+
