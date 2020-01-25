@@ -1,0 +1,5 @@
+.env
+/e[nv]
+.bashrc
+/s[ecrets]
+FundooLoginPage/env/
