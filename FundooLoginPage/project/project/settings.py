@@ -145,17 +145,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
-# EMAIL_USE_TLS = True
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_HOST_USER = 'shalineebhawnani80@gmail.com'
-# EMAIL_HOST_PASSWORD = 'ShalineeShalu5@5@'
-
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-
-
 JWT_AUTH = {
     'JWT_ENCODE_HANDLER':
     'rest_framework_jwt.utils.jwt_encode_handler',
@@ -210,7 +199,7 @@ AUTHENTICATION_BACKENDS = [
         'social_core.backends.facebook.FacebookOAuth2',
         'social_core.backends.github.GithubOAuth2',
         'django.contrib.auth.backends.ModelBackend',
-        'social_django.middleware.SocialAuthExceptionMiddleware',
+        # 'social_django.middleware.SocialAuthExceptionMiddleware',
     ]
 
 LOGIN_URL = 'login'
@@ -223,6 +212,12 @@ SOCIAL_AUTH_GITHUB_SECRET = os.environ.get('SOCIAL_AUTH_GITHUB_SECRET')
 
 SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')    
 SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')
+
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 
 AUTH_ENDPOINT = os.getenv('AUTH_ENDPOINT')
