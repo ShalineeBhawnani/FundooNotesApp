@@ -1,3 +1,10 @@
+# ******************************************************************************************************************
+# @purpose :Login Registration With Token Authentication.
+# @file    :views.py
+# @author  :ShalineeBhawnani
+# *******************************************************************************************************************
+
+
 import datetime
 import json
 import django
@@ -140,12 +147,13 @@ class Registrations(GenericAPIView):
             
             user_created.save()
             
-            sub = 'Thank you for registering'
-            msg = 'Welcome to the Family'
-            from_mail = "shalineebhawnani80@gmail.com"
-            to_list = [user_created.email]
-            send_mail(sub, msg, from_mail, to_list, fail_silently=True)
-            print('welcome mail sent')
+           
+            # from_mail = "shalineebhawnani80@gmail.com"
+            # sub = 'Thank you for registering'
+            # msg = 'Welcome to the Family'
+            # to_list = [user_created.email]
+            # send_mail(sub, msg, from_mail, to_list, fail_silently=True)
+            # print('welcome mail sent')
             current_site = get_current_site(request)
             domain = current_site.domain 
             print(current_site)
