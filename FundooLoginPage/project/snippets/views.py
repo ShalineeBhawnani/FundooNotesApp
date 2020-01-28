@@ -68,7 +68,8 @@ class Login(GenericAPIView):
     def post(self, request):
         permission_classes = [permissions.AllowAny]
         if request.user.is_authenticated:
-            pass
+            #pass
+            return redirect('api/notes')
             #return Response({'details': 'user is already authenticated'})
         data = request.data
         username = data.get('username')
@@ -80,6 +81,8 @@ class Login(GenericAPIView):
                 token = token_activation(username, password)
                 cache.set(user.username, token)
                 print(cache.get(user.username))
+                return redirect('^api')
+
                 return Response({'details': 'user succesfully loggedin,thakyou'})
         else:
             print("inactive")
