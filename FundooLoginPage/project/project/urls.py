@@ -7,6 +7,11 @@ from snippets import views
 from snippets.views import login, Login,home, Registrations, activate, ForgotPassword, Logout, reset_password,ResetPassword,session
 from django_short_url.views import get_surl
 from django_short_url.models import ShortURL
+from rest_framework import routers
+from note.note_api import NoteViewSet
+# Routers provide an easy way of automatically determining the URL conf.
+router = routers.DefaultRouter()
+router.register(r'notes', NoteViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,6 +32,10 @@ urlpatterns = [
          views.ResetPassword.as_view(), name="resetpassword"),
     path('social-auth/', include('social_django.urls', namespace="social")),
     path("", views.home, name="home"),
+
+    url(r'^', include('note.urls')),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api/', include(router.urls)),
     
     
 

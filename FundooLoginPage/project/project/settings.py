@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework_jwt',
     'django_short_url',
     'social_django',
+    'note',
     
 ]
 
