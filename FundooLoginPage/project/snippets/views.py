@@ -152,7 +152,6 @@ class Registrations(GenericAPIView):
             print('confirmation mail sent')
             return Response({"details": "please verify through your email"})
 
-
 class ForgotPassword(GenericAPIView):
  
     serializer_class = EmailSerializer

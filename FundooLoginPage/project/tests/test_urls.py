@@ -29,4 +29,3 @@ class TestUrls(SimpleTestCase):
         url = reverse('label')
         print(resolve(url))
         self.assertEquals(resolve(url).func.view_class, LabelList)
-

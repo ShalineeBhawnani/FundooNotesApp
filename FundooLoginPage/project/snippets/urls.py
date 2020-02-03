@@ -13,14 +13,11 @@ urlpatterns = [
     path('login/', views.Login.as_view(), name='login'),
     path('activate/<slug:surl>/', views.activate, name='activate'),
     path('registration/', views.Registrations.as_view(), name="registration"),
-
-    path('forgotpassword/', views.ForgotPassword.as_view(),name="forgotPassword"),
-    # path('activate/<surl>/', views.activate, name="activate"),
-    # path('reset_password/<slug:surl>/', views.reset_password, name="reset_password"),
-    # path('resetpassword/<user_reset>', views.ResetPassword.as_view(), name="resetpassword"),
+    path('forgotPassword/', views.ForgotPassword.as_view(),name="forgotPassword"),
     path('logout/', views.Logout.as_view() ,name="logout"),
-    # path('session/', views.session),
     path('reset_password/<surl>/', views.reset_password, name="reset_password"),
     path('resetpassword/<user_reset>/',
          views.ResetPassword.as_view(), name="resetpassword"),
+    path('session/', views.session),
+
 ]
