@@ -1,11 +1,9 @@
-from django.conf.urls import url
-
-from . import views
+from django.urls import path
+from django.conf.urls import url, include
+from note import views
+from note.views import NoteList,LabelList
 
 urlpatterns = [
-    # url(r'^', include('note.urls')),
-    # url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    # url(r'^api/', include(router.urls)),
-    url(r'^$', views.index, name='index'),
-     #path('index/',index, name='index')
+    path('note/', views.NoteList.as_view() ,name="note"),
+    path('label/', views.LabelList.as_view() ,name="label"),
 ]

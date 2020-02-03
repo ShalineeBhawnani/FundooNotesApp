@@ -55,6 +55,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware', 
+
   
 ]
 
@@ -71,8 +73,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'social_django.context_processors.backends',  # <--
-                'social_django.context_processors.login_redirect', # <--
+                # 'social_django.context_processors.backends',  # <--
+                # 'social_django.context_processors.login_redirect', # <--
+
+
               
             ]
         },
@@ -88,11 +92,11 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'myproject',
-        'USER': 'myprojectuser',
-        'PASSWORD': 'Shalinee5@',
+        'NAME': 'project',
+        'USER': 'admin',
+        'PASSWORD': 'password',
         'HOST': 'localhost',
-        'PORT': '',
+        'PORT': '5432',
     }
 }
 
@@ -134,7 +138,31 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=5),
+    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
 
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'AUDIENCE': None,
+    'ISSUER': None,
+
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+
+    'JTI_CLAIM': 'jti',
+
+    'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
+    'SLIDING_TOKEN_LIFETIME': datetime.timedelta(minutes=5),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': datetime.timedelta(days=1),
+}
 
 JWT_AUTH = {
     'JWT_ENCODE_HANDLER':
@@ -184,25 +212,25 @@ CACHES = {
         "KEY_PREFIX": "example"
     }
 }
+LOGOUT_REDIRECT_URL = 'login/'
+# AUTHENTICATION_BACKENDS = [
+#         'social_core.backends.google.GoogleOAuth2',
+#         'social_core.backends.facebook.FacebookOAuth2',
+#         'social_core.backends.github.GithubOAuth2',
+#         'django.contrib.auth.backends.ModelBackend',
+#         'social_django.middleware.SocialAuthExceptionMiddleware',
+#     ]
 
-AUTHENTICATION_BACKENDS = [
-        'social_core.backends.google.GoogleOAuth2',
-        'social_core.backends.facebook.FacebookOAuth2',
-        'social_core.backends.github.GithubOAuth2',
-        'django.contrib.auth.backends.ModelBackend',
-        # 'social_django.middleware.SocialAuthExceptionMiddleware',
-    ]
+# LOGIN_URL = 'login'
+# LOGIN_REDIRECT_URL = 'home'
+# LOGOUT_URL = 'logout'
+# LOGOUT_REDIRECT_URL = 'login'
 
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_URL = 'logout'
-LOGOUT_REDIRECT_URL = 'login'
+# SOCIAL_AUTH_GITHUB_KEY = os.environ.get('SOCIAL_AUTH_GITHUB_KEY')
+# SOCIAL_AUTH_GITHUB_SECRET = os.environ.get('SOCIAL_AUTH_GITHUB_SECRET')
 
-SOCIAL_AUTH_GITHUB_KEY = os.environ.get('SOCIAL_AUTH_GITHUB_KEY')
-SOCIAL_AUTH_GITHUB_SECRET = os.environ.get('SOCIAL_AUTH_GITHUB_SECRET')
-
-SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')    
-SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')
+# SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')    
+# SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')
 
 
 EMAIL_USE_TLS = True
@@ -213,5 +241,3 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 AUTH_ENDPOINT = os.getenv('AUTH_ENDPOINT')
 AUTH_ENDPOINT = "http://127.0.0.1:8000/api-token-auth/"
-    # path('api-token-auth/', obtain_jwt_token), 
-
