@@ -138,6 +138,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static-files')
+#DataFlair #User_Uploaded_Files
+MEDIA_URL = 'media/'
+MEDIA_ROOT=os.path.join(BASE_DIR, 'media')
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': (
+#         'rest_framework.permissions.IsAuthenticated',
+#     ),
+# }
+
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=5),
     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=1),
@@ -212,6 +223,7 @@ CACHES = {
         "KEY_PREFIX": "example"
     }
 }
+# login_url='login/'
 LOGOUT_REDIRECT_URL = 'login/'
 # AUTHENTICATION_BACKENDS = [
 #         'social_core.backends.google.GoogleOAuth2',

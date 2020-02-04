@@ -2,6 +2,9 @@ from django.urls import path
 from django.conf.urls import url, include
 from note import views
 from note.views import NoteListCreate,LabelList,NoteListDetail,NoteListDelete,NoteListUpdate
+from django.contrib.auth.decorators import login_required, permission_required
+
+
 
 urlpatterns = [
     path('note/', views.NoteListCreate.as_view() ,name="note"),

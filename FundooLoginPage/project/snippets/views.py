@@ -70,6 +70,7 @@ class Login(GenericAPIView):
         username = data.get('username')
         password = data.get('password')
         user = authenticate(username=username, password=password)
+        print(user)
         qs = User.objects.filter(
             Q(username__iexact=username) or
             Q(email__iexact=email)

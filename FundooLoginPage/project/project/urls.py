@@ -29,7 +29,7 @@ urlpatterns = [
     #      views.ResetPassword.as_view(), name="resetpassword"),
     path('social-auth/', include('social_django.urls', namespace="social")),
     # path("", views.home, name="home"),
-
+    path('api-auth/', include('rest_framework.urls')),
     path('', include('snippets.urls')),
     path('', include('note.urls')),
 ]
