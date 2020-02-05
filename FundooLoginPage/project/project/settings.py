@@ -224,7 +224,7 @@ CACHES = {
     }
 }
 # login_url='login/'
-LOGOUT_REDIRECT_URL = 'login/'
+#LOGOUT_REDIRECT_URL = 'login/'
 # AUTHENTICATION_BACKENDS = [
 #         'social_core.backends.google.GoogleOAuth2',
 #         'social_core.backends.facebook.FacebookOAuth2',

@@ -8,8 +8,8 @@ class LabelSerializer(serializers.ModelSerializer):
         model = Label
         fields = '__all__'
 
-
 class NoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note
         fields = '__all__'
+        read_only_fields = ['user']
