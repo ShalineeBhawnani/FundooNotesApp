@@ -5,3 +5,12 @@
 FundooLoginPage/env/
 S3MediaExample/env/
 FundooLoginPage/project/snippets/secrets/
+
+__pycache__/
+*.py[cod]
+venv/
+
+
+# SQLite database files
+
+*.sqlite3
