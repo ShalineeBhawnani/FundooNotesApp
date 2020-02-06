@@ -19,20 +19,50 @@ from snippets.token import token_activation,token_validation,account_activation_
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from note.decorators import login_decorator
+from .models import User
+from rest_framework import filters
+
+
+# class IsOwnerFilterBackend(filters.BaseFilterBackend):
+#     """
+#     Filter that only allows users to see their own objects.
+#     """
+#     def filter_queryset(self, request, queryset, view):
+#         return queryset.filter(user=request.user)
+
 #from rest_framework import permissions
 #from note.permissions import IsOwnerOrReadOnly
 #from rest_framework.authentication import TokenAuthentication
 
-@method_decorator(login_required(login_url='/login/'),name='dispatch')
-#@method_decorator(login_decorator,name='dispatch')
-class NoteListCreate(generics.CreateAPIView):
-    #permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+# @method_decorator(login_required(login_url='/login/'),name='dispatch')
+# #@method_decorator(login_decorator,name='dispatch')
+# class NoteListCreate(generics.CreateAPIView):
+#     #permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    queryset = Note.objects.all()
+#     queryset = Note.objects.all()
+#     serializer_class = NoteSerializer
+#     filter_backends = [filters.SearchFilter]
+#     search_fields = ['username']
+
+
+
+#     def perform_create(self,serializer):
+#         serializer. save(user=self.request.user)
+
+
+#user list for note
+class NoteListCreate(generics.ListAPIView):
     serializer_class = NoteSerializer
 
-    # def perform_create(self,serializer):
-    #     serializer. save(user=self.request.user)
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases
+        for the currently authenticated user.
+        """
+        user = self.request.user
+        return Note.objects.filter(user_id=user)
+  
+
 
 
 #@method_decorator(login_required(login_url='login/'),name='dispatch')
@@ -43,8 +73,13 @@ class LabelListCreate(generics.CreateAPIView):
     # permission_classes = [permissions.IsAuthenticatedOrReadOnly,
     #                        IsOwnerOrReadOnly]
 
-    serializer_class = LabelSerializer
-    queryset = Label.objects.all()
+    # serializer_class = LabelSerializer
+    # queryset = Label.objects.all()
+    
+    
+    def perform_create(self,serializer):
+        serializer. save(user=self.request.user)
+
 #@method_decorator(label_decorator,name='dispatch')
 class NoteListDelete(generics.RetrieveUpdateDestroyAPIView):
     queryset = Note.objects.all()

@@ -6,7 +6,7 @@ class Label(models.Model):
         User, on_delete=models.CASCADE, related_name='label_owner')
     label = models.CharField(max_length=25)
 
-    def __str__(self):
+    def __str__(self):  
         return str(self.label)
 
 
