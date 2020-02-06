@@ -72,7 +72,7 @@ class Login(GenericAPIView):
         user = authenticate(username=username, password=password)
         print(user)
         qs = User.objects.filter(
-            Q(username__iexact=username) or
+            Q(username__exact=username) or
             Q(email__iexact=email)
         ).distinct()
         print(qs)

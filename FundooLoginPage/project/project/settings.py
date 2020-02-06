@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+AUTH_ENDPOINT = "http://127.0.0.1:8000/api/token"
 
 # Application definition
 
@@ -46,6 +46,9 @@ INSTALLED_APPS = [
     'note',
     
 ]
+
+SITE_ID = 1
+
 
 MIDDLEWARE = [
    'django.middleware.security.SecurityMiddleware',
@@ -138,10 +141,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static-files')
-#DataFlair #User_Uploaded_Files
-MEDIA_URL = 'media/'
-MEDIA_ROOT=os.path.join(BASE_DIR, 'media')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static-files')
+# #DataFlair #User_Uploaded_Files
+# MEDIA_URL = 'media/'
+# MEDIA_ROOT=os.path.join(BASE_DIR, 'media')
 
 # REST_FRAMEWORK = {
 #     'DEFAULT_PERMISSION_CLASSES': (
@@ -243,6 +246,7 @@ CACHES = {
 
 # SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')    
 # SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')
+#LOGOUT_REDIRECT_URL = 'login/'
 
 
 EMAIL_USE_TLS = True
@@ -253,3 +257,10 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 AUTH_ENDPOINT = os.getenv('AUTH_ENDPOINT')
 AUTH_ENDPOINT = "http://127.0.0.1:8000/api-token-auth/"
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
