@@ -18,7 +18,7 @@ class NoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note
         fields = '__all__'
-        # read_only_fields = ['user']
+        #read_only_fields = ['user']
 
 class SearchNoteSerializer(serializers.ModelSerializer):
     class Meta:
@@ -31,5 +31,13 @@ class NoteFunctionSerializer(serializers.ModelSerializer):
     class Meta:
 
         model = Note
-        fields = ['title', 'note', 'note_image', 'labels', 'collaborators', 'is_archived', 'is_trashed', 'color',
-                  'is_pinned', 'link', 'reminder']
+        fields = ['title', 'note', 'label','add_picture', 'is_archived', 'is_bin', 'color',
+                  'is_pinned', 'more', 'reminder', 'collaborators']
+        
+
+class LabelFunctionSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+
+        model = Note
+        fields = ['label']

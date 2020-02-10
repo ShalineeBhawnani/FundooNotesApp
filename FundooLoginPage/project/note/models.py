@@ -13,7 +13,7 @@ class Note(models.Model):
     title = models.CharField(max_length=60, blank=True)
     note = models.TextField(blank=True)
     label = models.ManyToManyField(Label, blank=True)
-    add_image = models.ImageField(upload_to='images/', blank=True, null=True)
+    add_picture = models.ImageField(upload_to='images/', blank=True, null=True)
     is_archived = models.BooleanField(default=False)
     is_bin = models.BooleanField(default=False)
     color = models.CharField(max_length=16, blank=True)

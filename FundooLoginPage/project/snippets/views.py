@@ -47,6 +47,9 @@ from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.models import User, auth
 User = get_user_model
 from django.db.models import Q
+from project import redis_class
+rdb = redis_class.Redis()
+
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
@@ -62,7 +65,7 @@ class Login(GenericAPIView):
     
     def post(self, request):
         print("hello")
-        permission_classes = [permissions.AllowAny]
+        # permission_classes = [permissions.AllowAny]
         if request.user.is_authenticated:
             pass
             #return Response({'details': 'user is already authenticated'})
@@ -86,8 +89,11 @@ class Login(GenericAPIView):
                 login(request, user)
                 print(user)
                 token = token_activation(username, password)
-                cache.set(user.username, token)
-                print(cache.get(user.username))
+                print("token", token)
+                #cache.set(user.username, token)
+                #print(cache.get(user.username))
+                rdb.set(user.username, token)
+                rdb.get(token)
                 return Response({'details': 'user succesfully loggedin,thakyou'})
             return Response("incorrect password")
         return Response("user name alredy used")
@@ -302,9 +308,9 @@ class Logout(GenericAPIView):
         try:
             user = request.user
             logout(request)
-            cache.delete(user.username)
+            #cache.delete(user.username)
+            rdb.delete(user.username)
             return Response({'details': 'your succefully loggeg out,thankyou'})
         except Exception:
             return Response({'details': 'something went wrong while logout'})
-
 

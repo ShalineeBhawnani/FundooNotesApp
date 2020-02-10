@@ -44,6 +44,9 @@ INSTALLED_APPS = [
     'django_short_url',
     'social_django',
     'note',
+    'rest_framework.authtoken'
+    #'django_elasticsearch_dsl'
+    #'django_elasticsearch_dsl_drf'
     
 ]
 
@@ -260,10 +263,15 @@ AUTH_ENDPOINT = "http://127.0.0.1:8000/api-token-auth/"
 
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
-    ]
+'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.AllowAny',),
+
 }
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'elasticsearch:9200'
+    },
 }
