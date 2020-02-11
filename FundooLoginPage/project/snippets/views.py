@@ -1,7 +1,11 @@
 import datetime
 import json
 import django
+from rest_framework import status, exceptions
+from django.http import HttpResponse
+from rest_framework.authentication import get_authorization_header, BaseAuthentication
 import jwt
+import json
 from django.template.loader import render_to_string
 from pyee import BaseEventEmitter 
 from pymitter import EventEmitter
@@ -90,10 +94,12 @@ class Login(GenericAPIView):
                 print(user)
                 token = token_activation(username, password)
                 print("token", token)
-                #cache.set(user.username, token)
-                #print(cache.get(user.username))
-                rdb.set(user.username, token)
-                rdb.get(token)
+                cache.set(user.username, token)
+                print(cache.get(user.username))
+            
+                #rdb.set(user.username, token)
+                #print(rdb)
+                #rdb.get(user.username)
                 return Response({'details': 'user succesfully loggedin,thakyou'})
             return Response("incorrect password")
         return Response("user name alredy used")
@@ -308,8 +314,8 @@ class Logout(GenericAPIView):
         try:
             user = request.user
             logout(request)
-            #cache.delete(user.username)
-            rdb.delete(user.username)
+            cache.delete(user.username)
+            #rdb.delete(user.username)
             return Response({'details': 'your succefully loggeg out,thankyou'})
         except Exception:
             return Response({'details': 'something went wrong while logout'})

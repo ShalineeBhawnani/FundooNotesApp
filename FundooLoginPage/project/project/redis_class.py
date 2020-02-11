@@ -1,9 +1,11 @@
 import redis
+# from . import settings
+
 
 class Redis:
 
     def __init__(self, host='localhost', port=6379, db=0,):
-        self.host = host  
+        self.host = host  # settings.CACHES['default']['location']
         self.port = port
         self.db = db
         self.connection = self.connect()
