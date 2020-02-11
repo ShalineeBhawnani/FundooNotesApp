@@ -10,6 +10,9 @@ from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from django.core.cache import cache
 from django.views.decorators.cache import cache_page
 from django.conf import settings
+from rest_framework import permissions, renderers # new
+from note.permissions import IsOwnerOrReadOnly
+
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
@@ -63,27 +66,11 @@ class NoteDetails(generics.ListAPIView):
     
 @method_decorator(login_required, name='dispatch') 
 class NoteUpdate(generics.RetrieveUpdateDestroyAPIView):
-    lookup_field='id'
-
+    queryset=Note.objects.all()
     serializer_class=NoteSerializer
-    queryset= Note.objects.all()
 
-
-    def put(self,request,id):
-       
-        user = self.request.user
-        user_id= self.request.user
-        user= Note.objects.filter(id=id)
-
-        print(user)
-        return self.update(request,id=id)
-
-    def delete(self,request,id=None):
-        user = self.request.user
-        # user=user.objects.get(id)
-        id= self.request.user
-        return self.destroy(request,id)
-
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly,)
 
             
     

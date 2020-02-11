@@ -12,8 +12,8 @@ urlpatterns = [
     path('label/', views.CreateLabel.as_view() ,name="label"),
     path('labeldetails/',views.LabelDetails.as_view(), name= "labeldetails"),
     path('notedetails/', views.NoteDetails.as_view() ,name="notedetails"),
-    path('noteupdate/<int:id>/', views.NoteUpdate.as_view() ,name="noteupdate"),
-    path('noteupdate/<int:id>/', views.NoteUpdate.as_view() ,name="noteupdate"),
+    path('noteupdate/', views.NoteUpdate.as_view() ,name="noteupdate"),
+    path('noteupdate/<int:pk>/', views.NoteUpdate.as_view() ,name="noteupdate"),
     path('labelupdate/<int:id>/', views.LabelUpdate.as_view() ,name="noteupdate")
 
 
