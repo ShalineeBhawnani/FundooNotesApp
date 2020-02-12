@@ -1,43 +1,53 @@
 import redis
-# from . import settings
+from redis import StrictRedis
 
 
 class Redis:
-
-    def __init__(self, host='localhost', port=6379, db=0,):
-        self.host = host  # settings.CACHES['default']['location']
-        self.port = port
-        self.db = db
-        self.connection = self.connect()
-
+    """Open connection on Redis DataBase"""
+    def __init__(self, redis_host='localhost', redis_port=6379, redis_db=0):
+        self.host = redis_host 
+        self.port = redis_port
+        self.db = redis_db
+        self.con = self.connect()
     def connect(self):
-        '''
-        :return: Returns connection, which is set to self.connect
-        '''
-        connection = redis.StrictRedis(host=self.host, port=self.port, db=self.db)
-        if connection:
-            print('Connection established : ', connection)
-        return connection
-
-    def delete(self, *names):
-        self.connection.delete(*names)
-
-    def exists(self, key):
-        return self.connection.exists(key)
-
-    def get(self, key):
-        return self.connection.get(key)
-
-    def mget(self, *key):
-        return self.connection.mget(*key)
-
-    def set(self, key, value, exp_s=None, exp_ms=None):
-        '''
-        :param key: Name for Cache 'key'
-        :param value: Name of what is being stored in Cache 'key'
-        :param exp_s: Expiry of cache in seconds, None would mean cache is stored indefinitely
-        :param exp_ms: Expiry of cache in milliseconds
-        :return : returns string with confirmation
-        '''
-        self.connection.set(key, value, exp_s, exp_ms)
+        try:
+            con= self.con = redis.StrictRedis(
+                host=self.host,
+                port=self.port,
+                db=self.db,)
+            if con:
+                print('Redis got connected : ', con)
+            return con
+                
+        except Exception as e:
+            print(e)
+            print("RedisUtil Connection Error")
+            con=self.con = None
+            
+    def set(self, redis_key, redis_value, exp_s=None, exp_ms=None):
+        
+        self.con.set(redis_key, redis_value, exp_s, exp_ms)
         return 'key:value is set in-memory cache'
+    
+    def delete(self, *names):
+        print(names)
+        self.con.delete(*names)
+
+    def exists(self, redis_key):
+        print(redis_key)
+        return self.con.exists(redis_key)
+
+    def get(self, redis_key):
+        
+        print(redis_key)
+        return self.con.get(redis_key)
+    
+    # def get(self, value):
+    #     print(value)
+    #     return self.connection.get(value)
+
+
+    def mget(self, *redis_key):
+        return self.con.mget(*redis_key)
+
+   
