@@ -1,36 +1,17 @@
 
 import datetime
-from decouple import config
-import logging
-import sys
-import os
 
-sys.path.append(os.path.abspath("/home/secrets"))
-from snippets import secrets
-from snippets.secrets import config
+import logging
+import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = '$tfjbd&bm&#+!cbj5ldd*5l@o$3xy7yh&+&j+3z!(1buw2w)%*'
-
- 
-SECRET_KEY = os.environ.get('SECRET_KEY')
-
-
-
+SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 ALLOWED_HOSTS = []
 AUTH_ENDPOINT = "http://127.0.0.1:8000/api/token"
 
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -40,6 +21,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'snippets',
+    'oauth2_provider', # OAuth2
     'rest_framework',
     'rest_framework_jwt',
     'django_short_url',
@@ -55,14 +37,17 @@ SITE_ID = 1
 
 
 MIDDLEWARE = [
-   'django.middleware.security.SecurityMiddleware',
+
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'oauth2_provider.middleware.OAuth2TokenMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.cache.FetchFromCacheMiddleware', 
+    
 
   
 ]
@@ -145,20 +130,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static-files')
-# #DataFlair #User_Uploaded_Files
-# MEDIA_URL = 'media/'
-# MEDIA_ROOT=os.path.join(BASE_DIR, 'media')
-
-# REST_FRAMEWORK = {
-#     'DEFAULT_PERMISSION_CLASSES': (
-#         'rest_framework.permissions.IsAuthenticated',
-#     ),
-# }
 
 
-# Cache time to live is 15 minutes.
-CACHE_TTL = 60 * 15
+CACHE_TTL = 60 * 25
 
 CACHES = {
     "default": {
@@ -193,35 +167,30 @@ CACHES = {
 #LOGOUT_REDIRECT_URL = 'login/'
 
 
-# EMAIL_USE_TLS = True
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-# EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+#print(EMAIL_HOST_USER)
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+#print(EMAIL_HOST_PASSWORD)
+EMAIL_PORT=os.getenv('EMAIL_PORT')
+#print(EMAIL_PORT)
+
 
 
 AUTH_ENDPOINT = os.getenv('AUTH_ENDPOINT')
 AUTH_ENDPOINT = "http://127.0.0.1:8000/api-token-auth/"
 
-# 'DEFAULT_AUTHENTICATION_CLASSES': [
-#     'rest_framework.authentication.TokenAuthentication',
-#     # 'rest_framework.authentication.SessionAuthentication',
-# ]
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+        'rest_framework.authentication.SessionAuthentication', # To keep the Browsable API
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
 
-
-# REST_FRAMEWORK = {
-# 'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.AllowAny',
-#                                'rest_framework.parsers.JSONParser',
-#         'rest_framework.parsers.FormParser',),
-
-# }
-# REST_FRAMEWORK = {
-#     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
-# }
 
 ELASTICSEARCH_DSL = {
     'default': {
