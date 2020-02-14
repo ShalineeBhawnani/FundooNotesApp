@@ -26,9 +26,12 @@ INSTALLED_APPS = [
     'django_short_url',
     'social_django',
     'note',
-    'rest_framework.authtoken'
-    #'django_elasticsearch_dsl'
-    #'django_elasticsearch_dsl_drf'
+    'rest_framework.authtoken',
+    # Django Elasticsearch integration
+    'django_elasticsearch_dsl',
+
+    # Django REST framework Elasticsearch integration (this package)
+    'django_elasticsearch_dsl_drf',
     
 ]
 
@@ -194,8 +197,26 @@ AUTH_ENDPOINT = "http://127.0.0.1:8000/api-token-auth/"
 # }
 
 
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_PAGINATION_CLASS':
+        'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 100,
+    'ORDERING_PARAM': 'ordering',
+}
+
+# Elasticsearch configuration
 ELASTICSEARCH_DSL = {
     'default': {
-        'hosts': 'elasticsearch:9200'
+        'hosts': 'localhost:9200'
     },
+}
+
+# # Name of the Elasticsearch index
+ELASTICSEARCH_INDEX_NAMES = {
+    'note.search': 'note',
 }

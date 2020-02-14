@@ -12,7 +12,7 @@ class Note(models.Model):
     user = models.ForeignKey(User, related_name='Note_owner', on_delete=models.CASCADE)
     title = models.CharField(max_length=60, blank=True)
     note = models.TextField(blank=True)
-    label = models.ManyToManyField(Label, blank=True)
+    label_note = models.ManyToManyField(Label, blank=True)
     add_picture = models.ImageField(upload_to='images/', blank=True, null=True)
     is_archived = models.BooleanField(default=False)
     is_bin = models.BooleanField(default=False)
@@ -24,4 +24,5 @@ class Note(models.Model):
     reminder = models.DateTimeField(blank=True, null=True)
     collaborators = models.ManyToManyField(User, blank=True)
     def __str__(self):
-        return str(self.user)
+        return str(self.note)
+   
