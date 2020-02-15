@@ -18,7 +18,7 @@ from project import settings
 from project.settings import ELASTICSEARCH_INDEX_NAMES
 from django_elasticsearch_dsl_drf.viewsets import BaseDocumentViewSet
 from django_elasticsearch_dsl_drf.pagination import PageNumberPagination
-from note.search import NoteDocument
+#from note.search import NoteDocument
 from django.shortcuts import render
 from project import settings
 from django.http import HttpResponse
@@ -38,7 +38,7 @@ class CreateLabel(generics.GenericAPIView,mixins.CreateModelMixin):
         return self.create(self.request)
     
     def perform_create(self,serializer):
-        serializer.save(user_id=self.request.user)
+        serializer.save(user=self.request.user)
               
 @method_decorator(login_required, name='dispatch')
 class LabelDetails(generics.ListAPIView):
@@ -53,7 +53,7 @@ class LabelDetails(generics.ListAPIView):
 @method_decorator(login_required, name='dispatch')
 class CreateNote(generics.GenericAPIView,mixins.CreateModelMixin):
     
-    serializer_class=NoteSerializer
+    serializer_class = NoteSerializer
     def post(self, request, *args, **kwargs):
         # cache.set(request.user, Note)
         # print(cache.get(request.user))
@@ -139,19 +139,19 @@ class LabelUpdate(generics.GenericAPIView,mixins.UpdateModelMixin,mixins.Destroy
 
 
 
-class SearchNote(generics.GenericAPIView):
-    serializer_class = SearchNoteSerializer
-    queryset = Note.objects.all()
-    print(queryset)
-    # def post(self, request, id=None):
-    #     s=Search.NoteDocument.search().queryset({
-    #         "query": {
-    #             "bool": {
-    #                 "must": [ ]
-    #             }
-    #         },
-    #         "aggs": { }
-    #     })
-    #    s = s.execute()
+# class SearchNote(generics.GenericAPIView):
+#     serializer_class = SearchNoteSerializer
+#     queryset = Note.objects.all()
+#     print(queryset)
+#     # def post(self, request, id=None):
+#     #     s=Search.NoteDocument.search().queryset({
+#     #         "query": {
+#     #             "bool": {
+#     #                 "must": [ ]
+#     #             }
+#     #         },
+#     #         "aggs": { }
+#     #     })
+#     #    s = s.execute()
 
      

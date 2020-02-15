@@ -2,14 +2,18 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Label(models.Model):
-    user_id = models.ForeignKey(User, related_name='Label_owner', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='Label_owner', on_delete=models.CASCADE)
     label = models.CharField(max_length=50, blank=True)
 
     def __str__(self):  
         return str(self.label)
+    
+    # def to_dict(self):
+    #     return {
+    #         'label': self.label
+    #     }
 
 class Note(models.Model):
-    user = models.ForeignKey(User, related_name='Note_owner', on_delete=models.CASCADE)
     title = models.CharField(max_length=60, blank=True)
     note = models.TextField(blank=True)
     label_note = models.ManyToManyField(Label, blank=True)
@@ -22,7 +26,8 @@ class Note(models.Model):
     is_pinned = models.BooleanField(default=False)
     more = models.URLField(blank=True, null=True)
     reminder = models.DateTimeField(blank=True, null=True)
+    user = models.ForeignKey(User, related_name='Note_owner', on_delete=models.CASCADE)
     collaborators = models.ManyToManyField(User, blank=True)
     def __str__(self):
-        return str(self.note)
-   
+        return str(self.title)
+    

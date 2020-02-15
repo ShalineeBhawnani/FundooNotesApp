@@ -183,8 +183,8 @@ EMAIL_PORT=os.getenv('EMAIL_PORT')
 
 
 
-AUTH_ENDPOINT = os.getenv('AUTH_ENDPOINT')
-AUTH_ENDPOINT = "http://127.0.0.1:8000/api-token-auth/"
+# AUTH_ENDPOINT = os.getenv('AUTH_ENDPOINT')
+# AUTH_ENDPOINT = "http://127.0.0.1:8000/api-token-auth/"
 
 # REST_FRAMEWORK = {
 #     'DEFAULT_AUTHENTICATION_CLASSES': (
