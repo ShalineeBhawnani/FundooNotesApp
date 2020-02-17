@@ -8,19 +8,21 @@ class LabelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Label
         fields = '__all__'
+        #exclude = ['user', ]
         #read_only_fields = ['user']
 
 class NoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note
         fields = '__all__'
-        read_only_fields = ['user']
+        #exclude = ['user', ]
+        #read_only_fields = ['user']
 
 class SearchSerializer(serializers.ModelSerializer):
     class Meta:
 
         model = Note
-        fields = ['title', 'reminder', 'color', 'label_note']
+        fields = ['title', 'reminder', 'color', 'note']
 
 
 class NoteFunctionSerializer(serializers.ModelSerializer):

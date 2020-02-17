@@ -15,16 +15,14 @@ from note.permissions import IsOwnerOrReadOnly
 from elasticsearch import Elasticsearch 
 #from elasticsearch_dsl import Search, Q 
 from project import settings
-#from project.settings import ELASTICSEARCH_INDEX_NAMES
-# from django_elasticsearch_dsl_drf.viewsets import BaseDocumentViewSet
-# from django_elasticsearch_dsl_drf.pagination import PageNumberPagination
+from django.http import JsonResponse
 from note.search import NoteDocument
 from django.shortcuts import render
 from project import settings
 from django.http import HttpResponse
 from rest_framework import status
-#from project.settings import ELASTICSEARCH_INDEX_NAMES
 import json
+from rest_framework.views import APIView
 from rest_framework import viewsets
 from project.redis_class import Redis
 rdb=Redis()
@@ -32,14 +30,30 @@ CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
 
 @method_decorator(login_required, name='dispatch')
-class CreateLabel(generics.GenericAPIView,mixins.CreateModelMixin):
-    
-    serializer_class=LabelSerializer
-    def post(self, request, *args, **kwargs):
-        return self.create(self.request)
-    
-    def perform_create(self,serializer):
-        serializer.save(user_id=self.request.user)
+class CreateLabel(generics.GenericAPIView, mixins.CreateModelMixin):
+    serializer_class = LabelSerializer
+    queryset = Label.objects.all()
+    def post(self,request):
+        label_serializer = LabelSerializer(data=request.data)
+        if label_serializer.is_valid():
+            label_serializer.save()
+            return Response({"data": "data added successfully"}, 
+                            status=status.HTTP_201_CREATED)
+        else:
+            error_details = []
+            for key in label_serializer.errors.keys():
+                error_details.append({"field": key, "message": label_serializer.errors[key][0]})
+
+            data = {
+                    "Error": {
+                        "status": 400,
+                        "message": "Your submitted data was not valid - please correct the below errors",
+                        "error_details": error_details
+                        }
+                    }
+
+            return Response(data, status=status.HTTP_400_BAD_REQUEST)
+  
               
 @method_decorator(login_required, name='dispatch')
 class LabelDetails(generics.ListAPIView):
@@ -52,18 +66,30 @@ class LabelDetails(generics.ListAPIView):
         return queryset
 
 @method_decorator(login_required, name='dispatch')
-class CreateNote(generics.GenericAPIView,mixins.CreateModelMixin):
-    
+class CreateNote(generics.GenericAPIView):
     serializer_class = NoteSerializer
-    def post(self, request, *args, **kwargs):
-        # cache.set(request.user, Note)
-        # print(cache.get(request.user))
-        
-        return self.create(self.request)
     
-    def perform_create(self,serializer):
-        serializer.save(user_id=self.request.user)
-      
+    def post(self,request):
+        note_serializer = NoteSerializer(data=request.data)
+        if note_serializer.is_valid():
+            note_serializer.save()
+            return Response({"data": "data added successfully"}, 
+                            status=status.HTTP_201_CREATED)
+        else:
+            error_details = []
+            for key in note_serializer.errors.keys():
+                error_details.append({"field": key, "message": note_serializer.errors[key][0]})
+
+            data = {
+                    "Error": {
+                        "status": 400,
+                        "message": "Your submitted data was not valid - please correct the below errors",
+                        "error_details": error_details
+                        }
+                    }
+
+            return Response(data, status=status.HTTP_400_BAD_REQUEST)
+
 @method_decorator(login_required, name='dispatch')
 class NoteDetails(generics.ListAPIView):
     
@@ -155,8 +181,10 @@ class SearchNote(generics.GenericAPIView):
                 "query": {
                     "bool": {
                         "must": {
-                            "match": {      
-                                "title": user_request.data.get('title')
+                            "match": {  
+                                "title": user_request.data.get('title'),
+                                #"note": user_request.data.get('note')
+                                      
                                 }
                             }
                         }
@@ -166,7 +194,8 @@ class SearchNote(generics.GenericAPIView):
             result = elastic_client.search(index="note", body=query_body)
             print ("total hits:", len(result["hits"]["hits"]))
             return Response(result, status=status.HTTP_201_CREATED)
-
+        return Response(result.errors, status=status.HTTP_400_BAD_REQUEST)
+        
 
 
 

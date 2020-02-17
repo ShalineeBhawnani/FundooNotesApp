@@ -48,7 +48,7 @@ class NoteDocument(Document):
     class Django(object):
         
         model = Note # The model associate with this Document
-        related_models = [Label]
+        #related_models = [Label]
         fields = [
             'title',
             'color',
@@ -60,10 +60,10 @@ class NoteDocument(Document):
         name = 'note'
 
     
-    def get_instances_from_related(self, related_instance):
-        if isinstance(related_instance, Label):
-            return related_instance.label_note
+    # def get_instances_from_related(self, related_instance):
+    #     if isinstance(related_instance, Label):
+    #         return related_instance.label
 
-        # otherwise it's a Manufacturer or a Category
-        return related_instance.label_note_set.all()
+    #     # otherwise it's a Manufacturer or a Category
+    #     return related_instance.label_note_set.all()
  

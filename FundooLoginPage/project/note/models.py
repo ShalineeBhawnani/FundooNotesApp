@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 class Label(models.Model):
-    user = models.ForeignKey(User, related_name='Label_owner', on_delete=models.CASCADE)
+    #user = models.ForeignKey(User, related_name='Label_owner', on_delete=models.CASCADE)
     label = models.CharField(max_length=50, blank=True)
 
     def __str__(self):  
