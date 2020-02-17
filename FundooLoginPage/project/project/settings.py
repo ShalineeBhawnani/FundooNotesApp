@@ -217,6 +217,6 @@ ELASTICSEARCH_DSL = {
 }
 
 # # Name of the Elasticsearch index
-ELASTICSEARCH_INDEX_NAMES = {
-    'note.search': 'note',
-}
+# ELASTICSEARCH_INDEX_NAMES = {
+#     'note.search': 'note',
+# }

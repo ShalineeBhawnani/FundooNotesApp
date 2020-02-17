@@ -1,5 +1,5 @@
 from note.models import Note,Label
-from note.serializer import LabelSerializer,SearchNoteSerializer,NoteSerializer,LabelFunctionSerializer,NoteFunctionSerializer
+from note.serializer import LabelSerializer,SearchSerializer,NoteSerializer,LabelFunctionSerializer,NoteFunctionSerializer
 from rest_framework import mixins
 from rest_framework import generics
 from rest_framework.response import Response
@@ -13,18 +13,19 @@ from django.conf import settings
 from rest_framework import permissions, renderers # new
 from note.permissions import IsOwnerOrReadOnly
 from elasticsearch import Elasticsearch 
-from elasticsearch_dsl import Search, Q 
+#from elasticsearch_dsl import Search, Q 
 from project import settings
-from project.settings import ELASTICSEARCH_INDEX_NAMES
-from django_elasticsearch_dsl_drf.viewsets import BaseDocumentViewSet
-from django_elasticsearch_dsl_drf.pagination import PageNumberPagination
-#from note.search import NoteDocument
+#from project.settings import ELASTICSEARCH_INDEX_NAMES
+# from django_elasticsearch_dsl_drf.viewsets import BaseDocumentViewSet
+# from django_elasticsearch_dsl_drf.pagination import PageNumberPagination
+from note.search import NoteDocument
 from django.shortcuts import render
 from project import settings
 from django.http import HttpResponse
 from rest_framework import status
-from project.settings import ELASTICSEARCH_INDEX_NAMES
+#from project.settings import ELASTICSEARCH_INDEX_NAMES
 import json
+from rest_framework import viewsets
 from project.redis_class import Redis
 rdb=Redis()
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
@@ -38,7 +39,7 @@ class CreateLabel(generics.GenericAPIView,mixins.CreateModelMixin):
         return self.create(self.request)
     
     def perform_create(self,serializer):
-        serializer.save(user=self.request.user)
+        serializer.save(user_id=self.request.user)
               
 @method_decorator(login_required, name='dispatch')
 class LabelDetails(generics.ListAPIView):
@@ -61,7 +62,7 @@ class CreateNote(generics.GenericAPIView,mixins.CreateModelMixin):
         return self.create(self.request)
     
     def perform_create(self,serializer):
-        serializer.save(user=self.request.user)
+        serializer.save(user_id=self.request.user)
       
 @method_decorator(login_required, name='dispatch')
 class NoteDetails(generics.ListAPIView):
@@ -90,7 +91,7 @@ class ArchivedNotes(generics.GenericAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly,)
     def get(self,request):
-        is_archived=Note.objects.all().filter(is_archived=True, user_id=request.user)
+        is_archived=Note.objects.all().filter(is_archived=True, user=request.user)
         print(is_archived)
         serializer_class=NoteSerializer
         return Response(is_archived.values(),status=status.HTTP_200_OK)
@@ -100,7 +101,7 @@ class BinNotes(generics.GenericAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly,)
     def get(self,request):
-        is_bin=Note.objects.all().filter(is_bin=True, user_id=request.user)
+        is_bin=Note.objects.all().filter(is_bin=True, user=request.user)
         print(is_bin)
         serializer_class=NoteSerializer
         return Response(is_bin.values(),status=status.HTTP_200_OK)
@@ -138,20 +139,36 @@ class LabelUpdate(generics.GenericAPIView,mixins.UpdateModelMixin,mixins.Destroy
     
 
 
+@method_decorator(login_required, name='dispatch') 
+class SearchNote(generics.GenericAPIView):
+    serializer_class = SearchSerializer
+    queryset = Note.objects.all()
+    
+    def post(self, request, id=None):
+        elastic_client = Elasticsearch(hosts=["localhost"])
+        
+        user_request = SearchSerializer(data=request.data)
+        print(user_request)
 
-# class SearchNote(generics.GenericAPIView):
-#     serializer_class = SearchNoteSerializer
-#     queryset = Note.objects.all()
-#     print(queryset)
-#     # def post(self, request, id=None):
-#     #     s=Search.NoteDocument.search().queryset({
-#     #         "query": {
-#     #             "bool": {
-#     #                 "must": [ ]
-#     #             }
-#     #         },
-#     #         "aggs": { }
-#     #     })
-#     #    s = s.execute()
+        if user_request.is_valid():
+            query_body = {
+                "query": {
+                    "bool": {
+                        "must": {
+                            "match": {      
+                                "title": user_request.data.get('title')
+                                }
+                            }
+                        }
+                    }
+                }
+       
+            result = elastic_client.search(index="note", body=query_body)
+            print ("total hits:", len(result["hits"]["hits"]))
+            return Response(result, status=status.HTTP_201_CREATED)
 
-     
+
+
+
+
+

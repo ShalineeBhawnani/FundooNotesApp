@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Note,Label
 from django.contrib.auth.models import User
-# from .search import NoteDocument
+#from .search import NoteDocument
 import json
 
 class LabelSerializer(serializers.ModelSerializer):
@@ -14,13 +14,13 @@ class NoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note
         fields = '__all__'
-        #read_only_fields = ['user']
+        read_only_fields = ['user']
 
-class SearchNoteSerializer(serializers.ModelSerializer):
+class SearchSerializer(serializers.ModelSerializer):
     class Meta:
 
         model = Note
-        fields = ['title', 'note', 'reminder', 'color', 'label_note']
+        fields = ['title', 'reminder', 'color', 'label_note']
 
 
 class NoteFunctionSerializer(serializers.ModelSerializer):
@@ -28,7 +28,7 @@ class NoteFunctionSerializer(serializers.ModelSerializer):
     class Meta:
 
         model = Note
-        fields = ['title', 'label_note', 'label','add_picture', 'is_archived', 'is_bin', 'color',
+        fields = ['title', 'label_note','add_picture', 'is_archived', 'is_bin', 'color',
                   'is_pinned', 'more', 'reminder', 'collaborators']
 
 class LabelFunctionSerializer(serializers.ModelSerializer):
