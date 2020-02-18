@@ -10,10 +10,9 @@ from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from django.core.cache import cache
 from django.views.decorators.cache import cache_page
 from django.conf import settings
-from rest_framework import permissions, renderers # new
+from rest_framework import permissions, renderers 
 from note.permissions import IsOwnerOrReadOnly
 from elasticsearch import Elasticsearch 
-#from elasticsearch_dsl import Search, Q 
 from project import settings
 from django.http import JsonResponse
 from note.search import NoteDocument
@@ -24,31 +23,46 @@ from rest_framework import status
 import json
 from rest_framework.views import APIView
 from rest_framework import viewsets
+from django.http import HttpResponse, Http404, HttpResponseNotAllowed
 from project.redis_class import Redis
 rdb=Redis()
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
 
 @method_decorator(login_required, name='dispatch')
-class CreateLabel(generics.GenericAPIView, mixins.CreateModelMixin):
+class CreateLabel(generics.GenericAPIView):
+   
     serializer_class = LabelSerializer
-    queryset = Label.objects.all()
+    queryset= Label.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        try:
+
+            user_id = request.user
+            label = self.queryset.filter(user_id=user_id)
+            return Response(label.values(), status=status.HTTP_200_OK)
+        except Exception:
+            return Response(Exception, status=status.HTTP_403_FORBIDDEN)
+  
     def post(self,request):
-        label_serializer = LabelSerializer(data=request.data)
-        if label_serializer.is_valid():
-            label_serializer.save()
-            return Response({"data": "data added successfully"}, 
+        
+        #user_id=request.user_id
+        #label = self.queryset.filter(user_id=user_id)
+        user_data = LabelSerializer(data=request.data)
+        if user_data.is_valid():
+            user_data.save()
+            return Response({"data": "data created successfully"}, 
                             status=status.HTTP_201_CREATED)
         else:
             error_details = []
-            for key in label_serializer.errors.keys():
-                error_details.append({"field": key, "message": label_serializer.errors[key][0]})
+            for key in user_data.errors.keys():
+                error_details.append({"field": key, "message": user_data.errors[key][0]})
 
             data = {
                     "Error": {
                         "status": 400,
-                        "message": "Your submitted data was not valid - please correct the below errors",
-                        "error_details": error_details
+                        "message": "some error is there please check..",
+                        "error": error_details
                         }
                     }
 
@@ -68,12 +82,12 @@ class LabelDetails(generics.ListAPIView):
 @method_decorator(login_required, name='dispatch')
 class CreateNote(generics.GenericAPIView):
     serializer_class = NoteSerializer
-    
+    queryset= Label.objects.all()
     def post(self,request):
         note_serializer = NoteSerializer(data=request.data)
         if note_serializer.is_valid():
             note_serializer.save()
-            return Response({"data": "data added successfully"}, 
+            return Response({"data": "data created successfully"}, 
                             status=status.HTTP_201_CREATED)
         else:
             error_details = []
