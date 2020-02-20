@@ -222,17 +222,20 @@ class ScheduleReminder(generics.GenericAPIView):
         print(reminder)
         serializer_class=NoteSerializer
         return Response(reminder.values(),status=status.HTTP_200_OK)
-   
+
+
 
 class Remider(generics.GenericAPIView):
-    def get(self, request):
+    
+    def get(self, request, id=None):
         try:
             user = request.user
             print(user)
             user_id = user.id
             print(user_id)
-            user_note = Note.objects.filter(user_id=user_id)
+            user_note = Note.objects.filter(user_id=user_id,reminder__isnull=False)
             print(user_note)
+            return Response(user_note.values(), status=status.HTTP_200_OK)
             reminderlist = []
             print(reminderlist)
             completedlist = []
@@ -250,7 +253,7 @@ class Remider(generics.GenericAPIView):
             }
             remdstr = str(remid)
             logger.info("Reminders data is loaded for %s", user)
-            return HttpResponse(user_note.values(), status=200)
+            return Response(user_note.values(), status=200)
         except Note.DoesNotExist:
             res = obj1.jsonResponse(False, 'Something went wrong ', '')
             logger.info("Reminder unsuccessfull...")
