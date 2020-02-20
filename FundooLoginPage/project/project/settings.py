@@ -13,6 +13,7 @@ AUTH_ENDPOINT = "http://127.0.0.1:8000/api/token"
 
 
 INSTALLED_APPS = [
+    'storages',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -29,9 +30,10 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     # Django Elasticsearch integration
     'django_elasticsearch_dsl',
-
+    #'corsheaders',
     # Django REST framework Elasticsearch integration (this package)
     'django_elasticsearch_dsl_drf',
+    
     
 ]
 
@@ -67,9 +69,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                # 'social_django.context_processors.backends',  # <--
-                # 'social_django.context_processors.login_redirect', # <--
-
+    
 
               
             ]
@@ -80,14 +80,11 @@ TEMPLATES = [
 WSGI_APPLICATION = 'project.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'project',
-        'USER': 'admin',
+        'NAME': 'fundoo',
+        'USER': 'me',
         'PASSWORD': 'password',
         'HOST': 'localhost',
         'PORT': '5432',
@@ -95,8 +92,6 @@ DATABASES = {
 }
 
 
-# Password validation
-# https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -114,8 +109,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/3.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -128,8 +121,6 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
 
@@ -146,57 +137,12 @@ CACHES = {
         "KEY_PREFIX": "example"
     }
 }
-# login_url='login/'
-#LOGOUT_REDIRECT_URL = 'login/'
-# AUTHENTICATION_BACKENDS = [
-#         'social_core.backends.google.GoogleOAuth2',
-#         'social_core.backends.facebook.FacebookOAuth2',
-#         'social_core.backends.github.GithubOAuth2',
-#         'django.contrib.auth.backends.ModelBackend',
-#         'social_django.middleware.SocialAuthExceptionMiddleware',
-#     ]
 
-# LOGIN_URL = 'login'
-# LOGIN_REDIRECT_URL = 'home'
-# LOGOUT_URL = 'logout'
-# LOGOUT_REDIRECT_URL = 'login'
-
-# SOCIAL_AUTH_GITHUB_KEY = os.environ.get('SOCIAL_AUTH_GITHUB_KEY')
-# SOCIAL_AUTH_GITHUB_SECRET = os.environ.get('SOCIAL_AUTH_GITHUB_SECRET')
-
-# SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')    
-# SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')
-#LOGOUT_REDIRECT_URL = 'login/'
-
-# AUTHENTICATION_BACKENDS = (
-#     'django.contrib.auth.backends.ModelBackend' # To keep the Browsable API
-#     'oauth2_provider.backends.OAuth2Backend',
-# )
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-#print(EMAIL_HOST_USER)
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-#print(EMAIL_HOST_PASSWORD)
 EMAIL_PORT=os.getenv('EMAIL_PORT')
-#print(EMAIL_PORT)
-
-
-
-# AUTH_ENDPOINT = os.getenv('AUTH_ENDPOINT')
-# AUTH_ENDPOINT = "http://127.0.0.1:8000/api-token-auth/"
-
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
-#         'rest_framework.authentication.SessionAuthentication', # To keep the Browsable API
-#     ),
-#     'DEFAULT_PERMISSION_CLASSES': (
-#         'rest_framework.permissions.IsAuthenticated',
-#     ),
-# }
-
-
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -220,3 +166,14 @@ ELASTICSEARCH_DSL = {
 # ELASTICSEARCH_INDEX_NAMES = {
 #     'note.search': 'note',
 # }
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+formatter = logging.Formatter('%(levelname)s :%(asctime)s :%(pathname)s :%(lineno)s :%(thread)d  :%(threadName)s :%('
+                              'process)d :%(message)s')
+file_handler = logging.FileHandler('project.log')
+file_handler.setFormatter(formatter)
+CRON_CLASSES = [
+    "project.cron.newCrone",
+]

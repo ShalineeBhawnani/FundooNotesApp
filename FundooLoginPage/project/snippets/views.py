@@ -6,6 +6,8 @@ from django.http import HttpResponse
 from rest_framework.authentication import get_authorization_header, BaseAuthentication
 import jwt
 import json
+from rest_framework import generics
+from rest_framework import viewsets
 from django.template.loader import render_to_string
 from pyee import BaseEventEmitter 
 from pymitter import EventEmitter
@@ -35,7 +37,7 @@ from project.settings import EMAIL_HOST_USER
 from django.core.mail import send_mail
 from snippets.token import token_activation,token_validation,account_activation_token
 from rest_framework.response import Response
-from .serializers import EmailSerializer,LoginSerializer, RegistrationSerializer, UserSerializer,ResetPasswordSerializers
+from .serializers import EmailSerializer,LoginSerializer,ProfileUpdate,UserUpdateSerializers, RegistrationSerializer, UserSerializer,ResetPasswordSerializers
 from django_short_url.views import get_surl
 from django_short_url.models import ShortURL
 from django.http import HttpResponse, HttpResponseRedirect , response
@@ -50,9 +52,22 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.models import User, auth
 User = get_user_model
+from django.contrib import messages
+from django.shortcuts import render, redirect
 from django.db.models import Q
+from rest_framework.parsers import FormParser,MultiPartParser,JSONParser,FileUploadParser
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import View
+from django.utils.decorators import method_decorator
+from django.shortcuts import render
+from .models import Profile
+from django.contrib.auth.decorators import login_required
+from rest_framework.decorators import action
+from django.contrib.auth.decorators import login_required
 from project import redis_class
 rdb = redis_class.Redis()
+
 
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
@@ -281,21 +296,20 @@ class ResetPassword(GenericAPIView):
 
     def post(self, request, user_reset):
         password1 = request.data['password']
+        #password2 = request.data['password']
 
         if user_reset is None:
             return Response({'details': 'not a valid user'})
         elif (password1 or password2) == "":
             return Response({'details': 'password should not be empty'})
-            # elif (password1 != password2):
-            #     return Response({'details': 'password are should match'})
+           
         else:
             try:
                 user = User.objects.get(username=user_reset)
                 user.set_password(password1)
                 user.save()
                 return Response({'details': 'your password has been Reset'})
-                #messages.info(request, "your password has been reset")
-                #return redirect('/login')
+              
             except Exception:
                 return Response({'details': 'not a valid user'})
 
@@ -321,3 +335,22 @@ class Logout(GenericAPIView):
         except Exception:
             return Response({'details': 'something went wrong while logout'})
 
+
+@method_decorator(login_required, name='dispatch') 
+class CreateProfile(GenericAPIView):
+    serializer_class = ProfileUpdate
+    
+    def post(self,request):
+        profile = Profile.objects.get(user=request.user)
+        print(profile)
+        data = request.data    
+        img = data.get('image')
+        user = request.user
+        print(user)
+   
+        serializer = ProfileUpdate(profile,data={'image':img})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=200)
+        else:
+            return Response(serializer.errors,status=400)

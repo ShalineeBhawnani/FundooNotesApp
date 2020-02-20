@@ -1,6 +1,10 @@
 import redis
 from redis import StrictRedis
 
+# class RedisOperation:
+#     red = redis.StrictRedis(host='localhost', port=6379, db=0)
+
+
 
 class Redis:
     """Open connection on Redis DataBase"""

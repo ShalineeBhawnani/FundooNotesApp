@@ -37,4 +37,8 @@ class LabelFunctionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Label
         fields = ['label']
-        
+
+class UpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Note
+        fields = ['title', 'note', 'label', 'url','collaborators']
