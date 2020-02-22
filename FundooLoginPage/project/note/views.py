@@ -218,12 +218,10 @@ class ScheduleReminder(generics.GenericAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly,)
     def get(self,request):
-        reminder=Note.objects.all().filter(reminder=False, user_id=request.user)
-        print(reminder)
+        user_reminder=Note.objects.all().filter(reminder=False, user_id=request.user)
+        print(user_reminder)
         serializer_class=NoteSerializer
-        return Response(reminder.values(),status=status.HTTP_200_OK)
-
-
+        return Response(user_reminder.values(),status=status.HTTP_200_OK)
 
 class Remider(generics.GenericAPIView):
     
@@ -233,31 +231,12 @@ class Remider(generics.GenericAPIView):
             print(user)
             user_id = user.id
             print(user_id)
-            user_note = Note.objects.filter(user_id=user_id,reminder__isnull=False)
-            print(user_note)
-            return Response(user_note.values(), status=status.HTTP_200_OK)
-            reminderlist = []
-            print(reminderlist)
-            completedlist = []
-            print(completedlist)
-            for i in range(len(user_note.values())):
-                if user_note.values()[i]['reminder'] is None:
-                    continue
-                elif timezone.now() > user_note.values()[i]['reminder']:
-                    completedlist.append(user_note.values()[i])
-                else:
-                    reminderlist.append(user_note.values()[i])
-            remid = {
-                'reminder': reminderlist,
-                'compl': completedlist
-            }
-            remdstr = str(remid)
-            logger.info("Reminders data is loaded for %s", user)
-            return Response(user_note.values(), status=200)
-        except Note.DoesNotExist:
-            res = obj1.jsonResponse(False, 'Something went wrong ', '')
-            logger.info("Reminder unsuccessfull...")
-            return HttpResponse(json.dumps(res))
+            user_alert = Note.objects.filter(user_id=user_id,reminder__isnull=False)
+            print(user_alert)
+            return Response(user_alert.values(), status=status.HTTP_200_OK)
+        except Exception:
+            smd = {'success': 'Fail', 'message': 'unable to retrieve notes with reminders', 'data': []}
+            return Response(smd, status=status.HTTP_400_BAD_REQUEST)
 
 
 @method_decorator(login_required, name='dispatch') 
