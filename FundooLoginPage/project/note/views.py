@@ -1,7 +1,7 @@
 from note.models import Note,Label
-from note.serializer import LabelSerializer,UpdateSerializer,SearchSerializer,NoteSerializer,LabelFunctionSerializer,NoteFunctionSerializer
+from note.serializer import LabelSerializer,ReminderSerializer,UpdateSerializer,SearchSerializer,NoteSerializer,LabelFunctionSerializer,NoteFunctionSerializer
 from rest_framework import mixins
-from project.settings import file_handler
+#from project.settings import file_handler
 from rest_framework import generics
 from rest_framework.response import Response
 from django.contrib.auth.decorators import login_required
@@ -39,7 +39,6 @@ CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 obj1=Response()
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-logger.addHandler(file_handler)
 
 
 @method_decorator(login_required, name='dispatch')
@@ -57,10 +56,10 @@ class CreateLabel(generics.GenericAPIView):
         except Exception:
             return Response(Exception, status=status.HTTP_403_FORBIDDEN)
   
-    def post(self,request):
+    def post(self,request,id=None):
         
-        #user_id=request.user_id
-        #label = self.queryset.filter(user_id=user_id)
+        user_id=request.user
+        label = self.queryset.filter(user_id=user_id)
         user_data = LabelSerializer(data=request.data)
         if user_data.is_valid():
             user_data.save()
@@ -117,6 +116,7 @@ class CreateNote(generics.GenericAPIView):
 
             return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
+
 @method_decorator(login_required, name='dispatch')
 class NoteDetails(generics.ListAPIView):
     
@@ -137,59 +137,6 @@ class NoteUpdate(generics.RetrieveUpdateDestroyAPIView):
 
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly,)
-
-# class NoteUpdate(generics.GenericAPIView):
-#     serializer_class = NoteSerializer
-
-#     def put(self,request):
-#         user = request.user
-#         try:
-#             instance = Note.objects.get(id=note_id)
-#             data = request.data
-#             collaborator_list = [] 
-#             label = data["label"]
-#             data['label'] = [Label.objects.get(name=name, user_id=request.user.id).id for name in label]
-#             collaborator = data['collaborators']
-#             for email in collaborator:
-#                 emails = User.objects.filter(email=email)
-#                 user_id = emails.values()[0]['id']
-#                 collaborator_list.append(user_id)
-#             data['collaborators'] = collaborator_list
-#             serializer = UpdateSerializer(instance, data=data, partial=True)
-#             if serializer.is_valid():
-#                 note_create = serializer.save()
-#                 res = obj1.jsonResponse(True, 'note updated', [serializer.data])
-#                 if serializer.data['is_archive']:
-#                     rdb.set(str(user.id) + "is_archive",
-#                                 {note_create.id: str(json.dumps(serializer.data))})
-#                     logger.info("note was updated with note id :%s for user :%s ", note_id, user)
-#                     return HttpResponse(json.dumps(res, indent=2), status=200)
-#                 elif serializer.data['is_bin']:
-#                     rdb.set(str(user.id) + "is_bin",
-#                                 {note_create.id: str(json.dumps(serializer.data))})
-#                     logger.info("note was updated with note id :%s for user :%s ", note_id, user)
-#                     return HttpResponse(json.dumps(res, indent=2), status=200)
-#                 else:
-#                     if serializer.data['reminder']:
-#                         rdb.set("reminder",
-#                                     {note_create.id: str(json.dumps({"email": user.email, "user": str(user),
-#                                                                      "note_id": note_create.id,
-#                                                                      "reminder": serializer.data["reminder"]}))})
-#                     rdb.set(str(user.id) + "note",
-#                                 {note_create.id: str(json.dumps(serializer.data))})
-#                     logger.info("note was updated with note id :%s for user :%s ", note_id, user)
-#                     return HttpResponse(json.dumps(res, indent=2), status=200)
-#             logger.error("note was updated with note id :%s for user :%s ", note_id, user)
-#             res = obj1.jsonResponse(False, 'note was not created', '')
-#             return HttpResponse(json.dumps(res, indent=2), status=400)
-#         except KeyError as e:
-#             logger.error("no data was provided from user %s to update", str(e), user)
-#             res = obj1.jsonResponse(False, 'note already upto data ', '')
-#             return HttpResponse(json.dumps(res, indent=2), status=400)
-#         except Exception as e:
-#             logger.error("got error :%s for user :%s while updating note id :%s", str(e), user, note_id)
-#             res = obj1.jsonResponse(False, 'Something went wrong ', '')
-#             return HttpResponse(json.dumps(res, indent=2), status=400)
 
 
    
@@ -213,31 +160,27 @@ class BinNotes(generics.GenericAPIView):
         serializer_class=NoteSerializer
         return Response(is_bin.values(),status=status.HTTP_200_OK)
 
-@method_decorator(login_required, name='dispatch')    
-class ScheduleReminder(generics.GenericAPIView):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-                          IsOwnerOrReadOnly,)
-    def get(self,request):
-        user_reminder=Note.objects.all().filter(reminder=False, user_id=request.user)
-        print(user_reminder)
-        serializer_class=NoteSerializer
-        return Response(user_reminder.values(),status=status.HTTP_200_OK)
-
+@method_decorator(login_required, name='dispatch')   
 class Remider(generics.GenericAPIView):
-    
     def get(self, request, id=None):
+       
         try:
             user = request.user
             print(user)
-            user_id = user.id
-            print(user_id)
-            user_alert = Note.objects.filter(user_id=user_id,reminder__isnull=False)
-            print(user_alert)
-            return Response(user_alert.values(), status=status.HTTP_200_OK)
+            notes_with_reminder = Note.objects.filter(user_id=user, reminder__isnull=False)
+            return Response(notes_with_reminder.values(), status=status.HTTP_200_OK)
         except Exception:
-            smd = {'success': 'Fail', 'message': 'unable to retrieve notes with reminders', 'data': []}
+            smd = {'success': 'Fail', 'message': 'something wrong in reminder', 'data': []}
             return Response(smd, status=status.HTTP_400_BAD_REQUEST)
+        
+class ReminderUpdate(generics.RetrieveUpdateDestroyAPIView):
+    queryset=Note.objects.all()
+    serializer_class=ReminderSerializer
 
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly,)
+    
+  
 
 @method_decorator(login_required, name='dispatch') 
 class LabelUpdate(generics.GenericAPIView,mixins.UpdateModelMixin,mixins.DestroyModelMixin):

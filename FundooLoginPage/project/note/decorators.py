@@ -1,22 +1,21 @@
-# from django.http import HttpResponseForbidden
-# from django.core.cache import cache
-# from rest_framework import status, exceptions
-# from django.http import HttpResponse
-# from rest_framework.authentication import get_authorization_header, BaseAuthentication
-# from rest_framework.response import Response
-# import jwt
-# import json
-# from project.settings import SECRET_KEY
-# from note import models
+from django.http import HttpResponseForbidden
+from django.core.cache import cache
+from rest_framework import status, exceptions
+from django.http import HttpResponse
+from rest_framework.authentication import get_authorization_header, BaseAuthentication
+from rest_framework.response import Response
+import jwt
+import json
+from project.settings import SECRET_KEY
+from note import models
+from django.shortcuts import HttpResponse, redirect, get_object_or_404
+from project.redis_class import Redis
+rdb=Redis()
 
-# #rdb = redis_class.Redis()
-
-# def requires_auth(function=None):
-#     def wraps(request, *args,**kwargs):
-#         token = Token.objects.filter(key=request.GET.get('token')).first()
-#         #token = jwt.decode(request.user.username,SECRET_KEY, algorithm="HS256")
-#         cache.get(request.user.username)
-#         print(request.user.username)
-#         print(token)
-#         return function(token)
-#     return wraps
+def redirect_after_login(function):
+    def wrapper(request, *args, **kwargs):
+        user = request.user
+        if user.id is not None:
+            return redirect("/note")
+        return function(request, *args, **kwargs)
+    return wrapper

@@ -2,6 +2,8 @@
 import datetime
 import logging
 import os
+import time
+from datetime import datetime, timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,18 +23,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'snippets',
-    'oauth2_provider', # OAuth2
+    'oauth2_provider',
     'rest_framework',
     'rest_framework_jwt',
     'django_short_url',
     'social_django',
     'note',
     'rest_framework.authtoken',
-    # Django Elasticsearch integration
     'django_elasticsearch_dsl',
-    #'corsheaders',
-    # Django REST framework Elasticsearch integration (this package)
+    'django_celery_beat'
     'django_elasticsearch_dsl_drf',
+    'django_celery_results'
     
     
 ]
@@ -170,10 +171,16 @@ ELASTICSEARCH_DSL = {
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-formatter = logging.Formatter('%(levelname)s :%(asctime)s :%(pathname)s :%(lineno)s :%(thread)d  :%(threadName)s :%('
-                              'process)d :%(message)s')
-file_handler = logging.FileHandler('project.log')
-file_handler.setFormatter(formatter)
-CRON_CLASSES = [
-    "project.cron.newCrone",
-]
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+CELERYBEAT_SCHEDULE = {
+    "send_mail": {
+        "task": "note.tasks.send_mail",
+        "schedule": timedelta(seconds=1),
+    },
+}
+CELERYBEAT_SCHEDULER ="django_celery_beat.schedulers:DatabaseScheduler"

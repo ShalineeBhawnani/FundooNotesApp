@@ -42,3 +42,8 @@ class UpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note
         fields = ['title', 'note', 'label', 'url','collaborators']
+        
+class ReminderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Note
+        fields = ['reminder']
