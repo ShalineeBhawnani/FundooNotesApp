@@ -20,6 +20,6 @@ urlpatterns = [
     path('bin/', BinNotes.as_view(),name="bin"),
     path('reminder/', Remider.as_view(),name="reminder"),
     path('reminder_update/<int:pk>' ,ReminderUpdate.as_view(),name="ReminderUpdate"),
-    
+ 
 ]
 

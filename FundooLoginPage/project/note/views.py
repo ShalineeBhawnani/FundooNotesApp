@@ -39,9 +39,9 @@ CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 obj1=Response()
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-
-
-@method_decorator(login_required, name='dispatch')
+from rest_framework.decorators import api_view
+from utils import smd_response,Smd_Response
+from .service.note import NoteService
 class CreateLabel(generics.GenericAPIView):
    
     serializer_class = LabelSerializer
@@ -128,8 +128,6 @@ class NoteDetails(generics.ListAPIView):
         print(queryset)
         return queryset
         
-        
-    
 @method_decorator(login_required, name='dispatch') 
 class NoteUpdate(generics.RetrieveUpdateDestroyAPIView):
     queryset=Note.objects.all()
@@ -160,18 +158,18 @@ class BinNotes(generics.GenericAPIView):
         serializer_class=NoteSerializer
         return Response(is_bin.values(),status=status.HTTP_200_OK)
 
-@method_decorator(login_required, name='dispatch')   
-class Remider(generics.GenericAPIView):
-    def get(self, request, id=None):
+# @method_decorator(login_required, name='dispatch')   
+# class Remider(generics.GenericAPIView):
+#     def get(self, request, id=None):
        
-        try:
-            user = request.user
-            print(user)
-            notes_with_reminder = Note.objects.filter(user_id=user, reminder__isnull=False)
-            return Response(notes_with_reminder.values(), status=status.HTTP_200_OK)
-        except Exception:
-            smd = {'success': 'Fail', 'message': 'something wrong in reminder', 'data': []}
-            return Response(smd, status=status.HTTP_400_BAD_REQUEST)
+#         try:
+#             user = request.user
+#             print(user)
+#             notes_with_reminder = Note.objects.filter(user_id=user, reminder__isnull=False)
+#             return Response(notes_with_reminder.values(), status=status.HTTP_200_OK)
+#         except Exception:
+#             smd = {'success': 'Fail', 'message': 'something wrong in reminder', 'data': []}
+#             return Response(smd, status=status.HTTP_400_BAD_REQUEST)
         
 class ReminderUpdate(generics.RetrieveUpdateDestroyAPIView):
     queryset=Note.objects.all()
@@ -179,8 +177,25 @@ class ReminderUpdate(generics.RetrieveUpdateDestroyAPIView):
 
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly,)
-    
-  
+
+
+@method_decorator(login_required, name='dispatch')   
+class Remider(generics.GenericAPIView):
+    #permission_classes = (IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+      
+        try:
+            user = request.user
+            print(request.user)
+            data = NoteService().reminder_notes(user)
+            if data['success']:
+                return HttpResponse(json.dumps(data, indent=1), status=200)
+            else:
+                return HttpResponse(json.dumps(data), status=400)
+        except Exception:
+            smd = Smd_Response()
+            return smd
 
 @method_decorator(login_required, name='dispatch') 
 class LabelUpdate(generics.GenericAPIView,mixins.UpdateModelMixin,mixins.DestroyModelMixin):
@@ -201,7 +216,7 @@ class LabelUpdate(generics.GenericAPIView,mixins.UpdateModelMixin,mixins.Destroy
         user = self.request.user
         user_id= self.request.user.id
         return self.destroy(request,user_id)
-    
+
 
 
 @method_decorator(login_required, name='dispatch') 

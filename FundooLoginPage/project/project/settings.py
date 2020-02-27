@@ -16,6 +16,7 @@ AUTH_ENDPOINT = "http://127.0.0.1:8000/api/token"
 
 INSTALLED_APPS = [
     'storages',
+    'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -31,9 +32,9 @@ INSTALLED_APPS = [
     'note',
     'rest_framework.authtoken',
     'django_elasticsearch_dsl',
-    'django_celery_beat'
+    'django_celery_beat',
     'django_elasticsearch_dsl_drf',
-    'django_celery_results'
+    'django_celery_results',
     
     
 ]
@@ -138,7 +139,7 @@ CACHES = {
         "KEY_PREFIX": "example"
     }
 }
-
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
@@ -177,10 +178,10 @@ CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 
-CELERYBEAT_SCHEDULE = {
-    "send_mail": {
-        "task": "note.tasks.send_mail",
-        "schedule": timedelta(seconds=1),
-    },
-}
-CELERYBEAT_SCHEDULER ="django_celery_beat.schedulers:DatabaseScheduler"
+# CELERYBEAT_SCHEDULE = {
+#     "send_mail": {
+#         "task": "note.tasks.send_mail",
+#         "schedule": timedelta(seconds=1),
+#     },
+# }
+# CELERYBEAT_SCHEDULER ="django_celery_beat.schedulers:DatabaseScheduler"

@@ -4,8 +4,6 @@ from redis import StrictRedis
 # class RedisOperation:
 #     red = redis.StrictRedis(host='localhost', port=6379, db=0)
 
-
-
 class Redis:
     """Open connection on Redis DataBase"""
     def __init__(self, redis_host='localhost', redis_port=6379, redis_db=0):
@@ -54,4 +52,3 @@ class Redis:
     def mget(self, *redis_key):
         return self.con.mget(*redis_key)
 
-   
