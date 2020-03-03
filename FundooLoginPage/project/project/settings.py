@@ -23,7 +23,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'snippets',
+    'snippets', 
+    'rest_framework_swagger',
     'oauth2_provider',
     'rest_framework',
     'rest_framework_jwt',
@@ -35,6 +36,7 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'django_elasticsearch_dsl_drf',
     'django_celery_results',
+    'corsheaders',
     
     
 ]
@@ -53,10 +55,13 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.cache.FetchFromCacheMiddleware', 
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     
 
   
 ]
+CORS_ORIGIN_ALLOW_ALL = True 
 
 ROOT_URLCONF = 'project.urls'
 
@@ -156,7 +161,14 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 100,
     'ORDERING_PARAM': 'ordering',
 }
-
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'basic': {
+            'type': 'basic'
+        }
+    },
+    ...
+}
 # Elasticsearch configuration
 ELASTICSEARCH_DSL = {
     'default': {
@@ -172,6 +184,7 @@ ELASTICSEARCH_DSL = {
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['json']

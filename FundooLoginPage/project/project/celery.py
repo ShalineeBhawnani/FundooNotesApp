@@ -12,12 +12,12 @@ celery_app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 #celery_app.conf.beat_schedule = {'add-every-05-seconds':
                                   # {'task': 'note.tasks.send_mail_task', 
                                    # 'schedule': 05.0, }, }
-celery_app.conf.beat_schedule = {
-    'add-every-1-minute': {
-        'task': 'note.tasks.task_check_reminder',
-        'schedule': crontab(),
-    },
-}
+# celery_app.conf.beat_schedule = {
+#         'add-every-1-minute': {
+#             'task': 'note.tasks.task_check_reminder',
+#             'schedule': crontab(),
+#         },
+#     }
 
 @celery_app.task(bind=True)
 def debug_task(self):

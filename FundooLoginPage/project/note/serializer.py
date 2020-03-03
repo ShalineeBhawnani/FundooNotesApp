@@ -7,15 +7,21 @@ import json
 class LabelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Label
-        fields = '__all__'
-        #exclude = ['user', ]
+        fields = ['label']
         #read_only_fields = ['user']
+class CollaboratorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'mail']
 
 class NoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note
+
         fields = '__all__'
-        #exclude = ['user', ]
+        fields = ['title','note', 'label_note','add_picture', 'is_archived', 'is_bin', 'color',
+                  'is_pinned', 'more', 'reminder', 'collaborators','created_on','last_edited']
+      
         #read_only_fields = ['user']
 
 class SearchSerializer(serializers.ModelSerializer):
@@ -24,7 +30,11 @@ class SearchSerializer(serializers.ModelSerializer):
         model = Note
         fields = ['title', 'reminder', 'color', 'note']
 
-
+class Userserializer(serializers.ModelSerializer):
+    class Meta:
+        model = User 
+        fields = ['user','email']
+        
 class NoteFunctionSerializer(serializers.ModelSerializer):
     
     class Meta:
@@ -47,3 +57,5 @@ class ReminderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note
         fields = ['reminder']
+# label_note = LabelSerializer(many=True, read_only=True)
+#         collaborators = CollaboratorSerializer(many=True, read_only=True)

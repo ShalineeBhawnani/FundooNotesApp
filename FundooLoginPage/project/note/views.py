@@ -1,7 +1,6 @@
 from note.models import Note,Label
-from note.serializer import LabelSerializer,ReminderSerializer,UpdateSerializer,SearchSerializer,NoteSerializer,LabelFunctionSerializer,NoteFunctionSerializer
+from note.serializer import LabelSerializer,Userserializer,ReminderSerializer,UpdateSerializer,SearchSerializer,NoteSerializer,LabelFunctionSerializer,NoteFunctionSerializer
 from rest_framework import mixins
-#from project.settings import file_handler
 from rest_framework import generics
 from rest_framework.response import Response
 from django.contrib.auth.decorators import login_required
@@ -35,13 +34,22 @@ from rest_framework import viewsets
 from django.http import HttpResponse, Http404, HttpResponseNotAllowed
 from project.redis_class import Redis
 rdb=Redis()
+import pytz
+import datetime
+import logging
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 obj1=Response()
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 from rest_framework.decorators import api_view
 from utils import smd_response,Smd_Response
-from .service.note import NoteService
+from .service.note import NoteService,label_update_in_redis,update_redis
+import pickle
+from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth.models import User, auth
+from django.contrib.auth import authenticate, get_user_model
+User = get_user_model()
+#from project.snippets.models import Registration
 class CreateLabel(generics.GenericAPIView):
    
     serializer_class = LabelSerializer
@@ -57,12 +65,12 @@ class CreateLabel(generics.GenericAPIView):
             return Response(Exception, status=status.HTTP_403_FORBIDDEN)
   
     def post(self,request,id=None):
-        
+       
         user_id=request.user
         label = self.queryset.filter(user_id=user_id)
         user_data = LabelSerializer(data=request.data)
         if user_data.is_valid():
-            user_data.save()
+            user_data.save(user_id=user_id.id)
             return Response({"data": "data created successfully"}, 
                             status=status.HTTP_201_CREATED)
         else:
@@ -90,6 +98,48 @@ class LabelDetails(generics.ListAPIView):
         user = self.request.user
         queryset= Label.objects.filter(user_id=user)
         return queryset
+        
+
+# @method_decorator(login_required, name='dispatch')
+# class CreateNote(generics.GenericAPIView):
+#     serializer_class = NoteSerializer
+#     #serializer_class = Userserializer
+    
+#     def post(self, request, *args, **kwargs):
+#         user_id=request.user
+#         print(user_id)
+#         # user_id=request.user.id
+#         # print(user_id)
+#         collab = request.data.get('collaborators')
+#         print(collab)
+#         collab_list = []
+#         for email in collab:
+#             self.request.POST._mutable = True
+#             print("got email")
+#             user = User.objects.get(email=request.user.email)
+#             print(user)
+#             collab_list.append(user.id)
+#             print(collab_list.append(user.id))
+#         request.data['collaborators'] = collab_list
+#         note_serializer = NoteSerializer(data=request.data)
+#         if note_serializer.is_valid():
+#             note_serializer.save()
+#             return Response({"data": "data created successfully"}, 
+#                             status=status.HTTP_201_CREATED)
+#         else:
+#             error_details = []
+#             for key in note_serializer.errors.keys():
+#                 error_details.append({"field": key, "message": note_serializer.errors[key][0]})
+
+#             data = {
+#                     "Error": {
+#                         "status": 400,
+#                         "message": "Your submitted data was not valid - please correct the below errors",
+#                         "error_details": error_details
+#                         }
+#                     }
+
+#             return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
 @method_decorator(login_required, name='dispatch')
 class CreateNote(generics.GenericAPIView):
@@ -98,7 +148,7 @@ class CreateNote(generics.GenericAPIView):
     def post(self,request):
         note_serializer = NoteSerializer(data=request.data)
         if note_serializer.is_valid():
-            note_serializer.save()
+            note_serializer.save(user_id=request.user.id)
             return Response({"data": "data created successfully"}, 
                             status=status.HTTP_201_CREATED)
         else:
@@ -115,7 +165,6 @@ class CreateNote(generics.GenericAPIView):
                     }
 
             return Response(data, status=status.HTTP_400_BAD_REQUEST)
-
 
 @method_decorator(login_required, name='dispatch')
 class NoteDetails(generics.ListAPIView):
@@ -158,44 +207,43 @@ class BinNotes(generics.GenericAPIView):
         serializer_class=NoteSerializer
         return Response(is_bin.values(),status=status.HTTP_200_OK)
 
-# @method_decorator(login_required, name='dispatch')   
-# class Remider(generics.GenericAPIView):
-#     def get(self, request, id=None):
+@method_decorator(login_required, name='dispatch')   
+class Remider(generics.GenericAPIView):
+    def get(self, request, id=None):
        
-#         try:
-#             user = request.user
-#             print(user)
-#             notes_with_reminder = Note.objects.filter(user_id=user, reminder__isnull=False)
-#             return Response(notes_with_reminder.values(), status=status.HTTP_200_OK)
-#         except Exception:
-#             smd = {'success': 'Fail', 'message': 'something wrong in reminder', 'data': []}
-#             return Response(smd, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            user = request.user
+            print(user)
+            notes_with_reminder = Note.objects.filter(user_id=user, reminder__isnull=False)
+            return Response(notes_with_reminder.values(), status=status.HTTP_200_OK)
+        except Exception:
+            smd = {'success': 'Fail', 'message': 'something wrong in reminder', 'data': []}
+            return Response(smd, status=status.HTTP_400_BAD_REQUEST)
         
-class ReminderUpdate(generics.RetrieveUpdateDestroyAPIView):
-    queryset=Note.objects.all()
-    serializer_class=ReminderSerializer
-
+class ReminderUpdate(generics.GenericAPIView):
+    serializer_class= ReminderSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly,)
 
-
-@method_decorator(login_required, name='dispatch')   
-class Remider(generics.GenericAPIView):
-    #permission_classes = (IsAuthenticated,)
-
-    def get(self, request, *args, **kwargs):
-      
-        try:
-            user = request.user
-            print(request.user)
-            data = NoteService().reminder_notes(user)
-            if data['success']:
-                return HttpResponse(json.dumps(data, indent=1), status=200)
-            else:
-                return HttpResponse(json.dumps(data), status=400)
-        except Exception:
-            smd = Smd_Response()
-            return smd
+    def put(self,request,id):
+        user = request.user
+        notes_with_reminder = list(Note.objects.filter(user_id=user,reminder__isnull=False))
+        print(notes_with_reminder)
+        timezone = pytz.timezone("UTC")
+        if len(notes_with_reminder) > 0:
+            print(len(notes_with_reminder))
+            for note in list(notes_with_reminder):
+                t = type(note.reminder)
+                if t is None or note.reminder == '':
+                    break
+                reminder_time = note.reminder
+                reminder_time_byte = str.encode(str(reminder_time))
+                note_id = str.encode(str(note.id))
+                #email.send('note_reminder', reminder_time_byte, note_id) 
+                print(note_id)
+                return Response(reminder_time_byte, status=status.HTTP_200_OK)
+     
+  
 
 @method_decorator(login_required, name='dispatch') 
 class LabelUpdate(generics.GenericAPIView,mixins.UpdateModelMixin,mixins.DestroyModelMixin):

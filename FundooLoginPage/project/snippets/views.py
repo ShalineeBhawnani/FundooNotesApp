@@ -51,7 +51,7 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.models import User, auth
-User = get_user_model
+
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.db.models import Q
@@ -73,6 +73,7 @@ rdb = redis_class.Redis()
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
 User = get_user_model()
+
 
 class Login(GenericAPIView):
 

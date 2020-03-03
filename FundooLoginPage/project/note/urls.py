@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 urlpatterns = [
     path('note/', views.CreateNote.as_view() ,name="note"),
     path('label/', views.CreateLabel.as_view() ,name="label"),
-    path('labeldetails/',views.LabelDetails.as_view(), name= "labeldetails"),
+    path('labeldetails/<id>',views.LabelDetails.as_view(), name= "labeldetails"),
     path('notedetails/', views.NoteDetails.as_view() ,name="notedetails"),
     path('noteupdate/', views.NoteUpdate.as_view() ,name="noteupdate"),
     path('noteupdate/<int:pk>/', views.NoteUpdate.as_view() ,name="noteupdate"),
@@ -19,7 +19,8 @@ urlpatterns = [
     path('archive/', ArchivedNotes.as_view(),name="archive"),
     path('bin/', BinNotes.as_view(),name="bin"),
     path('reminder/', Remider.as_view(),name="reminder"),
-    path('reminder_update/<int:pk>' ,ReminderUpdate.as_view(),name="ReminderUpdate"),
+    path('reminder_update/<id>' ,ReminderUpdate.as_view(),name="ReminderUpdate"),
+   
  
 ]
 
