@@ -9,9 +9,9 @@ from django_short_url.views import get_surl
 from django_short_url.models import ShortURL
 from rest_framework_jwt import views
 from django.conf.urls import url
-from rest_framework.documentation import include_docs_urls
+#from rest_framework.documentation import include_docs_urls
 
-schema_view = get_swagger_view(title="Swagger Docs")
+#schema_view = get_swagger_view(title="Swagger Docs")
 
 
 urlpatterns = [

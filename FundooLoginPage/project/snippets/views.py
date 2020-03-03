@@ -11,7 +11,7 @@ from rest_framework import viewsets
 from django.template.loader import render_to_string
 from pyee import BaseEventEmitter 
 from pymitter import EventEmitter
-from lib.emitter import ee
+#from lib.emitter import ee
 from validate_email import validate_email
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -301,7 +301,7 @@ class ResetPassword(GenericAPIView):
 
         if user_reset is None:
             return Response({'details': 'not a valid user'})
-        elif (password1 or password2) == "":
+        elif (password or password2) == "":
             return Response({'details': 'password should not be empty'})
            
         else:

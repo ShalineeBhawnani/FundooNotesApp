@@ -13,10 +13,10 @@ DEBUG = True
 ALLOWED_HOSTS = []
 AUTH_ENDPOINT = "http://127.0.0.1:8000/api/token"
 
-
+SITE_ID = 2
 INSTALLED_APPS = [
     'storages',
-    'django.contrib.sites',
+    #'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -36,12 +36,10 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'django_elasticsearch_dsl_drf',
     'django_celery_results',
-    'corsheaders',
+    'corsheaders', #Cross Origin Resource Sharing.
     
     
 ]
-
-SITE_ID = 1
 
 
 MIDDLEWARE = [
@@ -62,6 +60,27 @@ MIDDLEWARE = [
   
 ]
 CORS_ORIGIN_ALLOW_ALL = True 
+CORS_ORIGIN_WHITELIST = [
+   "http://localhost:4200",
+ ]
+CORS_ALLOW_HEADERS = (
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'X-CSRFToken',
+    'x-csrftoken',
+    'X-XSRF-TOKEN',
+    'XSRF-TOKEN',
+    'csrfmiddlewaretoken',
+    'csrftoken',
+    'X-CSRF'
+)
 
 ROOT_URLCONF = 'project.urls'
 
@@ -144,31 +163,33 @@ CACHES = {
         "KEY_PREFIX": "example"
     }
 }
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+#EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-EMAIL_PORT=os.getenv('EMAIL_PORT')
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-    ),
-    'DEFAULT_PAGINATION_CLASS':
-        'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 100,
-    'ORDERING_PARAM': 'ordering',
-}
-SWAGGER_SETTINGS = {
-    'SECURITY_DEFINITIONS': {
-        'basic': {
-            'type': 'basic'
-        }
-    },
-    ...
-}
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework.authentication.BasicAuthentication',
+#         'rest_framework.authentication.SessionAuthentication',
+#     ),
+#     'DEFAULT_PAGINATION_CLASS':
+#         'rest_framework.pagination.PageNumberPagination',
+#     'PAGE_SIZE': 100,
+#     'ORDERING_PARAM': 'ordering',
+# }
+# SWAGGER_SETTINGS = {
+#     'SECURITY_DEFINITIONS': {
+#         'basic': {
+#             'type': 'basic'
+#         }
+#     },
+# }
 # Elasticsearch configuration
 ELASTICSEARCH_DSL = {
     'default': {
@@ -184,7 +205,7 @@ ELASTICSEARCH_DSL = {
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['json']
