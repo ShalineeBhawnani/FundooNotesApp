@@ -1,17 +1,23 @@
 
-<form (submit)="loginUser($event)">
-  <div class="container">
-  <div>
-    <input type="text" autocomplete="off" placeholder="Username" id="username">
-  </div>
-  <div>
-    <div>
-      <input type="email" autocomplete="off" placeholder="email" id="email">
+
+<div style = "text-align:center">
+
+  <div class="loginForm">
+    <h1 class="header">
+      Login Here
+    </h1>
+    <div class="fields">
+
+      <input [(ngModel)]="login.username" type=text id="login_name" placeholder="username"><br>
+      <input [(ngModel)]="login.email" type=email id="login_email_id" placeholder="email"><br>
+      <input [(ngModel)]="login.password" type=password id="login_password" placeholder="password"><br>
+
+      <button id="LOGIN" (click)="loginUser()">login</button>
+
     </div>
-    <input type="password" autocomplete="off" placeholder="Password" id="password">
-  </div>
-  <div>
-    <button type="submit" id="submit">Submit</button>
+    <div class="forgotpassword">
+      <a href="{% url 'forgotpassword' %}">Forgot Password?</a>
+    </div>
   </div>
 </div>
-</form>
+

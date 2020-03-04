@@ -1,35 +1,51 @@
-form {
-  display: flex;
+.loginForm{
+  background-color: rgb(243, 236, 236);
   position: absolute;
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items:center;
-  padding: 20px;
-  background: #eee;
-  border-radius: 20px;
-}
-
-input#username, input#password,input#email {
-  outline: 0;
-  font-size: 20px;
-  padding: 5px 10px;
-  margin: 5px;
-  min-width: 300px;
-}
-
-button#submit {
-  margin: 20px;
-  padding: 20px;
+  width: 60%;
+  float: left;
+  border: 1px solid black;
+  margin: 70px 0px 0px 250px;
+  height: 70%;
   border-radius: 10px;
-  font-size: 20px;
-  cursor: pointer;
+}
+.header{
+  margin: 40px 0px 0px 50px;
+  font-family: 'Source Sans Pro', sans-serif;
+  text-align: center;
+  letter-spacing: -0.5px;
+}
+
+.fields{
+  margin: 50px 0px 0px 0px;
+}
+#LOGIN{
+  margin: 0px 0px 0px 170px;
+  width : 10%;
+  height: 30px;
+}
+#login_name{
+  /* padding: 10px 195px 10px 10px; */
+  width: 30%;
+  height:30px;
+  padding: 0px 0px 0px 8px;
+  margin: 0px 0px 20px 0px;
+}
+
+#login_email_id{
+  /* padding: 10px 195px 10px 10px; */
+  width: 30%;
+  height:30px;
+  padding: 0px 0px 0px 8px;
+  margin: 0px 0px 20px 0px;
+}
+#login_password{
+  /* padding: 10px 195px 10px 10px; */
+  width: 30%;
+  height:30px;
+  padding: 0px 0px 0px 8px;
+  margin: 0px 0px 20px 0px;
+}
+.forgotpassword{
+  margin: -25px 0px 0px 250px;
+  float: left;
 }

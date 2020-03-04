@@ -5,31 +5,35 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  providers: [AuthService]
 })
 export class LoginComponent implements OnInit {
+  login;
 
   constructor(private Auth: AuthService,
               private router: Router) { }
 
-  ngOnInit() {
+    ngOnInit(){
+      this.login = {
+        fullname: '',
+        username: '',
+        email: '',
+        password: '',
+        password2: ''
+      };
+    }
+    loginUser() {
+      this.Auth.loginUser(this.login).subscribe(
+        response => {
+          alert('User ' + this.login.username + 'user loggedin')
+        },
+        error => console.log('error',error)
+
+      );
+
+    }
+
   }
 
-  loginUser(event) {
-    // event.preventDefault()
-    // const target = event.target
-    // const username = target.querySelector('#username').value
-    // const password = target.querySelector('#password').value
 
-    // this.Auth.getUserDetails(username, password).subscribe(data => {
-    //   if(data.success) {
-    //     this.router.navigate(['admin'])
-    //     this.Auth.setLoggedIn(true)
-    //   } else {
-    //     window.alert(data.message)
-    //   }
-    // })
-    console.log(event)
-  }
-
-}
