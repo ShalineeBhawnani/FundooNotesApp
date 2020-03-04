@@ -1,0 +1,17 @@
+
+  <div style = "text-align:center">
+
+    <div class="registerForm">
+      <h1 class="header">
+        Create Your Fundoo App
+      </h1>
+    <input [(ngModel)]="register.fullname"  type=text id="first_name" placeholder="fullname">
+    <input [(ngModel)]="register.username" type=text id="last_name" placeholder="username">
+    <input [(ngModel)]="register.email" type=email id="email_id" placeholder="email"><br>
+    <input [(ngModel)]="register.password" type=password id="password" placeholder="password">
+    <input [(ngModel)]="register.password2" type=password id="confirm_password" placeholder="comfirm password"><br>
+
+    <button id="REGISTER" (click)="registerUser()">Register</button>
+  </div>
+  </div>
+
