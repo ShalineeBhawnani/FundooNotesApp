@@ -18,15 +18,13 @@ export class LoginComponent implements OnInit {
       this.login = {
         fullname: '',
         username: '',
-        email: '',
-        password: '',
-        password2: ''
+        email: ''
       };
     }
     loginUser() {
       this.Auth.loginUser(this.login).subscribe(
         response => {
-          alert('User ' + this.login.username + 'user loggedin')
+          alert('User ' + this.login.username + 'Succesfully loggedin')
         },
         error => console.log('error',error)
 

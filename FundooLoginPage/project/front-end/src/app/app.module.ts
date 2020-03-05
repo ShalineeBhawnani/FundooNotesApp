@@ -9,6 +9,9 @@ import { HomeComponent } from './home/home.component';
 import { AuthService } from './auth.service';
 import { UserService } from './user.service';
 import { RegisterComponent } from './register/register.component';
+import { LogoutComponent } from './logout/logout.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule, MatMenuModule, MatSidenavModule } from '@angular/material';
 
 
 @NgModule({
@@ -18,11 +21,18 @@ import { RegisterComponent } from './register/register.component';
 
     HomeComponent,
 
-    RegisterComponent
+    RegisterComponent,
+
+    LogoutComponent
   ],
 
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatMenuModule,
+    FormsModule,
+    MatSidenavModule,
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
@@ -39,7 +49,8 @@ import { RegisterComponent } from './register/register.component';
         component: RegisterComponent
       }
 
-    ])
+    ]),
+    BrowserAnimationsModule
   ],
   providers: [AuthService, UserService],
   bootstrap: [AppComponent]

@@ -134,7 +134,9 @@ class Registrations(GenericAPIView):
             #return Response("your are already registred")
         data = request.data     
         name = data.get('name')
+        print(name)
         username = data.get('username') 
+        print(username)
         email = data.get('email')
         password = data.get('password')
         password2 = data.get('password2')
@@ -351,7 +353,9 @@ class CreateProfile(GenericAPIView):
    
         serializer = ProfileUpdate(profile,data={'image':img})
         if serializer.is_valid():
+            print("valid")
             serializer.save()
+            print("saved")
             return Response(serializer.data,status=200)
         else:
             return Response(serializer.errors,status=400)

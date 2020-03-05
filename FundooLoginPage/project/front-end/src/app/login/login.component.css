@@ -20,12 +20,12 @@
 }
 #LOGIN{
   margin: 0px 0px 0px 170px;
-  width : 10%;
+  width : 12%;
   height: 30px;
 }
 #login_name{
   /* padding: 10px 195px 10px 10px; */
-  width: 30%;
+  width: 32%;
   height:30px;
   padding: 0px 0px 0px 8px;
   margin: 0px 0px 20px 0px;
@@ -33,14 +33,14 @@
 
 #login_email_id{
   /* padding: 10px 195px 10px 10px; */
-  width: 30%;
+  width: 32%;
   height:30px;
   padding: 0px 0px 0px 8px;
   margin: 0px 0px 20px 0px;
 }
 #login_password{
   /* padding: 10px 195px 10px 10px; */
-  width: 30%;
+  width: 32%;
   height:30px;
   padding: 0px 0px 0px 8px;
   margin: 0px 0px 20px 0px;

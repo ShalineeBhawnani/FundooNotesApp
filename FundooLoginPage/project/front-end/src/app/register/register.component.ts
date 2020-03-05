@@ -13,7 +13,7 @@ export class RegisterComponent implements OnInit {
   constructor(private userService : UserService) {}
   ngOnInit(){
     this.register = {
-      fullname: '',
+      name: '',
       username: '',
       email: '',
       password: '',
@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit {
   registerUser() {
     this.userService.registerUser(this.register).subscribe(
       response => {
-        alert('User ' + this.register.username + 'has been created')
+        alert('User ' + this.register.username + 'please verify through your mail')
       },
       error => console.log('error',error)
 
@@ -33,4 +33,4 @@ export class RegisterComponent implements OnInit {
 
 }
 
-  
+
