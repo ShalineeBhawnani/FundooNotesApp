@@ -138,6 +138,7 @@ class Registrations(GenericAPIView):
         username = data.get('username') 
         print(username)
         email = data.get('email')
+        print(email)
         password = data.get('password')
         password2 = data.get('password2')
         if password != password2:
@@ -281,7 +282,7 @@ def reset_password(request, surl):
         if user is not None:
             context = {'userReset': user.username}
             print(context)
-            return redirect('/resetpassword/' + str(user)+'/')
+            return redirect('http://localhost:4200/resetpassword/' + str(user))
         else:
             messages.info(request, 'was not able to sent the email')
             return redirect('/api/forgotpassword')
@@ -298,7 +299,7 @@ class ResetPassword(GenericAPIView):
     serializer_class = ResetPasswordSerializers
 
     def post(self, request, user_reset):
-        password1 = request.data['password']
+        password = request.data['password']
         #password2 = request.data['password']
 
         if user_reset is None:
@@ -309,7 +310,7 @@ class ResetPassword(GenericAPIView):
         else:
             try:
                 user = User.objects.get(username=user_reset)
-                user.set_password(password1)
+                user.set_password(password)
                 user.save()
                 return Response({'details': 'your password has been Reset'})
               

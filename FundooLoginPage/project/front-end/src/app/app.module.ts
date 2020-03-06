@@ -5,54 +5,55 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
-import { AuthService } from './auth.service';
 import { UserService } from './user.service';
 import { RegisterComponent } from './register/register.component';
-import { LogoutComponent } from './logout/logout.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatMenuModule, MatSidenavModule } from '@angular/material';
-
+import { AppMaterialModule } from './app-material/app-material.module';
+import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
+import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
+import { AppRoutingModule } from './/app-routing.module';
+import { MyNavComponent } from './my-nav/my-nav.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule } from '@angular/material';
+import { MyDashboardComponent } from './my-dashboard/my-dashboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-
-    HomeComponent,
-
     RegisterComponent,
-
-    LogoutComponent
+    ForgotpasswordComponent,
+    ResetpasswordComponent,
+    MyNavComponent,
+    MyDashboardComponent,
   ],
 
   imports: [
+
     BrowserModule,
+    AppMaterialModule,
     BrowserAnimationsModule,
-    MatButtonModule,
-    MatMenuModule,
     FormsModule,
-    MatSidenavModule,
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot([
-      {
-        path: '',
-        component: HomeComponent
-      },
-      {
-        path: 'login',
-        component: LoginComponent
-      },
-      {
-        path: 'registration',
-        component: RegisterComponent
-      }
-
-    ]),
-    BrowserAnimationsModule
+    RouterModule,
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    MatGridListModule,
+    MatCardModule,
+    MatMenuModule
   ],
-  providers: [AuthService, UserService],
+
+
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
+
+
 export class AppModule { }

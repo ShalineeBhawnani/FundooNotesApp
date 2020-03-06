@@ -1,5 +1,4 @@
 
-
 <div style = "text-align:center">
 
   <div class="loginForm">
@@ -12,13 +11,12 @@
       <input [(ngModel)]="login.email" type=email id="login_email_id" placeholder="email"><br>
       <input [(ngModel)]="login.password" type=password id="login_password" placeholder="password"><br>
 
-      <button id="LOGIN" (click)="loginUser()">login</button>
 
-    </div>
-      <div class="forgotpassword">
-      <!-- <a routerLink="/forgotpassword">Registration</a> -->
-     <a href="{% url 'forgotpassword' %}">Forgot Password?</a>
+    <button id="button" (click)="loginUser()">Login</button><br><br><br><br><br>
+    <a routerLink = "/register">SignUp</a><br><br>
+    <a routerLink = "/forgotpassword">Forgot password</a>
+
+    <router-outlet></router-outlet>
     </div>
   </div>
 </div>
-
