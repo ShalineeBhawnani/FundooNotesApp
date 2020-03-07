@@ -5,10 +5,11 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
+import { MyNavComponent } from './my-nav/my-nav.component';
 
 const routes: Route[] = [
   {path:'', redirectTo: '/login', pathMatch:'full'},
-  {path:'login', component: LoginComponent},
+  {path:'login', component: LoginComponent },
   {path:'register', component:RegisterComponent},
   {path:'forgotpassword', component:ForgotpasswordComponent},
   {
@@ -16,6 +17,7 @@ const routes: Route[] = [
     component: ResetpasswordComponent,
   },
 
+  { path:'nav',component:MyNavComponent},
 
 ];
 

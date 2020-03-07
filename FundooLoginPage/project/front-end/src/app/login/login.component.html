@@ -1,13 +1,14 @@
-
 <div style = "text-align:center">
-
+  <mat-toolbar color="accent">
+    <span>FundooApp</span>
+    <span class="demo-toolbar"></span>
+  </mat-toolbar>
   <div class="loginForm">
     <h1 class="header">
       Login Here
     </h1>
     <div class="fields">
-
-      <input [(ngModel)]="login.username" type=text id="login_name" placeholder="username"><br>
+      <input [(ngModel)]="login.username" type=text id="login_name" placeholder="username" /><br>
       <input [(ngModel)]="login.email" type=email id="login_email_id" placeholder="email"><br>
       <input [(ngModel)]="login.password" type=password id="login_password" placeholder="password"><br>
 
@@ -16,7 +17,36 @@
     <a routerLink = "/register">SignUp</a><br><br>
     <a routerLink = "/forgotpassword">Forgot password</a>
 
+
     <router-outlet></router-outlet>
     </div>
+
   </div>
 </div>
+<!--
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title>Login</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form class="example-form">
+      <table class="example-full-width" cellspacing="0">
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width">
+            <input matInput placeholder="Username" [(ngModel)]="username" name="username" required>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+        <td><mat-form-field class="example-full-width">
+          <input matInput placeholder="Password" [(ngModel)]="password"type="password" name="password" required>
+        </mat-form-field></td>
+      </tr></table>
+    </form>
+    <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button (click)="loginUser()" color="primary">Login</button>
+  </mat-card-actions>
+</mat-card> -->

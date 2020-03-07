@@ -14,8 +14,9 @@ import { ResetpasswordComponent } from './resetpassword/resetpassword.component'
 import { AppRoutingModule } from './/app-routing.module';
 import { MyNavComponent } from './my-nav/my-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule } from '@angular/material';
+import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
 import { MyDashboardComponent } from './my-dashboard/my-dashboard.component';
+import { MyTableComponent } from './my-table/my-table.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { MyDashboardComponent } from './my-dashboard/my-dashboard.component';
     ResetpasswordComponent,
     MyNavComponent,
     MyDashboardComponent,
+    MyTableComponent,
   ],
 
   imports: [
@@ -47,7 +49,10 @@ import { MyDashboardComponent } from './my-dashboard/my-dashboard.component';
     MatListModule,
     MatGridListModule,
     MatCardModule,
-    MatMenuModule
+    MatMenuModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
 
 
