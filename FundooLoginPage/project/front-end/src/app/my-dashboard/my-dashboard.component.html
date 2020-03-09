@@ -1,5 +1,14 @@
 <div class="grid-container">
-  <h1 class="mat-h1">Dashboard</h1>
+  <!-- <h1 class="mat-h1">Fundoo NoteAPP</h1> -->
+   <div fxHide.lt-sm="true" fxLayoutAlign="start center" fxLayout="row" class="search-toolbar-div">
+    <div fxHide.lt-sm="true" class="search-div" fxLayoutAlign="center center">
+      <mat-form-field class="search-bar" appearance="fill legacy">
+        <span matPrefix><button mat-icon-button><mat-icon >search</mat-icon></button></span>
+        <input matInput type="search" placeholder="Search" (keyup)="searchBox($event)" style="margin-top: 7px;"/>
+      </mat-form-field>
+    </div>
+  </div>
+
   <mat-grid-list cols="2" rowHeight="350px">
     <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">
       <mat-card class="dashboard-card">

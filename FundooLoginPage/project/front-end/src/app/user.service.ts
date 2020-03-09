@@ -15,13 +15,17 @@ export class UserService {
 
   }
 
-  registerUser(userData): Observable<any>
+  register(userData): Observable<any>
   {
     return this.http.post('http://127.0.0.1:8000/registration/',userData,{
       responseType: 'text',
     });
 
   }
+
+//   register(user: User) {
+//     return this.http.post(`${config.apiUrl}/users/register`, user);
+// }
 
   forgotuser(userData): Observable<any>
   {

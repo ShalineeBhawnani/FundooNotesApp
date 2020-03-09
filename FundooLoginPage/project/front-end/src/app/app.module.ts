@@ -1,11 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {FormsModule} from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { UserService } from './user.service';
+import { AlertService } from './alert.service';
+import { AuthGuard } from './auth.guard';
 import { RegisterComponent } from './register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppMaterialModule } from './app-material/app-material.module';
@@ -17,6 +18,10 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
 import { MyDashboardComponent } from './my-dashboard/my-dashboard.component';
 import { MyTableComponent } from './my-table/my-table.component';
+import { AlertComponent } from './alert/alert.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProfileComponent } from './profile/profile.component';
+
 
 @NgModule({
   declarations: [
@@ -28,16 +33,18 @@ import { MyTableComponent } from './my-table/my-table.component';
     MyNavComponent,
     MyDashboardComponent,
     MyTableComponent,
+    AlertComponent,
+    ProfileComponent,
+
   ],
 
   imports: [
-
+    ReactiveFormsModule,
     BrowserModule,
     AppMaterialModule,
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-    FormsModule,
     RouterModule,
     BrowserAnimationsModule,
     AppRoutingModule,
@@ -52,11 +59,13 @@ import { MyTableComponent } from './my-table/my-table.component';
     MatMenuModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    FormsModule,
+    ReactiveFormsModule,
+
   ],
 
 
-  providers: [UserService],
+  providers: [UserService,AuthGuard,AlertService],
   bootstrap: [AppComponent]
 })
 

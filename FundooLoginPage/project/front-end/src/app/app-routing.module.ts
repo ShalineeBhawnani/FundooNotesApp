@@ -7,6 +7,7 @@ import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.compone
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
 import { MyNavComponent } from './my-nav/my-nav.component';
 
+
 const routes: Route[] = [
   {path:'', redirectTo: '/login', pathMatch:'full'},
   {path:'login', component: LoginComponent },
@@ -17,7 +18,10 @@ const routes: Route[] = [
     component: ResetpasswordComponent,
   },
 
-  { path:'nav',component:MyNavComponent},
+  { path:'nav',
+  component:MyNavComponent,
+  // canActivate: [AuthGuard]
+},
 
 ];
 

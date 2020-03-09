@@ -93,7 +93,8 @@ class Login(GenericAPIView):
         username = data.get('username')
         password = data.get('password')
         email = data.get('email')
-        user = authenticate(username=username, password=password)
+        print(email)
+        user = authenticate( password=password, email=email)
         print(user)
         qs = User.objects.filter(
             Q(username__exact=username) or
@@ -142,6 +143,7 @@ class Registrations(GenericAPIView):
         password = data.get('password')
         password2 = data.get('password2')
         if password != password2:
+            print("password matched")
             return Response("passwords are not matching")
         qs_name = User.objects.filter(
             Q(username__iexact=username)
