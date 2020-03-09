@@ -100,46 +100,7 @@ class LabelDetails(generics.ListAPIView):
         return queryset
         
 
-# @method_decorator(login_required, name='dispatch')
-# class CreateNote(generics.GenericAPIView):
-#     serializer_class = NoteSerializer
-#     #serializer_class = Userserializer
-    
-#     def post(self, request, *args, **kwargs):
-#         user_id=request.user
-#         print(user_id)
-#         # user_id=request.user.id
-#         # print(user_id)
-#         collab = request.data.get('collaborators')
-#         print(collab)
-#         collab_list = []
-#         for email in collab:
-#             self.request.POST._mutable = True
-#             print("got email")
-#             user = User.objects.get(email=request.user.email)
-#             print(user)
-#             collab_list.append(user.id)
-#             print(collab_list.append(user.id))
-#         request.data['collaborators'] = collab_list
-#         note_serializer = NoteSerializer(data=request.data)
-#         if note_serializer.is_valid():
-#             note_serializer.save()
-#             return Response({"data": "data created successfully"}, 
-#                             status=status.HTTP_201_CREATED)
-#         else:
-#             error_details = []
-#             for key in note_serializer.errors.keys():
-#                 error_details.append({"field": key, "message": note_serializer.errors[key][0]})
 
-#             data = {
-#                     "Error": {
-#                         "status": 400,
-#                         "message": "Your submitted data was not valid - please correct the below errors",
-#                         "error_details": error_details
-#                         }
-#                     }
-
-#             return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
 @method_decorator(login_required, name='dispatch')
 class CreateNote(generics.GenericAPIView):

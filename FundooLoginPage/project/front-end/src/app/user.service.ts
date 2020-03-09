@@ -7,7 +7,7 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  loginUser(userData): Observable<any>
+  login(userData): Observable<any>
   {
     return this.http.post('http://127.0.0.1:8000/login/',userData,{
       responseType: 'text',

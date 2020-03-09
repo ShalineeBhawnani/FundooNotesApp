@@ -6,7 +6,7 @@ import { first } from 'rxjs/operators';
 import { AlertService } from '../alert.service';
 import { UserService } from '../user.service';
 
-@Component({templateUrl: 'register.component.html'})
+@Component({templateUrl: 'register.component.html',styleUrls:['./register.component.css']})
 export class RegisterComponent implements OnInit {
     registerForm: FormGroup;
     loading = false;
@@ -44,8 +44,8 @@ export class RegisterComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    this.alertService.success('Registration successful', true);
-                    this.router.navigate(['/login']);
+                    this.alertService.success('Registration Successful Please verify through your email', true);
+                    // this.router.navigate(['/login']);
                 },
                 error => {
                     this.alertService.error(error);

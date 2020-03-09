@@ -21,6 +21,10 @@ import { MyTableComponent } from './my-table/my-table.component';
 import { AlertComponent } from './alert/alert.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './profile/profile.component';
+import { AuthenticationService } from './authentication.service'
+/* Angular Flex Layout */
+import { FlexLayoutModule } from "@angular/flex-layout";
+
 
 
 @NgModule({
@@ -61,11 +65,12 @@ import { ProfileComponent } from './profile/profile.component';
     MatPaginatorModule,
     FormsModule,
     ReactiveFormsModule,
+    FlexLayoutModule,
 
   ],
 
 
-  providers: [UserService,AuthGuard,AlertService],
+  providers: [UserService,AuthGuard,AlertService,AuthenticationService],
   bootstrap: [AppComponent]
 })
 
