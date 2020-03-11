@@ -50,23 +50,29 @@ from django.contrib.auth.models import User, auth
 from django.contrib.auth import authenticate, get_user_model
 User = get_user_model()
 #from project.snippets.models import Registration
+             
+# @method_decorator(login_required, name='dispatch')
 class CreateLabel(generics.GenericAPIView):
-   
+    
     serializer_class = LabelSerializer
     queryset= Label.objects.all()
 
     def get(self, request, *args, **kwargs):
+        print("get request")
         try:
 
             user_id = request.user
+            print(user_id)
             label = self.queryset.filter(user_id=user_id)
             return Response(label.values(), status=status.HTTP_200_OK)
         except Exception:
             return Response(Exception, status=status.HTTP_403_FORBIDDEN)
   
     def post(self,request,id=None):
+        print("post request")
        
         user_id=request.user
+        print(user_id)
         label = self.queryset.filter(user_id=user_id)
         user_data = LabelSerializer(data=request.data)
         if user_data.is_valid():

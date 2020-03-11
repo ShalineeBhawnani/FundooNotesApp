@@ -7,7 +7,8 @@ import { AuthenticationService } from '../authentication.service';
 
 import { AlertService } from '../alert.service';
 // import { UserService } from '../user.service';
-@Component({templateUrl: 'login.component.html',styleUrls:['./login.component.css']})
+@Component({templateUrl: 'login.component.html',
+            styleUrls:['./login.component.css']})
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
     loading = false;

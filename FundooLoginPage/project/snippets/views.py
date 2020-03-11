@@ -96,7 +96,7 @@ class Login(GenericAPIView):
         print(email)
         password = data.get('password')
         print(password)
-        user = authenticate(username=username,password=password)
+        user = authenticate(username=username,password=password,email=email)
         print(user)
         qs = User.objects.filter(
             Q(username__exact=username) or
@@ -121,6 +121,7 @@ class Login(GenericAPIView):
                 rdb.get(user.username)
                 print(rdb.get(user.username))
                 return Response({'details': 'user succesfully loggedin,thakyou',"token":token})
+                # return Response({ token })
             return Response("incorrect password")
         return Response("user name alredy used")
 
@@ -172,7 +173,8 @@ class Registrations(GenericAPIView):
             print('return from tokens.py:', token)
             rdb.set(user.username, token)
             # cache.set(username, token)
-            print("stroged token in cache:  ",cache.get(username))
+            rdb.get(user.username)
+            # print("stroged token in cache:  ",cache.get(username))
             url = str(token)
             print('url is ',  url)
             surl = get_surl(url)
@@ -191,7 +193,7 @@ class Registrations(GenericAPIView):
             email = EmailMessage(mail_subject, message, to=[email])
             email.send()
             print('confirmation mail sent')
-            return Response({"details": "please verify through your email"})
+            return Response({"details": "please verify through your email","token ":username})
 
 class ForgotPassword(GenericAPIView):
  

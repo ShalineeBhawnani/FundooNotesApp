@@ -7,6 +7,8 @@ import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.compone
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
 import { MyNavComponent } from './my-nav/my-nav.component';
 import { AuthGuard } from './auth.guard'
+import { LabelComponent } from './label/label.component';
+import { NoteComponent } from './note/note.component';
 
 
 const routes: Route[] = [
@@ -23,7 +25,26 @@ const routes: Route[] = [
     component:MyNavComponent,
     canActivate: [AuthGuard]
 },
-
+  {
+    path:'label',
+    component: LabelComponent
+  },
+  {
+    path:'note',
+    component: NoteComponent
+  },
+  {
+    path:'reminder',
+    component: NoteComponent
+  },
+  {
+    path:'archive',
+    component: NoteComponent
+  },
+  {
+    path:'bin',
+    component: NoteComponent
+  },
 ];
 
 @NgModule({

@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule ,HTTP_INTERCEPTORS} from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { UserService } from './user.service';
@@ -24,6 +24,12 @@ import { ProfileComponent } from './profile/profile.component';
 import { AuthenticationService } from './authentication.service'
 /* Angular Flex Layout */
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { NoteComponent } from './note/note.component';
+import { LabelComponent } from './label/label.component';
+import { ReminderComponent } from './reminder/reminder.component';
+import { ArchiveComponent } from './archive/archive.component';
+import { BinComponent } from './bin/bin.component';
+// import { JwtInterceptor } from './jwt.interceptor';
 
 
 
@@ -39,6 +45,13 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     MyTableComponent,
     AlertComponent,
     ProfileComponent,
+    NoteComponent,
+    LabelComponent,
+    ReminderComponent,
+    ArchiveComponent,
+    BinComponent,
+    // JwtInterceptor,
+
 
   ],
 
@@ -70,7 +83,10 @@ import { FlexLayoutModule } from "@angular/flex-layout";
   ],
 
 
-  providers: [UserService,AuthGuard,AlertService,AuthenticationService],
+  providers: [
+    // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    UserService,AuthGuard,AlertService,AuthenticationService,
+    ],
   bootstrap: [AppComponent]
 })
 

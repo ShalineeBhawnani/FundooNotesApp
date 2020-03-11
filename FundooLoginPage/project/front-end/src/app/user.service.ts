@@ -43,8 +43,22 @@ export class UserService {
     });
 
   }
+  note(userData):Observable<any>
+  {
+    return this.http.post('http://127.0.0.1:8000/note/',userData,{
+      responseType: 'text',
 
+    });
 
+  }
 
+  label(userData):Observable<any>
+  {
+    return this.http.post('http://127.0.0.1:8000/label/',userData,{
+      responseType: 'text',
+
+    });
+
+}
 }
 
