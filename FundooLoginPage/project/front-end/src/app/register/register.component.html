@@ -8,7 +8,7 @@
         <mat-card-content>
 
            <mat-form-field class="example-full-width">
-            <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" matInput placeholder="FullName"/>
+            <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" matInput placeholder="Full Name"/>
             <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
                 <div *ngIf="f.name.errors.required">Name is required</div>
             </div>

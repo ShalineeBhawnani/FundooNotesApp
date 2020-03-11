@@ -105,7 +105,7 @@ class LabelDetails(generics.ListAPIView):
 @method_decorator(login_required, name='dispatch')
 class CreateNote(generics.GenericAPIView):
     serializer_class = NoteSerializer
-    queryset= Label.objects.all()
+    queryset= Note.objects.all()
     def post(self,request):
         note_serializer = NoteSerializer(data=request.data)
         if note_serializer.is_valid():

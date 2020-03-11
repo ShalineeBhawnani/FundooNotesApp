@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
-
 import { AlertService } from '../alert.service';
 import { UserService } from '../user.service';
 
-@Component({templateUrl: 'register.component.html',styleUrls:['./register.component.css']})
+@Component({templateUrl: 'register.component.html',
+          styleUrls:['./register.component.css']})
 export class RegisterComponent implements OnInit {
     registerForm: FormGroup;
     loading = false;
@@ -45,7 +45,7 @@ export class RegisterComponent implements OnInit {
             .subscribe(
                 data => {
                     this.alertService.success('Registration Successful Please verify through your email', true);
-                    // this.router.navigate(['/login']);
+                    this.router.navigate(['/login']);
                 },
                 error => {
                     this.alertService.error(error);

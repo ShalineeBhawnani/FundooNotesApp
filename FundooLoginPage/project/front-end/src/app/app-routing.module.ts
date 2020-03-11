@@ -6,11 +6,12 @@ import { RegisterComponent } from './register/register.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
 import { MyNavComponent } from './my-nav/my-nav.component';
+import { AuthGuard } from './auth.guard'
 
 
 const routes: Route[] = [
   {path:'', redirectTo: '/login', pathMatch:'full'},
-  {path:'login', component: LoginComponent },
+  {path:'login', component: LoginComponent},
   {path:'register', component:RegisterComponent},
   {path:'forgotpassword', component:ForgotpasswordComponent},
   {
@@ -19,8 +20,8 @@ const routes: Route[] = [
   },
 
   { path:'nav',
-  component:MyNavComponent,
-  // canActivate: [AuthGuard]
+    component:MyNavComponent,
+    canActivate: [AuthGuard]
 },
 
 ];

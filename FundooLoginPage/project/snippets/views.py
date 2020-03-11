@@ -91,10 +91,12 @@ class Login(GenericAPIView):
             #return Response({'details': 'user is already authenticated'})
         data = request.data
         username = data.get('username')
-        password = data.get('password')
+        print(username)
         email = data.get('email')
         print(email)
-        user = authenticate( password=password, email=email)
+        password = data.get('password')
+        print(password)
+        user = authenticate(username=username,password=password)
         print(user)
         qs = User.objects.filter(
             Q(username__exact=username) or
@@ -118,7 +120,7 @@ class Login(GenericAPIView):
                 print(rdb)
                 rdb.get(user.username)
                 print(rdb.get(user.username))
-                return Response({'details': 'user succesfully loggedin,thakyou'})
+                return Response({'details': 'user succesfully loggedin,thakyou',"token":token})
             return Response("incorrect password")
         return Response("user name alredy used")
 
@@ -143,7 +145,7 @@ class Registrations(GenericAPIView):
         password = data.get('password')
         password2 = data.get('password2')
         if password != password2:
-            print("password matched")
+            print("password not matched")
             return Response("passwords are not matching")
         qs_name = User.objects.filter(
             Q(username__iexact=username)
@@ -157,16 +159,19 @@ class Registrations(GenericAPIView):
             return Response("already user id present with this  email")
         else:
             user = User.objects.create(username=username, email=email)
+            print(user)
             user.set_password(password)
             user.is_active = False
             user.save()
+            print("user saved")
             current_site = get_current_site(request)
             domain = current_site.domain 
             print(current_site)
             print('domain:', domain)                
             token = token_activation(username, password)
             print('return from tokens.py:', token)
-            cache.set(username, token)
+            rdb.set(user.username, token)
+            # cache.set(username, token)
             print("stroged token in cache:  ",cache.get(username))
             url = str(token)
             print('url is ',  url)
