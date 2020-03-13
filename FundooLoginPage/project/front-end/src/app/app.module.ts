@@ -29,7 +29,7 @@ import { LabelComponent } from './label/label.component';
 import { ReminderComponent } from './reminder/reminder.component';
 import { ArchiveComponent } from './archive/archive.component';
 import { BinComponent } from './bin/bin.component';
-// import { JwtInterceptor } from './jwt.interceptor';
+// import { TokenInterceptorService } from './token-interceptor.service';
 
 
 
@@ -50,7 +50,7 @@ import { BinComponent } from './bin/bin.component';
     ReminderComponent,
     ArchiveComponent,
     BinComponent,
-    // JwtInterceptor,
+    // TokenInterceptorService,
 
 
   ],
@@ -84,7 +84,7 @@ import { BinComponent } from './bin/bin.component';
 
 
   providers: [
-    // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    // { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true },
     UserService,AuthGuard,AlertService,AuthenticationService,
     ],
   bootstrap: [AppComponent]

@@ -8,7 +8,7 @@ class LabelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Label
         fields = ['label']
-        #read_only_fields = ['user']
+        # fields = '__all__'
 class CollaboratorSerializer(serializers.ModelSerializer):
     class Meta:
         model = User

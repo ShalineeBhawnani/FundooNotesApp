@@ -120,7 +120,7 @@ class Login(GenericAPIView):
                 print(rdb)
                 rdb.get(user.username)
                 print(rdb.get(user.username))
-                return Response({'details': 'user succesfully loggedin,thakyou',"token":token})
+                return Response({'details': 'user succesfully loggedin,thakyou','token':token})
                 # return Response({ token })
             return Response("incorrect password")
         return Response("user name alredy used")

@@ -27,11 +27,13 @@ const routes: Route[] = [
 },
   {
     path:'label',
-    component: LabelComponent
+    component: LabelComponent,
+    canActivate: [AuthGuard]
   },
   {
     path:'note',
     component: NoteComponent
+
   },
   {
     path:'reminder',

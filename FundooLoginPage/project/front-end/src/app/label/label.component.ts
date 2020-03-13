@@ -5,6 +5,8 @@ import { first } from 'rxjs/operators';
 import { AlertService } from '../alert.service';
 import { UserService } from '../user.service';
 import { AuthenticationService } from '../authentication.service';
+import { HttpClient, HttpResponse ,HttpHeaders} from '@angular/common/http';
+
 
 @Component({
   // selector: 'app-label',
@@ -17,7 +19,8 @@ export class LabelComponent implements OnInit {
    registerForm: FormGroup;
    loading = false;
    submitted = false;
-   user_id = localStorage.getItem('currentUser');
+  //  user_id = localStorage.getItem('token');
+
 
     constructor(
         private formBuilder: FormBuilder,
@@ -25,8 +28,8 @@ export class LabelComponent implements OnInit {
         private userService: UserService,
         private alertService: AlertService) { }
 
-
     ngOnInit() {
+
         this.registerForm = this.formBuilder.group({
 
             label: ['', Validators.required],
@@ -39,15 +42,22 @@ export class LabelComponent implements OnInit {
 
     onSubmit() {
         this.submitted = true;
+        // let user_id=JSON.parse(localStorage.getItem('user'));
 
         // stop here if form is invalid
         if (this.registerForm.invalid) {
             return;
         }
         let labelData = {
-          user_id : this.user_id,
+
+          // user : this.user_id,
+
+
           label: this.registerForm.value
+
         }
+
+          console.log("user details:",labelData)
           console.log("req body: ", this.registerForm.value);
 
         this.loading = true;

@@ -1,4 +1,6 @@
-<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+<!-- <html> -->
+  <body>
+  <div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
     <mat-card class="box">
       <mat-card-header>
       <mat-card-title>Log in</mat-card-title>
@@ -32,8 +34,8 @@
      <div>
       <button [disabled]="loading" button mat-stroked-button color="accent" class="btn-block"  class="btn btn-primary">Log in</button>
 
-      <a [routerLink]="['/register']" class="btn btn-link" style="float: right;">Register</a>
-      <a routerLink = "/forgotpassword" style="float: right; margin-right : 25px;">Forgot password</a>
+      <a [routerLink]="['/register']" class="btn btn-link" style="float: right;">Sign up</a>
+     <a routerLink = "/forgotpassword" style="float: right; margin-right : 25px;">Forgot password</a>
      </div>
     </form>
 
@@ -43,3 +45,5 @@
   </mat-card>
 </div>
 
+</body>
+<!-- </html> -->

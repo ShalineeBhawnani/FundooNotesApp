@@ -44,23 +44,30 @@ logger.setLevel(logging.DEBUG)
 from rest_framework.decorators import api_view
 from utils import smd_response,Smd_Response
 from .service.note import NoteService,label_update_in_redis,update_redis
-import pickle
+# import pickle
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User, auth
 from django.contrib.auth import authenticate, get_user_model
 User = get_user_model()
+import jwt
+from project.settings import SECRET_KEY
+
 #from project.snippets.models import Registration
              
 # @method_decorator(login_required, name='dispatch')
+# @login_required(login_url='/login/')
 class CreateLabel(generics.GenericAPIView):
     
     serializer_class = LabelSerializer
     queryset= Label.objects.all()
+    # print(queryset)
 
     def get(self, request, *args, **kwargs):
         print("get request")
         try:
-
+            # data = request.data
+            # username = data.get('username')
+            # print(username)
             user_id = request.user
             print(user_id)
             label = self.queryset.filter(user_id=user_id)
@@ -69,20 +76,29 @@ class CreateLabel(generics.GenericAPIView):
             return Response(Exception, status=status.HTTP_403_FORBIDDEN)
   
     def post(self,request,id=None):
+        # pdb.set_trace()
         print("post request")
-       
-        user_id=request.user
-        print(user_id)
-        label = self.queryset.filter(user_id=user_id)
-        user_data = LabelSerializer(data=request.data)
-        if user_data.is_valid():
-            user_data.save(user_id=user_id.id)
+        # user_id=request.user
+        # print(user_id)
+        # label = self.queryset.filter(user_id=user_id)
+        serializer = LabelSerializer(data=request.data['label']) #TODO Token Auth decorator
+        if serializer.is_valid():
+            token = request.headers.get('Token')
+            print(token)
+            mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+            print(mytoken)
+            user_id=mytoken.get('username')
+            print(user_id)
+            user=User.objects.get(username=user_id)
+            print(user)
+            serializer.save(user_id=user.id)
+            print("saved") # TODO Name/id from token
             return Response({"data": "data created successfully"}, 
                             status=status.HTTP_201_CREATED)
         else:
             error_details = []
-            for key in user_data.errors.keys():
-                error_details.append({"field": key, "message": user_data.errors[key][0]})
+            for key in serializer.errors.keys():
+                error_details.append({"field": key, "message": serializer.errors[key][0]})
 
             data = {
                     "Error": {

@@ -61,7 +61,7 @@ MIDDLEWARE = [
 ]
 CORS_ORIGIN_ALLOW_ALL = True 
 CORS_ORIGIN_WHITELIST = [
-   "http://localhost:4200",
+   "http://127.0.0.1:4200",
  ]
 CORS_ALLOW_HEADERS = (
     'accept',
@@ -79,7 +79,9 @@ CORS_ALLOW_HEADERS = (
     'XSRF-TOKEN',
     'csrfmiddlewaretoken',
     'csrftoken',
-    'X-CSRF'
+    'X-CSRF',
+    'headers',
+    'token',
 )
 
 ROOT_URLCONF = 'project.urls'

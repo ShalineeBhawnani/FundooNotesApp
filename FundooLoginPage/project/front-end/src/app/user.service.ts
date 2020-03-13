@@ -1,9 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient,HttpHeaders } from '@angular/common/http';
+import { HttpClient,HttpResponse,HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+
+
 
 @Injectable()
 export class UserService {
+
+  baseurl = "http://127.0.0.1:8000";
+  // httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
+
 
   constructor(private http: HttpClient) { }
 
@@ -53,12 +59,24 @@ export class UserService {
   }
 
   label(userData):Observable<any>
-  {
-    return this.http.post('http://127.0.0.1:8000/label/',userData,{
-      responseType: 'text',
+{
 
-    });
+      console.log(localStorage.getItem('token'))
+      return this.http.post('http://127.0.0.1:8000/label/', userData, { headers: {
+        'token': localStorage.getItem('token')
+      } });
+    }
 
-}
-}
 
+  //   return this.http.post('http://127.0.0.1:8000/label/',userData,{ headers: httpOptions }
+  //    );
+  // }
+
+//   label(userData): Observable<any> {
+//     const body = {label: userData.label };
+//     return this.http.post(this.baseurl + '/label/', body,
+//     {headers: this.httpOptions};
+//   }
+
+// }
+  }
