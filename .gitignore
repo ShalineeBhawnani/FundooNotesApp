@@ -1,4 +1,6 @@
 .env
+.vscode
+.vs
 /e[nv]
 .bashrc
 /s[ecrets]
