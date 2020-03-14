@@ -6,15 +6,16 @@
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="!(isHandset$ | async)">
-    <mat-toolbar color="primary">Menu</mat-toolbar>
-    <mat-nav-list>
+    <mat-toolbar color="primary"><mat-icon>menu</mat-icon></mat-toolbar>
+    <!-- <button mat-icon-button (click)="sidenav.togle()"><mat-icon>menu</mat-icon></button> -->
+      <mat-nav-list>
       <a mat-list-item routerLink = "/note">Notes</a>
       <a mat-list-item routerLink = "/reminder">Reminders</a>
       <a mat-list-item routerLink = "/label">Labels</a>
       <a mat-list-item routerLink = "/archive">Archive</a>
       <a mat-list-item routerLink = "/bin">Bin</a>
+      </mat-nav-list>
 
-    </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
@@ -29,7 +30,7 @@
       <span></span>
     </mat-toolbar>
     <app-my-dashboard></app-my-dashboard>
-    <app-my-table></app-my-table>
-
+    <!-- <app-my-table></app-my-table> -->
+    <!-- Add Content Here -->
   </mat-sidenav-content>
 </mat-sidenav-container>

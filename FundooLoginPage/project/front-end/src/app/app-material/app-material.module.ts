@@ -12,6 +12,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -28,7 +29,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
         MatSidenavModule,
         MatToolbarModule,
         FlexLayoutModule,
-        MatFormFieldModule
+        MatFormFieldModule,
+        MatCheckboxModule,
+        
     ],
     exports: [
         MatIconModule,
@@ -42,7 +45,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
         MatSidenavModule,
         MatToolbarModule,
         FlexLayoutModule,
-        MatFormFieldModule
+        MatFormFieldModule,
+        MatCheckboxModule,
+
+
+
     ],
     declarations: []
 })

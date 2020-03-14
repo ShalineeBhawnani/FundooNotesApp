@@ -121,9 +121,6 @@ class LabelDetails(generics.ListAPIView):
         queryset= Label.objects.filter(user_id=user)
         return queryset
         
-
-
-
 @method_decorator(login_required, name='dispatch')
 class CreateNote(generics.GenericAPIView):
     serializer_class = NoteSerializer
@@ -168,8 +165,6 @@ class NoteUpdate(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly,)
 
-
-   
 @method_decorator(login_required, name='dispatch')    
 class ArchivedNotes(generics.GenericAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,

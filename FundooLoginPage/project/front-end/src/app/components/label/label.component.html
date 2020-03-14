@@ -1,0 +1,19 @@
+
+<h1 mat-dialog-title>Edit Labels</h1>
+<div mat-dialog-content fxLayout="row">
+  <button mat-icon-button (click)="label.setValue('')">
+    <mat-icon>clear</mat-icon>
+  </button>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <!-- <mat-card-content> -->
+          <mat-form-field class="example-full-width">
+          <input type="text" formControlName="label" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.label.errors }" matInput placeholder="Create new Label"/>
+        </mat-form-field>
+      <!-- </mat-card-content> -->
+      <div>
+        <button mat-icon-button (click)="onSubmit()">Done</button>
+      </div>
+
+    </form>
+    <mat-icon>done</mat-icon>
+</div>

@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserService } from '../user.service';
+import { UserService } from '../../services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
-import { AuthenticationService } from '../authentication.service';
+import { AuthenticationService } from '../../services/authentication.service';
 
-import { AlertService } from '../alert.service';
-
+import { AlertService } from '../../services/alert.service';
 @Component({
   selector: 'app-forgotpassword',
   templateUrl: './forgotpassword.component.html',

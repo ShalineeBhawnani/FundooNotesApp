@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
-import { AlertService } from '../alert.service';
-import { UserService } from '../user.service';
-import { AuthenticationService } from '../authentication.service';
+import { AlertService } from '../../services/alert.service';
+import { UserService } from '../../services/user.service';
+import { AuthenticationService } from '../../services/authentication.service';
 import { HttpClient, HttpResponse ,HttpHeaders} from '@angular/common/http';
 
 
@@ -32,7 +32,7 @@ export class LabelComponent implements OnInit {
 
         this.registerForm = this.formBuilder.group({
 
-            label: ['', Validators.required],
+            label: [''],
 
         });
     }

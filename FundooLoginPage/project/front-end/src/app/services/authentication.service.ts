@@ -46,14 +46,10 @@ export class AuthenticationService {
             }));
     }
 
-
-
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('token');
     }
-
-
 
     forgotuser(email:string) {
       return this.http.post<any>(`http://127.0.0.1:8000/forgotpassword/`, {email: email})
