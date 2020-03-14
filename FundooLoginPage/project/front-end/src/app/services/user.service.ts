@@ -2,20 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient,HttpResponse,HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+import { environment } from '../../environments/environment';
+
 
 
 @Injectable()
 export class UserService {
 
-  baseurl = "http://127.0.0.1:8000";
-  // httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
-
-
+  baseUrl = environment.baseUrl;
   constructor(private http: HttpClient) { }
 
   login(userData): Observable<any>
   {
-    return this.http.post('http://127.0.0.1:8000/login/',userData,{
+    return this.http.post(this.baseUrl+'/login/',userData,{
       responseType: 'text',
     });
 
@@ -23,19 +22,15 @@ export class UserService {
 
   register(userData): Observable<any>
   {
-    return this.http.post('http://127.0.0.1:8000/registration/',userData,{
+    return this.http.post(this.baseUrl+'/registration/',userData,{
       responseType: 'text',
     });
 
   }
 
-//   register(user: User) {
-//     return this.http.post(`${config.apiUrl}/users/register`, user);
-// }
-
   forgotuser(userData): Observable<any>
   {
-    return this.http.post('http://127.0.0.1:8000/forgotpassword/',userData,{
+    return this.http.post(this.baseUrl+'/forgotpassword/',userData,{
       responseType: 'text',
     });
 
@@ -44,14 +39,14 @@ export class UserService {
   resetuser(userData,username): Observable<any>
 
   {
-    return this.http.post('http://127.0.0.1:8000/resetpassword/'+username,userData,{
+    return this.http.post(this.baseUrl+'/resetpassword/'+username,userData,{
       responseType: 'text',
     });
 
   }
   note(userData):Observable<any>
   {
-    return this.http.post('http://127.0.0.1:8000/note/',userData,{
+    return this.http.post(this.baseUrl+'/note/',userData,{
       responseType: 'text',
 
     });
@@ -62,21 +57,8 @@ export class UserService {
 {
 
       console.log(localStorage.getItem('token'))
-      return this.http.post('http://127.0.0.1:8000/label/', userData, { headers: {
+      return this.http.post(this.baseUrl+'/label/', userData, { headers: {
         'token': localStorage.getItem('token')
       } });
     }
-
-
-  //   return this.http.post('http://127.0.0.1:8000/label/',userData,{ headers: httpOptions }
-  //    );
-  // }
-
-//   label(userData): Observable<any> {
-//     const body = {label: userData.label };
-//     return this.http.post(this.baseurl + '/label/', body,
-//     {headers: this.httpOptions};
-//   }
-
-// }
   }

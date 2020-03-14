@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpRequest, HttpParams } from '@angular/common/http';
-
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class AuthenticationService {
+
+
+
    // http options used for making API calls
   private httpOptions: any;
 
@@ -19,7 +22,7 @@ export class AuthenticationService {
 
    // error messages received from the login attempt
   public errors: any = [];
-
+  baseUrl = environment.baseUrl;
   constructor(private http: HttpClient) {
     this.httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -28,7 +31,7 @@ export class AuthenticationService {
 
     login(username: string, password: string, email:string) {
         console.log("user")
-        return this.http.post<any>(`http://127.0.0.1:8000/login/`, { username: username, password: password,email: email})
+        return this.http.post<any>(this.baseUrl+'/login/', { username: username, password: password,email: email})
             .pipe(map(user => {
               console.log("user token check",user)
                 // login successful if there's a jwt token in the response
@@ -52,7 +55,7 @@ export class AuthenticationService {
     }
 
     forgotuser(email:string) {
-      return this.http.post<any>(`http://127.0.0.1:8000/forgotpassword/`, {email: email})
+      return this.http.post<any>(this.baseUrl+'/forgotpassword/', {email: email})
           .pipe(map(user => {
               // login successful if there's a jwt token in the response
               if (user && user.token) {
