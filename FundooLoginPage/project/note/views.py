@@ -81,12 +81,17 @@ class CreateLabel(generics.GenericAPIView):
         # user_id=request.user
         # print(user_id)
         # label = self.queryset.filter(user_id=user_id)
-        serializer = LabelSerializer(data=request.data['label']) #TODO Token Auth decorator
+        print(request.data)
+        
+        serializer = LabelSerializer(data=request.data['label'])
+        print(serializer) #TODO Token Auth decorator
         if serializer.is_valid():
             token = request.headers.get('Token')
             print(token)
             mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+            print(SECRET_KEY)
             print(mytoken)
+            print(str(mytoken))
             user_id=mytoken.get('username')
             print(user_id)
             user=User.objects.get(username=user_id)
@@ -121,14 +126,28 @@ class LabelDetails(generics.ListAPIView):
         queryset= Label.objects.filter(user_id=user)
         return queryset
         
-@method_decorator(login_required, name='dispatch')
+# @method_decorator(login_required, name='dispatch')
 class CreateNote(generics.GenericAPIView):
     serializer_class = NoteSerializer
     queryset= Note.objects.all()
     def post(self,request):
+        data=request.data
+        print(data)
         note_serializer = NoteSerializer(data=request.data)
+        print(note_serializer.is_valid())
         if note_serializer.is_valid():
-            note_serializer.save(user_id=request.user.id)
+            print("valid")
+            token = request.headers.get('Token')
+            print(token)
+            mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+            print(mytoken)
+            user_id=mytoken.get('username')
+            print(user_id)
+            user=User.objects.get(username=user_id)
+            print(user)
+            print("valid")
+            note_serializer.save(user_id=user.id)
+            print("saved")
             return Response({"data": "data created successfully"}, 
                             status=status.HTTP_201_CREATED)
         else:

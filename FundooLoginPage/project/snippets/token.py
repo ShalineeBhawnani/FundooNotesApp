@@ -29,15 +29,15 @@ def token_validation(username, password):
     token = tokson.json()['access']
     return token
 
-def decode(token):
-        """
-        Decode a JWT that was issued by us.
+# def decode(token):
+#         """
+#         Decode a JWT that was issued by us.
 
-        Throws an InvalidTokenError on decoding failure or token expiration.
-        """
-        print(jwt.decode(token, SECRET_KEY, algorithms=['HS256']))
+#         Throws an InvalidTokenError on decoding failure or token expiration.
+#         """
+#         print(jwt.decode(token, SECRET_KEY, algorithms=['HS256']))
     
-decode('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFudSIsInBhc3N3b3JkIjoiMTIzIiwiZXhwIjoxNTg0MjU2MjQ0fQ.WVnwqIaHKFIAH7naxZqYEPUF_g1iAIunYZdTH3sUz-4')
+# decode('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFudSIsInBhc3N3b3JkIjoiMTIzIiwiZXhwIjoxNTg0MjU2MjQ0fQ.WVnwqIaHKFIAH7naxZqYEPUF_g1iAIunYZdTH3sUz-4')
     
     
 

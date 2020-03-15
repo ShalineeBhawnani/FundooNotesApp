@@ -1,14 +1,14 @@
-
+<body style='background-color : #2d2e30' >
 <div fxLayoutAlign="start center" fxLayout="column">
 
-  <div style="width:100%;margin-bottom:0.9em" fxLayoutAlign="center center">
+  <div style="width:100%;margin-bottom:0.5em" fxLayoutAlign="center center">
     <mat-card [fxHide]="panelOpenState || checkListExpansionPanel" style="height: 10px" ngClass.gt-xs="mat-card-gt-xs"
       ngClass.lt-sm="mat-card-lt-sm">
       <mat-card-content fxLayout="row">
-        <div style="width:70%">
+        <div style="width:90%">
           <input matInput type="text" (click)="panelOpenState=!panelOpenState" placeholder="Take a note..." autofocus />
         </div>
-        <div style="width:30%; margin-top:-1em" fxLayoutAlign="space-around center">
+        <div style="width:80%; margin-top:-1em" fxLayoutAlign="space-around center">
           <button mat-icon-button color="" (click)="checkListExpansionPanel=!checkListExpansionPanel; ">
             <mat-icon matTooltip="New List">check_box</mat-icon>
           </button>
@@ -45,3 +45,22 @@
     </div>
   </div>
 
+</body>
+<!-- <h1 mat-dialog-title>Edit Labels</h1>
+<div mat-dialog-content fxLayout="row">
+  <button mat-icon-button (click)="label.setValue('')">
+    <mat-icon>clear</mat-icon>
+  </button>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+          <mat-form-field class="example-full-width">
+          <input type="text" formControlName="note" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.label.errors }" matInput placeholder="Create new Label"/>
+        </mat-form-field>
+
+      <div>
+        <button mat-icon-button (click)="onSubmit()">Done</button>
+      </div>
+
+    </form>
+    <mat-icon>done</mat-icon>
+</div> -->

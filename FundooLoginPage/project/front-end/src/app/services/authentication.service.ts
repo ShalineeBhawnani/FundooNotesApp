@@ -6,8 +6,6 @@ import { environment } from '../../environments/environment';
 @Injectable()
 export class AuthenticationService {
 
-
-
    // http options used for making API calls
   private httpOptions: any;
 

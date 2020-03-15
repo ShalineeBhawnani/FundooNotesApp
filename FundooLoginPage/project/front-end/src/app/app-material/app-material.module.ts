@@ -13,6 +13,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatExpansionModule} from '@angular/material'
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
         FlexLayoutModule,
         MatFormFieldModule,
         MatCheckboxModule,
-        
+        MatExpansionModule,
+
     ],
     exports: [
         MatIconModule,
@@ -47,6 +49,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
         FlexLayoutModule,
         MatFormFieldModule,
         MatCheckboxModule,
+        MatExpansionModule
 
 
 

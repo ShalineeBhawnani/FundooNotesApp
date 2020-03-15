@@ -1,9 +1,8 @@
 // import { Component, OnInit, Inject } from '@angular/core';
 // import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 // import { FormControl } from '@angular/forms';
-// import { LabelService } from 'src/app/services/label/label.service';
+// import { UserService } from '../../services/user.service';
 // import { EventEmitter } from 'events';
-// import { NoteService } from 'src/app/services/noteServices/note.service';
 // import { Subject } from 'rxjs';
 
 // @Component({
@@ -22,8 +21,7 @@
 
 //   emitUpdateLabelEvent=new Subject();
 
-//   constructor(public dialogRef: MatDialogRef<LabelsDialogComponent>,private labelServices:LabelService,
-//     private noteService:NoteService ) {}
+//   constructor(public dialogRef: MatDialogRef<LabelsDialogComponent>,private labelServices:UserService ) {}
 
 
 //   ngOnInit() {

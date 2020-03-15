@@ -44,14 +44,6 @@ export class UserService {
     });
 
   }
-  note(userData):Observable<any>
-  {
-    return this.http.post(this.baseUrl+'/note/',userData,{
-      responseType: 'text',
-
-    });
-
-  }
 
   label(userData):Observable<any>
 {
@@ -61,4 +53,14 @@ export class UserService {
         'token': localStorage.getItem('token')
       } });
     }
-  }
+
+  note(noteData):Observable<any>
+  {
+
+        console.log(localStorage.getItem('token'))
+        return this.http.post(this.baseUrl+'/note/', noteData, { headers: {
+          'token': localStorage.getItem('token')
+        } });
+      }
+    }
+

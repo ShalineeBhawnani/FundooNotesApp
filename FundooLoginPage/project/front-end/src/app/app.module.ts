@@ -29,6 +29,7 @@ import { LabelComponent } from './components/label/label.component';
 import { ReminderComponent } from './components/reminder/reminder.component';
 import { ArchiveComponent } from './components/archive/archive.component';
 import { BinComponent } from './components/bin/bin.component';
+import { NotesComponent } from './components/notes/notes.component';
 // import { TokenInterceptorService } from './services/token-interceptor.service';
 
 
@@ -50,6 +51,7 @@ import { BinComponent } from './components/bin/bin.component';
     ReminderComponent,
     ArchiveComponent,
     BinComponent,
+    NotesComponent,
     // TokenInterceptorService,
 
 

@@ -9,7 +9,7 @@ import { HttpClient, HttpResponse ,HttpHeaders} from '@angular/common/http';
 
 
 @Component({
-  // selector: 'app-label',
+  selector: 'app-label',
   templateUrl: './label.component.html',
   styleUrls: ['./label.component.css'],
   providers:[AuthenticationService],
@@ -19,7 +19,7 @@ export class LabelComponent implements OnInit {
    registerForm: FormGroup;
    loading = false;
    submitted = false;
-  //  user_id = localStorage.getItem('token');
+
 
 
     constructor(
@@ -51,8 +51,6 @@ export class LabelComponent implements OnInit {
         let labelData = {
 
           // user : this.user_id,
-
-
           label: this.registerForm.value
 
         }
@@ -65,7 +63,7 @@ export class LabelComponent implements OnInit {
             .subscribe(
                 data => {
                     this.alertService.success('label created successfully', true);
-                    this.router.navigate(['/nav']);
+                    // this.router.navigate(['/label']);
                 },
                 error => {
                     this.alertService.error(error);
