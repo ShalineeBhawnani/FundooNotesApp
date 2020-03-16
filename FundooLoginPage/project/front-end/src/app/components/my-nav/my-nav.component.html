@@ -1,17 +1,17 @@
-<body style='background-color: #2d2e30'>
 
 <div class="example-container" [class.example-is-mobile]="mobileQuery.matches" >
-  <mat-toolbar color="#2d2e30" class="example-toolbar">
+  <mat-toolbar [color]="themeColor" class="example-toolbar">
     <button mat-icon-button (click)="snav.toggle()"><mat-icon aria-label="Side nav toggle">menu</mat-icon></button>
     <h1 class="example-app-name">Fundoo App</h1>
-  </mat-toolbar>
+    <div style="width:100%;margin-bottom:0.7em" fxLayoutAlign="center center">  <input type="text" placeholder="Search.."></div>
 
+  </mat-toolbar>
   <mat-sidenav-container class="example-sidenav-container"
                          [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
-                 [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" class="example-mat-sidenav">
+                 [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" opened [attr.color]="themeColor" class="example-mat-sidenav" [opened]="true">
       <mat-nav-list>
-        <mat-divider></mat-divider><br>
+        <mat-divider></mat-divider>
         <a mat-list-item routerLink="." >Notes</a>
         <a mat-list-item routerLink="." >Remainders</a><br>
         <mat-divider></mat-divider><br>
@@ -24,9 +24,9 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-    <app-notes></app-notes>
+    <app-note></app-note>
 
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
-</body>
+

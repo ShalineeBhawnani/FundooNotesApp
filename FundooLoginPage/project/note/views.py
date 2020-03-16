@@ -51,11 +51,9 @@ from django.contrib.auth import authenticate, get_user_model
 User = get_user_model()
 import jwt
 from project.settings import SECRET_KEY
-
-#from project.snippets.models import Registration
-             
-# @method_decorator(login_required, name='dispatch')
-# @login_required(login_url='/login/')
+from project import decorators   
+         
+# @method_decorator(login_required(login_url='/login/'))
 class CreateLabel(generics.GenericAPIView):
     
     serializer_class = LabelSerializer
@@ -74,7 +72,7 @@ class CreateLabel(generics.GenericAPIView):
             return Response(label.values(), status=status.HTTP_200_OK)
         except Exception:
             return Response(Exception, status=status.HTTP_403_FORBIDDEN)
-  
+    # @login_required
     def post(self,request,id=None):
         # pdb.set_trace()
         print("post request")
@@ -126,10 +124,12 @@ class LabelDetails(generics.ListAPIView):
         queryset= Label.objects.filter(user_id=user)
         return queryset
         
-# @method_decorator(login_required, name='dispatch')
+# @login_required
 class CreateNote(generics.GenericAPIView):
+    print("post")
     serializer_class = NoteSerializer
     queryset= Note.objects.all()
+    
     def post(self,request):
         data=request.data
         print(data)
@@ -165,7 +165,7 @@ class CreateNote(generics.GenericAPIView):
 
             return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
-@method_decorator(login_required, name='dispatch')
+# @method_decorator(login_required, name='dispatch')
 class NoteDetails(generics.ListAPIView):
     
     serializer_class=NoteFunctionSerializer
