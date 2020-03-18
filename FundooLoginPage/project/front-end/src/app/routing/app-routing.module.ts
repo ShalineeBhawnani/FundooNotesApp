@@ -47,8 +47,6 @@ const routes: Route[] = [
 
 },
 
-
-
   {
     path:'trash',
     component: TrashComponent

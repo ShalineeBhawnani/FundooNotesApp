@@ -58,21 +58,17 @@ class CreateLabel(generics.GenericAPIView):
     
     serializer_class = LabelSerializer
     queryset= Label.objects.all()
-    print(queryset)
-
+    
     def get(self, request, *args, **kwargs):
         print("get request")
         try:
-            # data = request.data
-            # username = data.get('username')
-            # print(username)
             user_id = request.user
             print(user_id)
             label = self.queryset.filter(user_id=user_id)
             return Response(label.values(), status=status.HTTP_200_OK)
         except Exception:
             return Response(Exception, status=status.HTTP_403_FORBIDDEN)
-    # @login_required
+   
     def post(self,request,id=None):
         # pdb.set_trace()
         print("post request")
@@ -237,9 +233,10 @@ class ArchivedNotes(generics.GenericAPIView):
 class BinNotes(generics.GenericAPIView):
     # permission_classes = (permissions.IsAuthenticatedOrReadOnly,
     #                       IsOwnerOrReadOnly,)
-    print("get request")
+    
     
     def get(self,request):
+        print("get request")
         token = request.headers.get('Token')
         print(token)
         mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
@@ -249,7 +246,7 @@ class BinNotes(generics.GenericAPIView):
         user_id=mytoken.get('username')
         print(user_id)
         user=User.objects.get(username=user_id)
-        print(user)
+        print(user.id)
         is_bin=Note.objects.all().filter(is_bin=True, user=request.user.id)
         print(is_bin)
         serializer_class=NoteSerializer
