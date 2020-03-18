@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { AlertService } from '../../services/alert.service';
 import { UserService } from '../../services/user.service';
 import { AuthenticationService } from '../../services/authentication.service';
@@ -24,13 +24,13 @@ export class LabelComponent implements OnInit {
   // loading = false;
   // submitted = false;
 
-    constructor(
+    constructor(public dialogRef: MatDialogRef<LabelComponent>,
       private userService: UserService,
       private alertService: AlertService,) { }
 
     ngOnInit() {
 
-     
+
     }
 
     // convenience getter for easy access to form fields
