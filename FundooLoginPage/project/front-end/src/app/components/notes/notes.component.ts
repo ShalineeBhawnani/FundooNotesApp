@@ -12,7 +12,7 @@ import { HttpClient, HttpResponse ,HttpHeaders} from '@angular/common/http';
 @Component({
   selector: 'app-notes',
   templateUrl: './notes.component.html',
-  styleUrls: ['./notes.component.css'],
+  styleUrls: ['./notes.component.scss'],
   providers:[AuthenticationService,UserService]
 
 })

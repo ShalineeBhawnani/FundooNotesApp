@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertService } from '../../services/alert.service';
 import { UserService } from '../../services/user.service';
-
 @Component({
-  selector: 'app-archive',
-  templateUrl: './archive.component.html',
-  styleUrls: ['./archive.component.scss']
+  selector: 'app-trash',
+  templateUrl: './trash.component.html',
+  styleUrls: ['./trash.component.scss']
 })
-export class ArchiveComponent implements OnInit {
-
+export class TrashComponent implements OnInit {
   notes = [
     {   title: ' ',
         note: ' '}
@@ -22,7 +20,7 @@ export class ArchiveComponent implements OnInit {
    }
    getNotes=()=>{
 
-      this.userSerive.ArchiveNote().subscribe(
+      this.userSerive.Trash().subscribe(
         data => {
           this.notes = data;
         },

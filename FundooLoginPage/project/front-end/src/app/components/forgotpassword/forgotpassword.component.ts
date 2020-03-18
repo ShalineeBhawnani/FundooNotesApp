@@ -9,7 +9,7 @@ import { AlertService } from '../../services/alert.service';
 @Component({
   selector: 'app-forgotpassword',
   templateUrl: './forgotpassword.component.html',
-  styleUrls: ['./forgotpassword.component.css'],
+  styleUrls: ['./forgotpassword.component.scss'],
   providers: [UserService]
 })
 export class ForgotpasswordComponent implements OnInit {

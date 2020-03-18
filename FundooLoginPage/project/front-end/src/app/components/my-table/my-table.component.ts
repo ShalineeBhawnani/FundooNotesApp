@@ -5,7 +5,7 @@ import { MyTableDataSource } from './my-table-datasource';
 @Component({
   selector: 'app-my-table',
   templateUrl: './my-table.component.html',
-  styleUrls: ['./my-table.component.css']
+  styleUrls: ['./my-table.component.scss']
 })
 export class MyTableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;

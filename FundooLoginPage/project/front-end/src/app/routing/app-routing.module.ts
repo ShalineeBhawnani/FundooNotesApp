@@ -9,6 +9,10 @@ import { MyNavComponent } from '../components/my-nav/my-nav.component';
 import { AuthGuard } from '../auth_guard/auth.guard'
 import { LabelComponent } from '../components/label/label.component';
 import { NoteComponent } from '../components/note/note.component';
+import { NotedataComponent } from '../components/notedata/notedata.component';
+import { ArchiveComponent}  from '../components/archive/archive.component';
+import { TrashComponent } from '../components/trash/trash.component';
+
 
 
 const routes: Route[] = [
@@ -20,33 +24,42 @@ const routes: Route[] = [
     path:'resetpassword/:name',
     component: ResetpasswordComponent,
   },
+  {path:'nav',
+  component:MyNavComponent,
 
-  { path:'nav',
-    component:MyNavComponent,
-    canActivate: [AuthGuard]
+    children:[
+      {path:'', redirectTo: 'note', pathMatch:'full'},
+      {path:'note',
+      component:NotedataComponent,
+      canActivate: [AuthGuard]},
+      {
+        path:'reminder',
+        component: NoteComponent
+      },
+
+    ]
 },
-  {
-    path:'label',
-    component: LabelComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path:'note',
-    component: NoteComponent
 
-  },
+{
+  path:'label',
+  component: LabelComponent,
+  canActivate: [AuthGuard],
+
+},
+
+
+
   {
-    path:'reminder',
-    component: NoteComponent
+    path:'trash',
+    component: TrashComponent
   },
+
   {
     path:'archive',
-    component: NoteComponent
+    component: ArchiveComponent
   },
-  {
-    path:'bin',
-    component: NoteComponent
-  },
+
+
 ];
 
 @NgModule({

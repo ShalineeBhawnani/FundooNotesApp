@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertService } from '../../services/alert.service';
 import { UserService } from '../../services/user.service';
-
+import { AuthenticationService } from '../../services/authentication.service';
 @Component({
-  selector: 'app-archive',
-  templateUrl: './archive.component.html',
-  styleUrls: ['./archive.component.scss']
+  selector: 'app-displaynotes',
+  templateUrl: './displaynotes.component.html',
+  styleUrls: ['./displaynotes.component.scss']
 })
-export class ArchiveComponent implements OnInit {
+export class DisplaynotesComponent implements OnInit {
 
   notes = [
     {   title: ' ',
@@ -22,7 +22,7 @@ export class ArchiveComponent implements OnInit {
    }
    getNotes=()=>{
 
-      this.userSerive.ArchiveNote().subscribe(
+      this.userSerive.getAllNote().subscribe(
         data => {
           this.notes = data;
         },

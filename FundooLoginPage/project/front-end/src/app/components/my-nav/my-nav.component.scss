@@ -1,0 +1,138 @@
+// @import 'src/app/SCSS/styles';
+
+// @import url("https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined");
+
+.sidenav-container {
+  width:100%;
+  min-height: 100%;
+}
+.toolbar{
+  width:100%;
+  min-width:320px;
+}
+
+.menu-notes-gt-xs{
+  width:20%;
+  min-width:150px;
+}
+.menu-notes-lt-sm{
+  width:30%;
+  min-width:30%;
+}
+.search-toolbar-div{
+  width:700px;
+  min-width:30%;
+  max-width:55%;
+  position: relative;
+}
+.sidenav {
+  width: 300px;
+  overflow: hidden;
+}
+
+.search-div{
+  position: relative;
+  width:100%;
+  min-width:30%;
+  max-width:90%;
+  height:45px;
+  border-radius: 10px;
+  border: 1px solid grey;
+
+}
+
+.search-bar{
+  margin-top: -2.1em;
+  width:100%;
+  height: 100%;
+  &:focus{
+    background-color: white;
+    color: black;
+  }
+}
+
+.mat-icon-account-gt-xs{
+  width:30%;
+  max-width:40%;
+}
+.mat-icon-account-lt-sm{
+  width:60%;
+}
+
+.mat-icon-class{
+  width:50%;
+  // max-width:200px;
+  min-width:100px;
+}
+
+.account-div-lt-sm{
+  width:20%;
+  div{
+    width:100%;
+  }
+}
+
+.account-div-gt-xs{
+  width:50%;
+  div{
+    width:35px;
+  }
+}
+
+.mat-nav-list{
+  width:100%;
+  mat-list-item{
+    width:100%;
+    border-bottom-right-radius: 25px;
+    border-top-right-radius: 25px;
+    &:hover{
+      background-color: rgb(233, 207, 123);
+    }
+  }
+}
+.mat-list-item-selected{
+  background-color: rgb(228, 184, 103);
+}
+
+::ng-deep .mat-form-field-prefix{
+    transform: translateY(0.5em);
+    -moz-transform: translateY(0.9em);
+}
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.is-mobile .toolbar {
+  position: fixed;
+  /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+  z-index: 2;
+}
+
+.example-sidenav-container {
+  /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+     causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
+  flex: 1;
+}
+
+.is-mobile .example-sidenav-container {
+  /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
+     `<body>` to be our scrolling element for mobile layouts. */
+  flex: 1 0 auto;
+}
+
+.mini-search-bar{
+  width:100%;
+  min-width: 10px;
+  z-index: 1;
+  border:1px solid black;
+  background: white;
+  border-radius: 7px;
+}

@@ -10,6 +10,8 @@ import { environment } from '../../environments/environment';
 export class UserService {
 
   baseUrl = environment.baseUrl;
+  httpHeaders = new HttpHeaders({'Content-type': 'application/json'})
+
   constructor(private http: HttpClient) { }
 
   login(userData): Observable<any>
@@ -45,11 +47,11 @@ export class UserService {
 
   }
 
-  label(userData):Observable<any>
+  label(noteData):Observable<any>
 {
 
       console.log(localStorage.getItem('token'))
-      return this.http.post(this.baseUrl+'/label/', userData, { headers: {
+      return this.http.post(this.baseUrl+'/label/', noteData, { headers: {
         'token': localStorage.getItem('token')
       } });
     }
@@ -62,5 +64,35 @@ export class UserService {
           'token': localStorage.getItem('token')
         } });
       }
-    }
 
+getAllNote():Observable<any>
+{
+  return this.http.get(this.baseUrl+'/note/',
+  { headers: {
+    'token': localStorage.getItem('token')
+  } });
+}
+
+updateAllNote():Observable<any>
+{
+  return this.http.get(this.baseUrl+'/updatenote/',
+  { headers: {
+    'token': localStorage.getItem('token')
+  } });
+}
+ArchiveNote():Observable<any>
+{
+  return this.http.get(this.baseUrl+'/archive/',
+  { headers: {
+    'token': localStorage.getItem('token')
+  } });
+}
+
+Trash():Observable<any>
+{
+  return this.http.get(this.baseUrl+'/bin/',
+  { headers: {
+    'token': localStorage.getItem('token')
+  } });
+}
+}

@@ -30,6 +30,11 @@ import { ReminderComponent } from './components/reminder/reminder.component';
 import { ArchiveComponent } from './components/archive/archive.component';
 import { BinComponent } from './components/bin/bin.component';
 import { NotesComponent } from './components/notes/notes.component';
+import { ColorPickerComponent } from './components/color-picker/color-picker.component';
+
+import { DisplaynotesComponent } from './components/displaynotes/displaynotes.component';
+import { NotedataComponent } from './components/notedata/notedata.component';
+import { TrashComponent } from './components/trash/trash.component';
 // import { TokenInterceptorService } from './services/token-interceptor.service';
 
 
@@ -52,6 +57,10 @@ import { NotesComponent } from './components/notes/notes.component';
     ArchiveComponent,
     BinComponent,
     NotesComponent,
+    ColorPickerComponent,
+    DisplaynotesComponent,
+    NotedataComponent,
+    TrashComponent,
     // TokenInterceptorService,
 
 

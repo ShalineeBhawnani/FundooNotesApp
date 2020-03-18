@@ -11,22 +11,27 @@
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
                  [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" opened [attr.color]="themeColor" class="example-mat-sidenav" [opened]="true">
       <mat-nav-list>
-        <mat-divider></mat-divider>
-        <a mat-list-item routerLink="." >Notes</a>
+           <!-- notes -->
+          <mat-list-item routerLink="/nav/note">
+          <img src="src/assets/images/outline_emoji_objects_black_18dp.png"><span style="margin-left:3em">Notes</span>
+          </mat-list-item>
+        <!-- <a mat-list-item routerLink="/nav/note" >Notes</a> -->
+             <!-- remainders -->
+
         <a mat-list-item routerLink="." >Remainders</a><br>
         <mat-divider></mat-divider><br>
-        <a mat-list-item routerLink="." >Label</a><br>
+        <a mat-list-item routerLink="/nav/label">Label</a><br>
         <mat-divider></mat-divider>
-        <a mat-list-item routerLink="." >Archive</a>
+        <a mat-list-item routerLink="/archive" >Archive</a>
         <a mat-list-item routerLink="." >Trash</a>
 
       </mat-nav-list>
     </mat-sidenav>
 
     <mat-sidenav-content>
-    <app-note></app-note>
+    <router-outlet> </router-outlet>
 
-    </mat-sidenav-content>
+     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
 

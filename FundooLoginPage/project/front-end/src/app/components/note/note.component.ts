@@ -7,10 +7,11 @@ import { AuthenticationService } from '../../services/authentication.service';
 @Component({
   selector: 'app-note',
   templateUrl: './note.component.html',
-  styleUrls: ['./note.component.css'],
+  styleUrls: ['./note.component.scss'],
   providers:[AuthenticationService,UserService]
 })
 export class NoteComponent implements OnInit {
+
   title = new FormControl('', [
 
   ]);
@@ -27,9 +28,11 @@ export class NoteComponent implements OnInit {
 
    }
 
-  ngOnInit() {
+   ngOnInit() {
 
-  }
+    }
+
+
 
   saveNotes()
 

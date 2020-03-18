@@ -1,9 +1,9 @@
-<div fxLayoutAlign="start center" fxLayout="column" class="myclass">
+<div fxLayoutAlign="start center" fxLayout="column" >
   <div style="width:100%;margin-bottom:0.7em" fxLayoutAlign="center center">
     <mat-card [fxHide]="panelOpenState || checkListExpansionPanel" style="height: 10px" ngClass.gt-xs="mat-card-gt-xs"
       ngClass.lt-sm="mat-card-lt-sm">
       <mat-card-content fxLayout="row">
-        <div style="width:70%">
+        <div class="inputtag">
           <input matInput type="text" (click)="panelOpenState=!panelOpenState" placeholder="Take a note..." autofocus />
         </div>
         <div style="width:30%; margin-top:-1em" fxLayoutAlign="space-around center">
@@ -24,30 +24,44 @@
 
       <!-- mat card title -->
       <mat-card-title fxLayoutAlign="space-between center" style="margin-top:-0.5em;">
-        <div style="width:80%;">
+        <div class="inputtag">
           <input matInput type="text" placeholder="Title" [formControl]=title />
         </div>
       </mat-card-title>
 
       <mat-card-content>
+        <div class="takeanote">
         <input matInput matTextareaAutosize placeholder="Take a note..."
-        [formControl]="note" />
-        </mat-card-content>
+        [formControl]="note" /></div>
+      </mat-card-content>
 
-        <!-- closing button -->
-        <div class="footer-close-button-div" fxLayoutAlign="end center">
-          <button mat-button (click)="saveNotes(); panelOpenState=!panelOpenState;">Close</button>
+
+          <div class="footer-icons-div" fxLayoutAlign="space-around center" >
+            <button mat-icon-button color=""><mat-icon matTooltip="Remind me">notifications_none</mat-icon></button>
+            <button mat-icon-button color=""><mat-icon matTooltip="Collaborator">person_add</mat-icon></button>
+            <button mat-icon-button color="" [matMenuTriggerFor]="cardColorMenu"><mat-icon matTooltip="Change color">color_lens</mat-icon></button>
+            <!-- <mat-menu #cardColorMenu="matMenu" fxlayoutAlign="space-around center" fxLayoutGap="2%">
+            <app-color-picker [note]="" (colorEvent)="updateBackgroundColor($event)"></app-color-picker>
+            </mat-menu> -->
+            <button mat-icon-button color=""><mat-icon matTooltip="Add image">crop_original</mat-icon></button>
+            <button mat-icon-button (click)="setArchive()" [fxHide]="isArchived" color=""><mat-icon matTooltip="Archive">archive</mat-icon></button>
+            <button mat-icon-button (click)="setArchive()" [fxHide]="!isArchived" color=""><mat-icon matTooltip="Unarchive">archive</mat-icon></button>
+            <button mat-icon-button color="" [matMenuTriggerFor]="more_vert"><mat-icon matTooltip="More">more_vert</mat-icon></button>
+            <mat-menu #more_vert="matMenu">
+            <button mat-menu-item>
+            Delete
+            </button>
+            </mat-menu>
+            <button mat-icon-button color=""><mat-icon matTooltip="Undo">undo</mat-icon></button>
+            <button mat-icon-button color=""><mat-icon matTooltip="Redo">redo</mat-icon></button>
+
+ <!-- closing buton -->
+        <div class="footer-close-button-div" fxLayoutAlign="start" fxLayoutAlign="space-around end">
+        <button mat-button (click)="saveNotes(); panelOpenState=!panelOpenState;">Close</button>
         </div>
-    </mat-card>
+      </div>
+       </mat-card>
 
     </div></div>
 
 
-  <mat-card>
-    <p *ngFor="let i of note">
-      <mat-card-title> {{ i.title }} </mat-card-title>
-      <mat-card> {{ i.note }} </mat-card>
-      <div style="text-align: center">
-        <h1>Welcome to {{i.title}}!!</h1>
-        </div>
-  </mat-card>

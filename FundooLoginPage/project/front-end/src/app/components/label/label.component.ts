@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { AlertService } from '../../services/alert.service';
 import { UserService } from '../../services/user.service';
@@ -11,63 +11,52 @@ import { HttpClient, HttpResponse ,HttpHeaders} from '@angular/common/http';
 @Component({
   selector: 'app-label',
   templateUrl: './label.component.html',
-  styleUrls: ['./label.component.css'],
+  styleUrls: ['./label.component.scss'],
   providers:[AuthenticationService],
 
 })
 export class LabelComponent implements OnInit {
-   registerForm: FormGroup;
-   loading = false;
-   submitted = false;
+  label:FormControl=new FormControl('');
+  labels:any;
+  editLabel:boolean=true;
+  editedTextLabel=new FormControl('');
 
-
+  // loading = false;
+  // submitted = false;
 
     constructor(
-        private formBuilder: FormBuilder,
-        private router: Router,
-        private userService: UserService,
-        private alertService: AlertService) { }
+      private userService: UserService,
+      private alertService: AlertService,) { }
 
     ngOnInit() {
 
-        this.registerForm = this.formBuilder.group({
-
-            label: [''],
-
-        });
+     
     }
 
     // convenience getter for easy access to form fields
-    get f() { return this.registerForm.controls; }
+    createLabel()
 
-    onSubmit() {
-        this.submitted = true;
-        // let user_id=JSON.parse(localStorage.getItem('user'));
+    {
+      console.log(this.label.value);
+       let noteData = {
 
-        // stop here if form is invalid
-        if (this.registerForm.invalid) {
-            return;
-        }
-        let labelData = {
+             lable : this.label.value
 
-          // user : this.user_id,
-          label: this.registerForm.value
-
-        }
-
-          console.log("user details:",labelData)
-          console.log("req body: ", this.registerForm.value);
-
-        this.loading = true;
-        this.userService.label(labelData)
-            .subscribe(
-                data => {
-                    this.alertService.success('label created successfully', true);
-                    // this.router.navigate(['/label']);
-                },
-                error => {
-                    this.alertService.error(error);
-                    this.loading = false;
-                });
     }
-}
+
+      this.userService.label(noteData)
+
+    .subscribe(
+        (data) => {
+            console.log('label: ' + noteData);
+            console.log(noteData.lable);
+            this.alertService.success('label created successfully', true);
+            // this.router.navigate(['/label']);
+        },
+        error => {
+            this.alertService.error(error);
+
+        });
+  }
+
+    }

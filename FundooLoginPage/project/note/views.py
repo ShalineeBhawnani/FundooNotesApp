@@ -58,7 +58,7 @@ class CreateLabel(generics.GenericAPIView):
     
     serializer_class = LabelSerializer
     queryset= Label.objects.all()
-    # print(queryset)
+    print(queryset)
 
     def get(self, request, *args, **kwargs):
         print("get request")
@@ -81,7 +81,8 @@ class CreateLabel(generics.GenericAPIView):
         # label = self.queryset.filter(user_id=user_id)
         print(request.data)
         
-        serializer = LabelSerializer(data=request.data['label'])
+        serializer = LabelSerializer(data=request.data)
+        print(request.data)
         print(serializer) #TODO Token Auth decorator
         if serializer.is_valid():
             token = request.headers.get('Token')
@@ -128,7 +129,33 @@ class LabelDetails(generics.ListAPIView):
 class CreateNote(generics.GenericAPIView):
     print("post")
     serializer_class = NoteSerializer
-    queryset= Note.objects.all()
+    queryset= Note.objects.all().filter(is_archived=False,is_bin=False)
+    # print(queryset)
+   
+    def get(self, request, *args, **kwargs):
+        print("get request")
+        token = request.headers.get('Token')
+        print(token)
+        mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+        print(SECRET_KEY)
+        print(mytoken)
+        print(str(mytoken))
+        user_id=mytoken.get('username')
+        print(user_id)
+        user=User.objects.get(username=user_id)
+        print(user)
+        try:
+            # data = request.data
+            # username = data.get('username')
+            # print(username)
+            # user_id = request.user
+            # print(user_id)
+            note = self.queryset.filter(user_id=user.id)
+            print(note)
+            return Response(note.values(), status=status.HTTP_200_OK)
+        except Exception:
+            return Response(Exception, status=status.HTTP_403_FORBIDDEN)
+        
     
     def post(self,request):
         data=request.data
@@ -184,22 +211,46 @@ class NoteUpdate(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly,)
 
-@method_decorator(login_required, name='dispatch')    
+# @method_decorator(login_required, name='dispatch')    
 class ArchivedNotes(generics.GenericAPIView):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-                          IsOwnerOrReadOnly,)
+    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+    #                       IsOwnerOrReadOnly,)
+    
     def get(self,request):
-        is_archived=Note.objects.all().filter(is_archived=True, user=request.user)
+        print("get request")
+        token = request.headers.get('Token')
+        print(token)
+        mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+        print(SECRET_KEY)
+        print(mytoken)
+        print(str(mytoken))
+        user_id=mytoken.get('username')
+        print(user_id)
+        user=User.objects.get(username=user_id)
+        print(user)
+        is_archived=Note.objects.all().filter(is_archived=True,user_id=user.id)
         print(is_archived)
         serializer_class=NoteSerializer
         return Response(is_archived.values(),status=status.HTTP_200_OK)
         
-@method_decorator(login_required, name='dispatch')    
+ 
 class BinNotes(generics.GenericAPIView):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-                          IsOwnerOrReadOnly,)
+    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+    #                       IsOwnerOrReadOnly,)
+    print("get request")
+    
     def get(self,request):
-        is_bin=Note.objects.all().filter(is_bin=True, user=request.user)
+        token = request.headers.get('Token')
+        print(token)
+        mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+        print(SECRET_KEY)
+        print(mytoken)
+        print(str(mytoken))
+        user_id=mytoken.get('username')
+        print(user_id)
+        user=User.objects.get(username=user_id)
+        print(user)
+        is_bin=Note.objects.all().filter(is_bin=True, user=request.user.id)
         print(is_bin)
         serializer_class=NoteSerializer
         return Response(is_bin.values(),status=status.HTTP_200_OK)
