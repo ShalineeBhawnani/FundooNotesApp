@@ -1,15 +1,15 @@
 // @import 'src/app/SCSS/styles';
 
-// @import url("https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined");
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined");
 
-.sidenav-container {
-  width:100%;
-  min-height: 100%;
-}
-.toolbar{
-  width:100%;
-  min-width:320px;
-}
+// .sidenav-container {
+//   width:100%;
+//   min-height: 100%;
+// }
+// .toolbar{
+//   width:100%;
+//   min-width:320px;
+// }
 
 .menu-notes-gt-xs{
   width:20%;
@@ -56,13 +56,13 @@
   max-width:40%;
 }
 .mat-icon-account-lt-sm{
-  width:60%;
+  width:30%;
 }
 
 .mat-icon-class{
-  width:50%;
+  width:17%;
   // max-width:200px;
-  min-width:100px;
+  min-width:17px;
 }
 
 .account-div-lt-sm{
@@ -100,7 +100,7 @@
 }
 
 
-.container {
+.example-container {
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -112,21 +112,10 @@
 
 .is-mobile .toolbar {
   position: fixed;
-  /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+
   z-index: 2;
 }
 
-.example-sidenav-container {
-  /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
-     causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
-  flex: 1;
-}
-
-.is-mobile .example-sidenav-container {
-  /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
-     `<body>` to be our scrolling element for mobile layouts. */
-  flex: 1 0 auto;
-}
 
 .mini-search-bar{
   width:100%;
@@ -135,4 +124,9 @@
   border:1px solid black;
   background: white;
   border-radius: 7px;
+}
+
+
+.mat-sidenav{
+  width:250px;
 }

@@ -16,7 +16,7 @@ import { AppRoutingModule } from './routing//app-routing.module';
 import { MyNavComponent } from './components/my-nav/my-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
-import { MyDashboardComponent } from './components/my-dashboard/my-dashboard.component';
+
 import { MyTableComponent } from './components/my-table/my-table.component';
 import { AlertComponent } from './components/alert/alert.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -28,13 +28,12 @@ import { NoteComponent } from './components/note/note.component';
 import { LabelComponent } from './components/label/label.component';
 import { ReminderComponent } from './components/reminder/reminder.component';
 import { ArchiveComponent } from './components/archive/archive.component';
-import { BinComponent } from './components/bin/bin.component';
-import { NotesComponent } from './components/notes/notes.component';
 import { ColorPickerComponent } from './components/color-picker/color-picker.component';
-
 import { DisplaynotesComponent } from './components/displaynotes/displaynotes.component';
 import { NotedataComponent } from './components/notedata/notedata.component';
 import { TrashComponent } from './components/trash/trash.component';
+import { NoteDialogComponent } from './components/note-dialog/note-dialog.component';
+import { IconComponent } from './components/icon/icon.component';
 // import { TokenInterceptorService } from './services/token-interceptor.service';
 
 
@@ -47,7 +46,7 @@ import { TrashComponent } from './components/trash/trash.component';
     ForgotpasswordComponent,
     ResetpasswordComponent,
     MyNavComponent,
-    MyDashboardComponent,
+
     MyTableComponent,
     AlertComponent,
     ProfileComponent,
@@ -55,12 +54,13 @@ import { TrashComponent } from './components/trash/trash.component';
     LabelComponent,
     ReminderComponent,
     ArchiveComponent,
-    BinComponent,
-    NotesComponent,
+
     ColorPickerComponent,
     DisplaynotesComponent,
     NotedataComponent,
     TrashComponent,
+    NoteDialogComponent,
+    IconComponent,
     // TokenInterceptorService,
 
 
@@ -98,7 +98,8 @@ import { TrashComponent } from './components/trash/trash.component';
     // { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true },
     UserService,AuthGuard,AlertService,AuthenticationService,
     ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [NoteDialogComponent]
 })
 
 

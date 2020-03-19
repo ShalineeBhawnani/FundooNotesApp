@@ -143,3 +143,27 @@ a{
         overflow: hidden;
     }
 }
+.reminder-mat-menu{
+    width:400px;
+    padding:0
+}
+.reminder-mat-menu-item{
+    div{
+        display: inline-block;
+        position: relative;
+        overflow-wrap: break-word;
+        width:50%;
+    }
+}
+
+.checkList-text-decoration{
+    text-decoration:line-through;
+ }
+
+ .checklist-unchecked{
+    word-break: break-all;
+    margin:0 0 10px 0;
+ }
+ .checklist-checked{
+    text-decoration:line-through;
+ }

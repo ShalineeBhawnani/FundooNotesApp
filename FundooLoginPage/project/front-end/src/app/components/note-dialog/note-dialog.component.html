@@ -1,0 +1,28 @@
+
+<div fxLayoutAlign="start center" fxLayout="column">
+  <div fxLayoutAlign="center center">
+  <div class="inputtag">
+
+  <textarea matInput matTextareaAutosize placeholder="Title" [formControl]="title" class="textarea" >
+  </textarea>
+  {{data.title}}
+  </div>
+  <br>
+  <mat-card-content>
+  <div class="takeanote">
+  <textarea matInput matTextareaAutosize placeholder="Take a note..." class="textarea" [formControl]="note">
+  {{note}}
+  </textarea>
+
+  </div>
+  </mat-card-content>
+  <!-- closing button -->
+  <!-- <app-icon></app-icon> -->
+
+  </div>
+  <div class="footer-icons-div" fxLayoutAlign="space-around center" >
+    <app-icon></app-icon>
+  <button mat-button (click)="onNoClick()" class="button">Close</button>
+  </div>
+
+  </div>

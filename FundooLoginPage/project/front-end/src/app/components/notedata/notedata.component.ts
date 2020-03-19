@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 
 @Component({
   selector: 'app-notedata',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./notedata.component.scss']
 })
 export class NotedataComponent implements OnInit {
+  description:string;
+
 
   constructor() { }
 

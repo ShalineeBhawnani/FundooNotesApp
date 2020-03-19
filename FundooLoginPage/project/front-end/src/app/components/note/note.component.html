@@ -36,27 +36,11 @@
       </mat-card-content>
 
 
-          <div class="footer-icons-div" fxLayoutAlign="space-around center" >
-            <button mat-icon-button color=""><mat-icon matTooltip="Remind me">notifications_none</mat-icon></button>
-            <button mat-icon-button color=""><mat-icon matTooltip="Collaborator">person_add</mat-icon></button>
-            <button mat-icon-button color="" [matMenuTriggerFor]="cardColorMenu"><mat-icon matTooltip="Change color">color_lens</mat-icon></button>
-            <!-- <mat-menu #cardColorMenu="matMenu" fxlayoutAlign="space-around center" fxLayoutGap="2%">
-            <app-color-picker [note]="" (colorEvent)="updateBackgroundColor($event)"></app-color-picker>
-            </mat-menu> -->
-            <button mat-icon-button color=""><mat-icon matTooltip="Add image">crop_original</mat-icon></button>
-            <button mat-icon-button (click)="setArchive()" [fxHide]="isArchived" color=""><mat-icon matTooltip="Archive">archive</mat-icon></button>
-            <button mat-icon-button (click)="setArchive()" [fxHide]="!isArchived" color=""><mat-icon matTooltip="Unarchive">archive</mat-icon></button>
-            <button mat-icon-button color="" [matMenuTriggerFor]="more_vert"><mat-icon matTooltip="More">more_vert</mat-icon></button>
-            <mat-menu #more_vert="matMenu">
-            <button mat-menu-item>
-             Delete
-            </button>
-            </mat-menu>
-            <button mat-icon-button color=""><mat-icon matTooltip="Undo">undo</mat-icon></button>
-            <button mat-icon-button color=""><mat-icon matTooltip="Redo">redo</mat-icon></button>
+          <div class="footer-icons-div" fxLayoutAlign="start center" >
+           <app-icon></app-icon>
 
  <!-- closing buton -->
-        <div class="footer-close-button-div" fxLayoutAlign="start" fxLayoutAlign="space-around end">
+        <div class="footer-close-button-div" fxLayoutAlign="center" fxLayoutAlign="space-around end">
         <button mat-button (click)="saveNotes(); panelOpenState=!panelOpenState;">Close</button>
         </div>
       </div>

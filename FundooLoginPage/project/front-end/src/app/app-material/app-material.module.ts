@@ -34,7 +34,7 @@ import {MatExpansionModule} from '@angular/material'
         MatFormFieldModule,
         MatCheckboxModule,
         MatExpansionModule,
-      
+
 
     ],
     exports: [

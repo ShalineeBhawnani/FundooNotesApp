@@ -2,12 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import { AlertService } from '../../services/alert.service';
 import { UserService } from '../../services/user.service';
 import { AuthenticationService } from '../../services/authentication.service';
+import {MatDialog, MatDialogRef,MAT_DIALOG_DATA,MatDialogConfig} from '@angular/material/dialog';
+import { NoteDialogComponent } from '../note-dialog/note-dialog.component';
+
+
+export interface DialogData {
+  // title: string;
+  // note: string;
+  }
 @Component({
+
   selector: 'app-displaynotes',
   templateUrl: './displaynotes.component.html',
-  styleUrls: ['./displaynotes.component.scss']
+  styleUrls: ['./displaynotes.component.scss'],
+  providers: [UserService]
 })
+
 export class DisplaynotesComponent implements OnInit {
+
+fileNameDialogRef: MatDialogRef<NoteDialogComponent>;
 
   notes = [
     {   title: ' ',
@@ -15,11 +28,16 @@ export class DisplaynotesComponent implements OnInit {
       ]
 
 
-  constructor(private userSerive: UserService) {
+  constructor(private userSerive: UserService,public dialog:MatDialog) {
 
     this.getNotes();
 
    }
+
+  ngOnInit(){
+
+  }
+
    getNotes=()=>{
 
       this.userSerive.getAllNote().subscribe(
@@ -31,11 +49,19 @@ export class DisplaynotesComponent implements OnInit {
         }
       );
     }
-
-
-  ngOnInit(){
-
-  }
+    openDialog(note) {
+      {
+      this.fileNameDialogRef = this.dialog.open(NoteDialogComponent, {
+      hasBackdrop: false,
+      data: note
+      });
+      }
+      }
 
 
 }
+
+
+
+
+
