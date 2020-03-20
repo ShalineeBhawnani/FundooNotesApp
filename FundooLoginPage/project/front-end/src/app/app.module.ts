@@ -16,8 +16,6 @@ import { AppRoutingModule } from './routing//app-routing.module';
 import { MyNavComponent } from './components/my-nav/my-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
-
-import { MyTableComponent } from './components/my-table/my-table.component';
 import { AlertComponent } from './components/alert/alert.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -34,20 +32,20 @@ import { NotedataComponent } from './components/notedata/notedata.component';
 import { TrashComponent } from './components/trash/trash.component';
 import { NoteDialogComponent } from './components/note-dialog/note-dialog.component';
 import { IconComponent } from './components/icon/icon.component';
+import { SharedService } from './/services/shared.service';
 // import { TokenInterceptorService } from './services/token-interceptor.service';
 
 
 
 @NgModule({
   declarations: [
+    // SharedService,
     AppComponent,
     LoginComponent,
     RegisterComponent,
     ForgotpasswordComponent,
     ResetpasswordComponent,
     MyNavComponent,
-
-    MyTableComponent,
     AlertComponent,
     ProfileComponent,
     NoteComponent,
@@ -61,6 +59,7 @@ import { IconComponent } from './components/icon/icon.component';
     TrashComponent,
     NoteDialogComponent,
     IconComponent,
+
     // TokenInterceptorService,
 
 
@@ -90,13 +89,14 @@ import { IconComponent } from './components/icon/icon.component';
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
+   
 
   ],
 
 
   providers: [
     // { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true },
-    UserService,AuthGuard,AlertService,AuthenticationService,
+    UserService,AuthGuard,AlertService,AuthenticationService,SharedService,
     ],
   bootstrap: [AppComponent],
   entryComponents: [NoteDialogComponent]

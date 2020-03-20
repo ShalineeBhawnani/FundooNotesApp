@@ -4,7 +4,7 @@ import { UserService } from '../../services/user.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import {MatDialog, MatDialogRef,MAT_DIALOG_DATA,MatDialogConfig} from '@angular/material/dialog';
 import { NoteDialogComponent } from '../note-dialog/note-dialog.component';
-
+import { SharedService } from '../../services/shared.service';
 
 export interface DialogData {
   // title: string;
@@ -27,14 +27,15 @@ fileNameDialogRef: MatDialogRef<NoteDialogComponent>;
         note: ' '}
       ]
 
-
-  constructor(private userSerive: UserService,public dialog:MatDialog) {
+  constructor(private userSerive: UserService,public dialog:MatDialog,
+    private sharedService: SharedService) {
 
     this.getNotes();
 
    }
 
   ngOnInit(){
+
 
   }
 
@@ -60,7 +61,6 @@ fileNameDialogRef: MatDialogRef<NoteDialogComponent>;
 
 
 }
-
 
 
 

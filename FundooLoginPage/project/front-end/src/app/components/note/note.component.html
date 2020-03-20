@@ -36,11 +36,11 @@
       </mat-card-content>
 
 
-          <div class="footer-icons-div" fxLayoutAlign="start center" >
+          <div fxLayout="row" fxLayoutAlign="start center">
            <app-icon></app-icon>
 
- <!-- closing buton -->
-        <div class="footer-close-button-div" fxLayoutAlign="center" fxLayoutAlign="space-around end">
+       <!-- closing buton -->
+        <div fxLayoutAlign="center" fxLayoutAlign="space-around end">
         <button mat-button (click)="saveNotes(); panelOpenState=!panelOpenState;">Close</button>
         </div>
       </div>

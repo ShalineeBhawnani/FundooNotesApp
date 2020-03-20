@@ -199,13 +199,44 @@ class NoteDetails(generics.ListAPIView):
         print(queryset)
         return queryset
         
-@method_decorator(login_required, name='dispatch') 
-class NoteUpdate(generics.RetrieveUpdateDestroyAPIView):
+
+class NoteUpdate(generics.GenericAPIView):
     queryset=Note.objects.all()
     serializer_class=NoteSerializer
+    def put(self,request,pk):
+        data=request.data
+        print(data)
+        note_serializer = NoteSerializer(data=request.data)
+        print(note_serializer.is_valid())
+        if note_serializer.is_valid():
+            print("valid")
+            token = request.headers.get('Token')
+            print(token)
+            mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+            print(mytoken)
+            user_id=mytoken.get('username')
+            print(user_id)
+            user=User.objects.get(username=user_id)
+            print(user)
+            print("valid")
+            note_serializer.save(user_id=user.id)
+            print("saved")
+            return Response({"data": "data created successfully"}, 
+                            status=status.HTTP_201_CREATED)
+        else:
+            error_details = []
+            for key in note_serializer.errors.keys():
+                error_details.append({"field": key, "message": note_serializer.errors[key][0]})
 
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-                          IsOwnerOrReadOnly,)
+            data = {
+                    "Error": {
+                        "status": 400,
+                        "message": "Your submitted data was not valid - please correct the below errors",
+                        "error_details": error_details
+                        }
+                    }
+
+            return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
 # @method_decorator(login_required, name='dispatch')    
 class ArchivedNotes(generics.GenericAPIView):

@@ -3,6 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators}from '@angular/forms';
 import { AlertService } from '../../services/alert.service';
 import { UserService } from '../../services/user.service';
 import { AuthenticationService } from '../../services/authentication.service';
+import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-note',
@@ -18,17 +19,19 @@ export class NoteComponent implements OnInit {
   note = new FormControl('', [
 
   ]);
-
+  noteData:string;
 
   constructor(
     private userService: UserService,
     private alertService: AlertService,
+    private sharedService: SharedService
 
   ) {
 
    }
 
    ngOnInit() {
+  
 
     }
 
