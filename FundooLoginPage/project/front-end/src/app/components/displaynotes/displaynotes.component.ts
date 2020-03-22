@@ -5,10 +5,11 @@ import { AuthenticationService } from '../../services/authentication.service';
 import {MatDialog, MatDialogRef,MAT_DIALOG_DATA,MatDialogConfig} from '@angular/material/dialog';
 import { NoteDialogComponent } from '../note-dialog/note-dialog.component';
 import { SharedService } from '../../services/shared.service';
+import { Subscription } from 'rxjs';
 
 export interface DialogData {
-  // title: string;
-  // note: string;
+  
+  subscription: Subscription;
   }
 @Component({
 
@@ -19,6 +20,7 @@ export interface DialogData {
 })
 
 export class DisplaynotesComponent implements OnInit {
+  note$: any;
 
 fileNameDialogRef: MatDialogRef<NoteDialogComponent>;
 
@@ -31,6 +33,7 @@ fileNameDialogRef: MatDialogRef<NoteDialogComponent>;
     private sharedService: SharedService) {
 
     this.getNotes();
+    this.note$ = this.sharedService.getMessage();
 
    }
 

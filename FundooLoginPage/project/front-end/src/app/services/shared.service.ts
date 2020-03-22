@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 
 @Injectable()
 export class SharedService {
+  private subject = new Subject<any>();
 
-  private data = {};
-  setOption(option, value) {
-    this.data[option] = value;
+  // public emitObservable: Subject<void> = new Subject<void>();
+
+  sendMessage(message: string) {
+      this.subject.next({ text: message });
   }
 
-  getOption() {
-    return this.data;
+  getMessage(): Observable<any> {
+      return this.subject.asObservable();
   }
 }
