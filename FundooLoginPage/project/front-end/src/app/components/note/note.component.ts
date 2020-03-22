@@ -14,11 +14,9 @@ import { SharedService } from '../../services/shared.service';
 export class NoteComponent implements OnInit {
 
   title = new FormControl('', [
-    Validators.required
 
   ]);
   note = new FormControl('', [
-    Validators.required
 
   ]);
   noteData:string;

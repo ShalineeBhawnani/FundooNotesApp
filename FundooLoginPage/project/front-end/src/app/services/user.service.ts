@@ -102,5 +102,4 @@ return this.http.put(this.baseUrl+'noteupdate/'+note_id,userData,{headers:{
 'token':localStorage.getItem('token')}}
 );
 }
-
 }

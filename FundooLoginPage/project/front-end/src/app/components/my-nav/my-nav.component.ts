@@ -26,8 +26,4 @@ export class MyNavComponent implements OnDestroy{
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
-
-  logout(){
-  localStorage.removeItem('token');
-}
 }

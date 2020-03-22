@@ -28,8 +28,9 @@ const routes: Route[] = [
   component:MyNavComponent,
 
     children:[
-      {path:"", redirectTo: '/nav/note', pathMatch:'full'},
-      {path:'note',component:NotedataComponent,
+      {path:'', redirectTo: 'note', pathMatch:'full'},
+      {path:'note',
+      component:NotedataComponent,
       canActivate: [AuthGuard]},
       {
         path:'reminder',
@@ -37,8 +38,6 @@ const routes: Route[] = [
       },
 
     ]
-
-    
 },
 
 {

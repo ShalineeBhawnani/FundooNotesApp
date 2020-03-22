@@ -25,16 +25,26 @@
       <!-- mat card title -->
       <mat-card-title fxLayoutAlign="space-between center" style="margin-top:-0.5em;">
         <div class="inputtag">
-          <input matInput type="text" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.title.errors }" placeholder="Title" [formControl]=title />
+          <input matInput type="text" placeholder="Title" [formControl]=title />
         </div>
       </mat-card-title>
+      <div style="width:20%;" fxLayoutAlign="end center" [fxHide]="!isAdvancedUser">
+        <button mat-icon-button color="" [fxHide]="isPinned" (click)="setPin()"><img
+            src="src/assets/images/outline_fiber_pin.png" /></button>
+        <button mat-icon-button color="" [fxHide]="!isPinned" (click)="setPin()"><img
+            src="src/assets/images/baseline_fiber_pin.png" /></button>
+      </div>
+
+      <!-- <mat-card-content>
+        <div class="takeanote">
+        <input matInput matTextareaAutosize placeholder="Take a note..."
+        [formControl]="note" /></div>
+      </mat-card-content> -->
 
       <mat-card-content>
-        <div class="takeanote">
-        <input matInput matTextareaAutosize class="form-control" [ngClass]="{ 'is-invalid': submitted && f.note.errors }" placeholder="Take a note..."
-        [formControl]="note" /></div>
+        <textarea matInput matTextareaAutosize placeholder="Take a note..."
+          [formControl]="note">{{note.value}}</textarea>
       </mat-card-content>
-
 
           <div fxLayout="row" fxLayoutAlign="start center">
            <app-icon></app-icon>

@@ -27,8 +27,7 @@
       </button>
     </div>
     <div style="margin-right:4.5em" fxLayoutAlign="center">
-      <button mat-icon-button><mat-icon (click)="refresh()" matTooltip="refresh">refresh</mat-icon>
-      </button></div>
+      <mat-icon matTooltip="refresh">refresh</mat-icon></div>
 
       <mat-icon  fxHide.lt-sm="true" matTooltip="Apps">apps</mat-icon >
         <div ngClass.gt-xs="account-div-gt-xs" ngClass.lt-sm="account-div-lt-sm" fxLayoutAlign="end center">
@@ -46,7 +45,7 @@
                     </div>
                     <div>{{user.email}}</div>
                   </div>
-                </mat-card> -->
+                </mat-card> -->/
                 <div mat-menu-item>
                   <button mat-button>Add account</button>
                   <button mat-button (click)="logout()">Logout</button>
@@ -64,17 +63,17 @@
                  [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" opened [attr.color]="themeColor" class="example-mat-sidenav" [opened]="true">
       <mat-nav-list>
            <!-- notes -->
-          <mat-list-item routerLink="nav/note" >
+          <mat-list-item routerLink="note" >
           <img src="src/assets/images/outline_emoji_objects_black_18dp.png"><span style="margin-left:3em">Notes</span>
           </mat-list-item>
         <!-- <a mat-list-item routerLink="/nav/note" >Notes</a> -->
              <!-- remainders -->
 
-         <a mat-list-item routerLink="/reminder" ><mat-icon aria-label="Side nav toggle" >notifications_none</mat-icon>
+         <a mat-list-item routerLink="." ><mat-icon aria-label="Side nav toggle" >notifications_none</mat-icon>
           <span style="padding-left: 24px;">Remainder</span></a><br>
           <mat-divider></mat-divider><br>
 
-        <a mat-list-item routerLink="/label" ><mat-icon aria-label="Side nav toggle" >label</mat-icon>
+        <a mat-list-item routerLink="." ><mat-icon aria-label="Side nav toggle" >label</mat-icon>
         <span style="padding-left: 24px;">Label</span></a><br>
         <mat-divider></mat-divider>
 
@@ -82,7 +81,7 @@
         <span style="padding-left: 24px;">Archive</span></a><br>
 
         <a mat-list-item routerLink="." ><mat-icon aria-label="Side nav toggle" >restore_from_trash</mat-icon>
-        <span style="padding-left: 24px;">Trash</span></a><br>
+        <span style="padding-left: 24px;">Bin</span></a><br>
 
 
       </mat-nav-list>
