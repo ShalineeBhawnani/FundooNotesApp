@@ -1,3 +1,18 @@
+<!-- <div fxLayout="column wrap" fxLayoutGap="15px" fxLayoutAlign="flex-start">
+    <div>
+        <app-note (newNoteEvent)="getNewNote($event)"></app-note>
+    </div>
+    <div *ngIf="pinNotes.length!=0" class="pins">Pinned</div>
+    <div>
+        <app-displaynotes (pinEvent)="getNewNote($event)" [notes]="pinNotes"></app-displaynotes>
+    </div>
+    <div *ngIf="unPinNotes.length!=0" class="pins">Others</div>
+    <div>
+        <app-display-notes (pinEvent)="getNewNote($event)" [notes]="unPinNotes"></app-display-notes>
+    </div>
+</div> -->
+
+
 <app-note></app-note>
 <app-displaynotes></app-displaynotes>
 

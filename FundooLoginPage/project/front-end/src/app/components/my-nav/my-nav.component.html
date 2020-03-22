@@ -27,7 +27,8 @@
       </button>
     </div>
     <div style="margin-right:4.5em" fxLayoutAlign="center">
-      <mat-icon matTooltip="refresh">refresh</mat-icon></div>
+      <button mat-icon-button><mat-icon (click)="refresh()" matTooltip="refresh">refresh</mat-icon>
+      </button></div>
 
       <mat-icon  fxHide.lt-sm="true" matTooltip="Apps">apps</mat-icon >
         <div ngClass.gt-xs="account-div-gt-xs" ngClass.lt-sm="account-div-lt-sm" fxLayoutAlign="end center">
@@ -63,17 +64,17 @@
                  [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" opened [attr.color]="themeColor" class="example-mat-sidenav" [opened]="true">
       <mat-nav-list>
            <!-- notes -->
-          <mat-list-item routerLink="/nav/note">
+          <mat-list-item routerLink="nav/note" >
           <img src="src/assets/images/outline_emoji_objects_black_18dp.png"><span style="margin-left:3em">Notes</span>
           </mat-list-item>
         <!-- <a mat-list-item routerLink="/nav/note" >Notes</a> -->
              <!-- remainders -->
 
-         <a mat-list-item routerLink="." ><mat-icon aria-label="Side nav toggle" >notifications_none</mat-icon>
+         <a mat-list-item routerLink="/reminder" ><mat-icon aria-label="Side nav toggle" >notifications_none</mat-icon>
           <span style="padding-left: 24px;">Remainder</span></a><br>
           <mat-divider></mat-divider><br>
 
-        <a mat-list-item routerLink="." ><mat-icon aria-label="Side nav toggle" >label</mat-icon>
+        <a mat-list-item routerLink="/label" ><mat-icon aria-label="Side nav toggle" >label</mat-icon>
         <span style="padding-left: 24px;">Label</span></a><br>
         <mat-divider></mat-divider>
 

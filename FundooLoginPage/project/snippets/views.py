@@ -349,11 +349,12 @@ class Logout(GenericAPIView):
             return Response({'details': 'something went wrong while logout'})
 
 
-@method_decorator(login_required, name='dispatch') 
 class CreateProfile(GenericAPIView):
     serializer_class = ProfileUpdate
+    print(serializer_class)
     
     def post(self,request):
+       
         profile = Profile.objects.get(user=request.user)
         print(profile)
         data = request.data    
