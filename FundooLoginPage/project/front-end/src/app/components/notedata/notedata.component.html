@@ -1,3 +1,13 @@
 <app-note></app-note>
-<app-displaynotes></app-displaynotes>
-
+<!-- 
+<div fxLayout="row wrap" fxLayoutAlign="center" fxLayoutGap="20px" >
+    <mat-card *ngFor="let note of notes">
+  
+          <textarea class="textarea" matInput matTextareaAutosize placeholder="Take a note...">
+          {{note.title}}
+          {{note.note}}
+          </textarea>
+        </mat-card>
+   </div>
+  -->
+   <app-displaynotes [sendDataToChild]="ParentData"></app-displaynotes>

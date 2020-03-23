@@ -40,10 +40,13 @@ export class NoteComponent implements OnInit {
   saveNotes()
 
   {
+    this.sharedService.sendMessage(this.noteData);
+    
     console.log(this.title.value);
      let noteData = {
      title : this.title.value,
      note : this.note.value
+    
 
   }
     this.userService.note(noteData)

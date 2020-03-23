@@ -46,6 +46,7 @@
           [formControl]="note">{{note.value}}</textarea>
       </mat-card-content>
 
+      <div *ngIf="note$" >{{ ( note$ | async)?.text }}</div>
           <div fxLayout="row" fxLayoutAlign="start center">
            <app-icon></app-icon>
 
