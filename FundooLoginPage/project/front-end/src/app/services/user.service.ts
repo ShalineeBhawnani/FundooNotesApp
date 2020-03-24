@@ -102,4 +102,10 @@ return this.http.put(this.baseUrl+'noteupdate/'+note_id,userData,{headers:{
 'token':localStorage.getItem('token')}}
 );
 }
+updateBackgroundColor(data) {
+  console.log(localStorage.getItem('token'))
+  return this.http.post(this.baseUrl+'/color/', { headers: {
+    'token': localStorage.getItem('token')
+  } });
+}
 }

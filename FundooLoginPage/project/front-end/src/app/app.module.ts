@@ -33,6 +33,7 @@ import { TrashComponent } from './components/trash/trash.component';
 import { NoteDialogComponent } from './components/note-dialog/note-dialog.component';
 import { IconComponent } from './components/icon/icon.component';
 import { SharedService } from './/services/shared.service';
+import { DataService } from './/services/data.service';
 // import { TokenInterceptorService } from './services/token-interceptor.service';
 
 
@@ -96,7 +97,7 @@ import { SharedService } from './/services/shared.service';
 
   providers: [
     // { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true },
-    UserService,AuthGuard,AlertService,AuthenticationService,SharedService,
+    UserService,AuthGuard,AlertService,AuthenticationService,SharedService,DataService
     ],
   bootstrap: [AppComponent],
   entryComponents: [NoteDialogComponent]

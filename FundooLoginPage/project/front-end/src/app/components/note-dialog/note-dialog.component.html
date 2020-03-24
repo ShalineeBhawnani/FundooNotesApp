@@ -3,25 +3,25 @@
     <div fxLayoutAlign="center center">
 
     <mat-card class="matcard" ngClass.gt-xs="mat-card-gt-xs"
-    ngClass.lt-sm="mat-card-lt-sm">
+                        ngClass.lt-sm="mat-card-lt-sm">
 
-    <mat-card-content>
-    <div class="inputtag">
-    <textarea #titleinput matInput matTextareaAutosize [formControl]="title" class="textarea" > {{data.title}}</textarea>
-    </div>
-    </mat-card-content>
-    <br>
+        <mat-card-content>
+        <div class="inputtag">
+      <textarea #titleinput matInput matTextareaAutosize [formControl]="title" class="textarea" > {{ data.title }}</textarea>
+        </div>
+      </mat-card-content>
+    
 
-    <mat-card-content>
-    <div class="takeanote">
-    <textarea #textinput matInput matTextareaAutosize class="textarea" [formControl]="notes"> {{data.note}}</textarea>
-    </div>
-    </mat-card-content>
+        <mat-card-content>
+       <div class="takeanote">
+      <textarea #textinput matInput matTextareaAutosize class="textarea" [formControl]="notes"> {{ data.note }}</textarea>
+      </div>
+     </mat-card-content>
 
-
+    <app-icon ></app-icon>
     <button mat-button (click)="updateClick(titleinput.value,textinput.value)" class="button">Close</button>
 
-
     </mat-card>
+
     </div>
     </div>

@@ -66,24 +66,12 @@ fileNameDialogRef: MatDialogRef<NoteDialogComponent>;
     
     }
     
-    
-    
     }
   ngOnDestroy() {
     // unsubscribe to ensure no memory leaks
     // this.subscription.unsubscribe();
     }
-  //  getNotes=()=>{
-
-  //     this.userSerive.getAllNote().subscribe(
-  //       data => {
-  //         this.notes = data;
-  //       },
-  //       error => {
-  //         console.log(error);
-  //       }
-  //     );
-  //   }
+  
     openDialog(note) {
       {
       this.fileNameDialogRef = this.dialog.open(NoteDialogComponent, {

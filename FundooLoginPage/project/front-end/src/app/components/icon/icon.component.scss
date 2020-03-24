@@ -1,0 +1,48 @@
+.icons{
+    padding-left: 10px;
+    padding-bottom: 10px;
+    }
+    
+    .colorHolder{
+        width:100px;
+        height: 80px;
+        padding-left: 2PX;
+        border-radius: 80%;
+        //background-color: rgb(98, 155, 136)
+    
+    }
+    .mat-icon {
+      font-size: 18px;
+    }
+    
+    .dot {
+        height: 25px;
+        padding-left: 10px;
+        padding-bottom: 10px;
+        width: 24px;
+        border-radius: 50%;
+        display: inline-block;
+      }
+    
+      .menu{
+        width:150px;
+        
+      }
+      .input{
+        padding-top: 10px;
+        border:none;
+        resize: none;
+        width:100px;
+        min-height: 25px;
+        height: 30px;
+        outline: none;
+    }
+
+    .doneIcon{
+      padding-top: 0px;
+    }
+    
+    ::ng-deep .labels{
+      overflow-y:hidden;
+    }
+    

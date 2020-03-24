@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 import { AlertService } from '../../services/alert.service';
 import { UserService } from '../../services/user.service';
+import { DataService } from '../../services/data.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 
@@ -20,11 +21,16 @@ export class NotedataComponent implements OnInit {
   ParentData
  
 
-  constructor(private userSerive: UserService) {
-    this.getNotes();
+  constructor(private userService: UserService,private dataService:DataService) {
+    
    }
  
   ngOnInit() {
+    this.getNotes();
+    // this.dataService.currentMessage.subscribe((message)=>{
+    //   if(message=="Note added" || message=="Note Edited")
+    //   this.getNotes();
+    // })
 
    
   }
@@ -32,7 +38,7 @@ export class NotedataComponent implements OnInit {
 
    
 
-    this.userSerive.getAllNote().subscribe(
+    this.userService.getAllNote().subscribe(
       data => {
         console.log(data)
         this.notes = data;
@@ -46,27 +52,3 @@ export class NotedataComponent implements OnInit {
   }
 
 }
-// getNotes(){
-
-//   console.log(this.title.value);
-//   let noteData = {
-//   title : this.title.value,
-//   note : this.note.value
- 
-// }
-//  this.userService.getAllNote(noteData)
-
-// .subscribe(
-//    (data) => {
-//        console.log('Name: ' + this.title.value);
-//        this.alertService.success('notes got', true);
-//        // this.router.navigate(['/label']);
-//    },
-//    error => {
-//        this.alertService.error(error);
-
-//    });
-// }
-
-// }
-

@@ -1,17 +1,36 @@
+
+<div fxLayout="row" fxLayoutAlign="space-between center">
+
+    <div class="icons" >
+        {{visibility}}
 <button mat-icon-button color=""><mat-icon matTooltip="Remind me">notifications_none</mat-icon></button>
 <button mat-icon-button color=""><mat-icon matTooltip="Collaborator">person_add</mat-icon></button>
-<!-- <button mat-icon-button color="" [matMenuTriggerFor]="cardColorMenu"><mat-icon matTooltip="Change color">color_lens</mat-icon></button> -->
-<!-- <mat-menu #cardColorMenu="matMenu" fxlayoutAlign="space-around center" fxLayoutGap="2%">
-<app-color-picker [note]="" (colorEvent)="updateBackgroundColor($event)"></app-color-picker>
-</mat-menu> -->
+ <!-- <button mat-icon-button color="" [matMenuTriggerFor]="cardColorMenu"><mat-icon matTooltip="Change color">color_lens</mat-icon></button>
+<mat-menu #cardColorMenu="matMenu" fxlayoutAlign="space-around center" fxLayoutGap="2%">
+<app-color-picker (colorEvent)="updateBackgroundColor($event)"></app-color-picker>
+</mat-menu>  -->
+<button mat-icon-button [matMenuTriggerFor]="color">  
+<mat-icon>color_lens</mat-icon>  </button>
 <button mat-icon-button color=""><mat-icon matTooltip="Add image">crop_original</mat-icon></button>
 <button mat-icon-button (click)="setArchive()" [fxHide]="isArchived" color=""><mat-icon matTooltip="Archive">archive</mat-icon></button>
 <button mat-icon-button (click)="setArchive()" [fxHide]="!isArchived" color=""><mat-icon matTooltip="Unarchive">archive</mat-icon></button>
 <button mat-icon-button color="" [matMenuTriggerFor]="more_vert"><mat-icon matTooltip="More">more_vert</mat-icon></button>
 <mat-menu #more_vert="matMenu">
-<button mat-menu-item>
- Delete
-</button>
+    <button mat-menu-item (click)=deleteNotes()>Delete Note</button>
+    <!-- <button mat-menu-item [matMenuTriggerFor]="addLAbel">Add Label</button>
+    <button mat-menu-item (click)=labelAdd()>CheckList</button> -->
 </mat-menu>
+</div>
+</div>
 <!-- <button mat-icon-button color=""><mat-icon matTooltip="Undo">undo</mat-icon></button>
 <button mat-icon-button color=""><mat-icon matTooltip="Redo">redo</mat-icon></button> -->
+      
+    <mat-menu #color="matMenu" >
+        <div class="colorHolder" fxFlex="100">
+                <button mat-mini-fab class="dot"
+                 *ngFor="let color of colors; let i = index"
+                   [ngStyle]="{background: color}" 
+                   (click)=colorElement(color) ></button>
+        </div>
+                  
+    </mat-menu>

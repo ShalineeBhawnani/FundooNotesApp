@@ -19,37 +19,24 @@
     </mat-card>
 
     <!-- mat card expanded panel -->
-    <mat-card [fxHide]="!panelOpenState" [ngStyle]="{'background-color': matCardColor}" ngClass.gt-xs="mat-card-gt-xs"
+    <mat-card [fxHide]="!panelOpenState" [ngStyle]="{background: color}" ngClass.gt-xs="mat-card-gt-xs"
       ngClass.lt-sm="mat-card-lt-sm">
 
       <!-- mat card title -->
       <mat-card-title fxLayoutAlign="space-between center" style="margin-top:-0.5em;">
         <div class="inputtag">
-          <input matInput type="text" placeholder="Title" [formControl]=title />
+          <input matInput type="text" placeholder="Title" [formControl]=title [ngStyle]="{background: color}"/>
         </div>
       </mat-card-title>
-      <div style="width:20%;" fxLayoutAlign="end center" [fxHide]="!isAdvancedUser">
-        <button mat-icon-button color="" [fxHide]="isPinned" (click)="setPin()"><img
-            src="src/assets/images/outline_fiber_pin.png" /></button>
-        <button mat-icon-button color="" [fxHide]="!isPinned" (click)="setPin()"><img
-            src="src/assets/images/baseline_fiber_pin.png" /></button>
-      </div>
-
-      <!-- <mat-card-content>
-        <div class="takeanote">
-        <input matInput matTextareaAutosize placeholder="Take a note..."
-        [formControl]="note" /></div>
-      </mat-card-content> -->
-
+    
       <mat-card-content>
         <textarea matInput matTextareaAutosize placeholder="Take a note..."
-          [formControl]="note">{{note.value}}</textarea>
+          [formControl]="note" [ngStyle]="{background: color}" name="note">{{note.value}}</textarea>
       </mat-card-content>
 
-      <div *ngIf="note$" >{{ ( note$ | async)?.text }}</div>
           <div fxLayout="row" fxLayoutAlign="start center">
-           <app-icon></app-icon>
-
+           <!-- <app-icon></app-icon> -->
+           <app-icon (eventCarrier)="recieveMessageFromIcon($event)"></app-icon>
        <!-- closing buton -->
         <div fxLayoutAlign="center" fxLayoutAlign="space-around end">
         <button mat-button (click)="saveNotes(); panelOpenState=!panelOpenState;">Close</button>

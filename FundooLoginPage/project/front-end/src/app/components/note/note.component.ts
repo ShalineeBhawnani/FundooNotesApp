@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,Output,EventEmitter, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators}from '@angular/forms';
 import { AlertService } from '../../services/alert.service';
 import { UserService } from '../../services/user.service';
 import { AuthenticationService } from '../../services/authentication.service';
-import { SharedService } from '../../services/shared.service';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-note',
@@ -19,12 +19,16 @@ export class NoteComponent implements OnInit {
   note = new FormControl('', [
 
   ]);
-  noteData:string;
-
+  save: Boolean
+  message:string;
+  noteLabels=[];
+  labelIdList=[];
+  color:string ="#ffffff";
+  notes:string = "";
   constructor(
     private userService: UserService,
     private alertService: AlertService,
-    private sharedService: SharedService
+    private dataService:DataService
 
   ) {
 
@@ -32,21 +36,22 @@ export class NoteComponent implements OnInit {
 
    ngOnInit() {
   
-
+    this.dataService.currentMessage.subscribe(message => this.message = message)
     }
-
-
+    newMessage() {
+      this.dataService.changeMessage("Note added")
+    }
 
   saveNotes()
 
   {
-    this.sharedService.sendMessage(this.noteData);
+    // this.messageEvent.emit(this.message);
     
     console.log(this.title.value);
      let noteData = {
      title : this.title.value,
-     note : this.note.value
-    
+     note : this.note.value,
+     color:this.color,
 
   }
     this.userService.note(noteData)
@@ -54,6 +59,7 @@ export class NoteComponent implements OnInit {
   .subscribe(
       (data) => {
           console.log('Name: ' + this.title.value);
+          this.newMessage();
           this.alertService.success('notes created successfully', true);
           // this.router.navigate(['/label']);
       },
@@ -61,9 +67,18 @@ export class NoteComponent implements OnInit {
           this.alertService.error(error);
 
       });
-}
+    }
 
+    recieveMessageFromIcon($event){
+    if($event.purpose=="color"){
+    {
+      
+      this.color=$event.value;
+      console.log("my color",this.color)
+
+    }
   }
 
 
-
+  }
+}
