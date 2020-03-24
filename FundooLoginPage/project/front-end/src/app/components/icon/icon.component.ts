@@ -14,11 +14,17 @@ export class IconComponent implements OnInit {
   "#e8eaed","#e6c9a8","#fdcfe8","#d7aefb","#f28b82","#fbbc04","#fff475","#ccff90","#a7ffeb",
     "#cbf0f8","#aecbfa","#d7aefb"
   ]
+  save:Boolean=false;
   note:any;
   @Output() eventCarrier = new EventEmitter<Events>();
+  @Output() saveNotes = new EventEmitter<Boolean>();
   constructor(private dataService:DataService,) { }
 
   ngOnInit() {
+  }
+  saveNote() {
+    this.save=true;
+    this.saveNotes.emit(this.save);
   }
 
   colorElement(color){

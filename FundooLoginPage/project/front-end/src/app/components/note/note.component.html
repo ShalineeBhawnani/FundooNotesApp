@@ -36,7 +36,7 @@
 
           <div fxLayout="row" fxLayoutAlign="start center">
            <!-- <app-icon></app-icon> -->
-           <app-icon (eventCarrier)="recieveMessageFromIcon($event)"></app-icon>
+           <app-icon (eventCarrier)="recieveMessageFromIcon($event)" (saveNotes)="saveButtonClick($event)"></app-icon>
        <!-- closing buton -->
         <div fxLayoutAlign="center" fxLayoutAlign="space-around end">
         <button mat-button (click)="saveNotes(); panelOpenState=!panelOpenState;">Close</button>
