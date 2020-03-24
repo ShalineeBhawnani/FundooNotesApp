@@ -9,22 +9,31 @@ import { UserService } from '../../services/user.service';
 })
 export class ArchiveComponent implements OnInit {
 
+ 
   notes = [
     {   title: ' ',
         note: ' '}
       ]
-
+      ParentData
 
   constructor(private userSerive: UserService) {
 
-    this.getNotes();
+   
+  }
 
-   }
+    ngOnInit(){
+
+      this.getNotes();
+
+    }
+   
    getNotes=()=>{
 
       this.userSerive.ArchiveNote().subscribe(
         data => {
+          console.log("my data",data)
           this.notes = data;
+          this.ParentData = this.notes
         },
         error => {
           console.log(error);
@@ -32,10 +41,7 @@ export class ArchiveComponent implements OnInit {
       );
     }
 
-
-  ngOnInit(){
-
-  }
+  
 
 
 }

@@ -1,25 +1,26 @@
-// .mat-card{
-//   width: 150px;
-//   height: 150px;
-//   margin-top: 30px;
-//   border-radius: 20px;
-//   justify-content: flex-start;
-//   }
-//   .textarea{
-//   border: none;
-//   }
-
-.mat-card{
-  width: 200px;
-  height: 70px;
-  margin-top: 30px;
-  border-radius: 20px;
-  justify-content: flex-start;
+.noteGridContainer {
+  max-width: 1335px;
+  
+  margin: 0 auto;
+  .grid-row {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    
+    .grid-item {
+      margin-top: 40px;
+      margin-left: 20px;
+      margin-right:20px;
+      border-radius: 5%;
+      flex-basis: 25%;
+      min-width: 250px;
+      min-height: 180px;
+      //-ms-flex: auto;
+      
+      word-break: break-word;
+      position: relative;
+      padding: 10px;
+      box-sizing: border-box;
+    }
   }
-  .textarea{
-  border: none;
-  }
-
-  .clickable:hover {
-  cursor: pointer;
-  }
+}

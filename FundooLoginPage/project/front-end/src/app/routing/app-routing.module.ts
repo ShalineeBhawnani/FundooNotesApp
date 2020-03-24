@@ -29,14 +29,24 @@ const routes: Route[] = [
 
     children:[
       {path:'', redirectTo: 'note', pathMatch:'full'},
+      
       {path:'note',
-      component:NotedataComponent,
-      canActivate: [AuthGuard]},
+           component:NotedataComponent,
+      },
       {
         path:'reminder',
         component: NoteComponent
       },
 
+      {
+        path:'bin',
+        component: TrashComponent
+        },
+
+     {
+       path:'archive',
+       component: ArchiveComponent
+    },
     ]
 },
 
@@ -47,15 +57,6 @@ const routes: Route[] = [
 
 },
 
-  {
-    path:'trash',
-    component: TrashComponent
-  },
-
-  {
-    path:'archive',
-    component: ArchiveComponent
-  },
 
 
 ];

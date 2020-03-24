@@ -22,6 +22,7 @@ export class IconComponent implements OnInit {
 
   ngOnInit() {
   }
+  
   saveNote() {
     this.save=true;
     this.saveNotes.emit(this.save);

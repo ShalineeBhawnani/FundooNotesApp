@@ -1,16 +1,17 @@
-<div fxLayout="row wrap" fxLayoutAlign="center" fxLayoutGap="20px" >
-  <mat-card *ngFor="let note of notes" (click)="openDialog(note)" matRipple class="clickable" >
 
-        <textarea class="textarea" matInput matTextareaAutosize placeholder="Take a note...">
-        {{note.title}}
-        {{note.note}}
-     
-        </textarea>
-         
-      </mat-card>
+<div  class="noteGridContainer" >
+  <div  class="grid-row" >
+      <mat-card *ngFor="let note of notes; let i = index"  (click)="openDialog(note)" matRipple class="clickable" class="grid-item"  
+      [ngStyle]="{background: note.color}" fxLayout="column" 
+      fxLayoutAlign="space-between stretch">
+      
+            <div >
+              <mat-card-title>{{note.title}}</mat-card-title>
+              <mat-card-content >{{note.note}}</mat-card-content>
+            </div>
+              <mat-card-footer><app-icon (eventCarrier)="recieveMessageFromIconTray($event,value.id)"></app-icon></mat-card-footer>
+            </mat-card>
+              
+    </div>
 
- </div>
-
-
-
- 
+</div>

@@ -18,9 +18,9 @@ class NoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note
 
-        # fields = '__all__'
-        fields = ['title','note', 'label_note','add_picture', 'is_archived', 'is_bin', 'color',
-                  'is_pinned', 'more', 'reminder', 'collaborators','created_on','last_edited']
+        fields = '__all__'
+        # fields = ['title','note', 'label_note','add_picture', 'is_archived', 'is_bin', 'color',
+        #           'is_pinned', 'more', 'reminder', 'collaborators','created_on','last_edited']
         # fields=['title','note']
       
         #read_only_fields = ['user']
@@ -60,3 +60,15 @@ class ReminderSerializer(serializers.ModelSerializer):
         fields = ['reminder']
 # label_note = LabelSerializer(many=True, read_only=True)
 #         collaborators = CollaboratorSerializer(many=True, read_only=True)
+
+
+
+class RestoreNoteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Note
+        fields = ['is_bin']
+
+class ArchiveNoteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Note
+        fields = ['is_archived']

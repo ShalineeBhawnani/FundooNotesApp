@@ -1,5 +1,5 @@
 from note.models import Note,Label
-from note.serializer import LabelSerializer,Userserializer,ReminderSerializer,UpdateSerializer,SearchSerializer,NoteSerializer,LabelFunctionSerializer,NoteFunctionSerializer
+from note.serializer import LabelSerializer,ArchiveNoteSerializer,RestoreNoteSerializer,Userserializer,ReminderSerializer,UpdateSerializer,SearchSerializer,NoteSerializer,LabelFunctionSerializer,NoteFunctionSerializer
 from rest_framework import mixins
 from rest_framework import generics
 from rest_framework.response import Response
@@ -63,7 +63,7 @@ class CreateLabel(generics.GenericAPIView):
         print("get request")
         try:
             user_id = request.user
-            print(user_id)
+           
             label = self.queryset.filter(user_id=user_id)
             return Response(label.values(), status=status.HTTP_200_OK)
         except Exception:
@@ -82,17 +82,11 @@ class CreateLabel(generics.GenericAPIView):
         print(serializer) #TODO Token Auth decorator
         if serializer.is_valid():
             token = request.headers.get('Token')
-            print(token)
             mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
-            print(SECRET_KEY)
-            print(mytoken)
-            print(str(mytoken))
             user_id=mytoken.get('username')
-            print(user_id)
             user=User.objects.get(username=user_id)
-            print(user)
             serializer.save(user_id=user.id)
-            print("saved") # TODO Name/id from token
+
             return Response({"data": "data created successfully"}, 
                             status=status.HTTP_201_CREATED)
         else:
@@ -131,15 +125,9 @@ class CreateNote(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
         print("get request")
         token = request.headers.get('Token')
-        print(token)
         mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
-        print(SECRET_KEY)
-        print(mytoken)
-        print(str(mytoken))
         user_id=mytoken.get('username')
-        print(user_id)
         user=User.objects.get(username=user_id)
-        print(user)
         try:
             # data = request.data
             # username = data.get('username')
@@ -147,7 +135,6 @@ class CreateNote(generics.GenericAPIView):
             # user_id = request.user
             # print(user_id)
             note = self.queryset.filter(user_id=user.id)
-            print(note)
             return Response(note.values(), status=status.HTTP_200_OK)
         except Exception:
             return Response(Exception, status=status.HTTP_403_FORBIDDEN)
@@ -238,50 +225,62 @@ class NoteUpdate(generics.GenericAPIView):
 
             return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
-# @method_decorator(login_required, name='dispatch')    
-class ArchivedNotes(generics.GenericAPIView):
-    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-    #                       IsOwnerOrReadOnly,)
+  
+# class ArchivedNotes(generics.GenericAPIView):
     
-    def get(self,request):
-        print("get request")
-        token = request.headers.get('Token')
-        print(token)
-        mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
-        print(SECRET_KEY)
-        print(mytoken)
-        print(str(mytoken))
-        user_id=mytoken.get('username')
-        print(user_id)
-        user=User.objects.get(username=user_id)
-        print(user)
-        is_archived=Note.objects.all().filter(is_archived=True,user_id=user.id)
-        print(is_archived)
-        serializer_class=NoteSerializer
-        return Response(is_archived.values(),status=status.HTTP_200_OK)
+#     def get(self, request, *args, **kwargs):
+#         print("get request")
+#         token = request.headers.get('Token')
+#         print(token)
+#         mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+#         print(SECRET_KEY)
+#         print(mytoken)
+#         print(str(mytoken))
+#         user_id=mytoken.get('username')
+#         print(user_id)
+#         user=User.objects.get(username=user_id)
+#         print(user)
+#         is_archived=Note.objects.all().filter(is_archived=True,user_id=user.id)
+#         print(is_archived)
+#         serializer_class=NoteSerializer
+#         return Response(is_archived.values(),status=status.HTTP_200_OK)
         
  
-class BinNotes(generics.GenericAPIView):
-    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-    #                       IsOwnerOrReadOnly,)
-    
-    
-    def get(self,request):
-        print("get request")
+class ArchivedNotes(generics.GenericAPIView):
+    serializer_class = ArchiveNoteSerializer
+    queryset = Note.objects.all()
+    print(queryset)
+    def get(self, request):
         token = request.headers.get('Token')
-        print(token)
         mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
-        print(SECRET_KEY)
-        print(mytoken)
-        print(str(mytoken))
         user_id=mytoken.get('username')
         print(user_id)
         user=User.objects.get(username=user_id)
-        print(user.id)
-        is_bin=Note.objects.all().filter(is_bin=True, user=request.user.id)
-        print(is_bin)
-        serializer_class=NoteSerializer
-        return Response(is_bin.values(),status=status.HTTP_200_OK)
+        note = Note.objects.filter(is_archived=True, user_id=user.id)
+        seri = NoteSerializer(note, many=True)
+        return Response(seri.data, status=status.HTTP_200_OK)
+
+
+class BinNotes(generics.GenericAPIView):
+    serializer_class = RestoreNoteSerializer
+    queryset = Note.objects.all()
+
+    def get(self,request):
+        try:
+
+            token = request.headers.get('Token')
+            print(token)
+            received_token = jwt.decode(token,SECRET_KEY,algorithms=['HS256'])
+            token_username = received_token.get('username')
+            user=User.objects.get(username=token_username)
+
+            userid = User.objects.get(id=user.id)
+            note = Note.objects.filter(is_bin=True , user_id=userid)
+            serial_class = NoteSerializer(note, many=True)
+            return Response(serial_class.data)
+        except Note.DoesNotExist:
+            return Response("Not found")
+
 
 @method_decorator(login_required, name='dispatch')   
 class Remider(generics.GenericAPIView):
@@ -378,4 +377,74 @@ class SearchNote(generics.GenericAPIView):
 
 
 
+
+# lass UpdateNoteList(GenericAPIView):
+
+#     serializer_class = DisplayNoteSerializer
+#     def get(self,request,pk):
+
+#         user = User.objects.get(id=self.request.user.id)
+#         note = Notes.objects.get(id=pk,user_id=user.id)
+#         serial_class = DisplayNoteSerializer(note)
+#         return Response(serial_class.data)
+
+#     def put(self,request,pk):
+#         token = request.headers.get('Token')
+#         print(token)
+#         received_token = jwt.decode(token,SECRET_KEY,algorithms=['HS256'])
+#         token_username = received_token.get('username')
+#         user=User.objects.get(username=token_username)
+#         print(user)
+#         note = Notes.objects.get(id=pk,user_id=user.id)
+#         serializer = CreateNoteSerializer(note,data=request.data)
+#         if serializer.is_valid():
+#             serializer.save(user_id=user.id)
+#             return Response("Notes Updated Successfully")
+#         return Response('Oops Something went Wrong')
+
+
+# class ArchiveNoteList(GenericAPIView):
+
+#     serializer_class = DisplayNoteSerializer
+#     queryset = Notes.objects.all()
+
+#     def get(self,request):
+#         user = User.objects.get(id=self.request.user.id)
+#         note = Notes.objects.filter(archive = True,user_id=user.id)
+#         serial_class = DisplayNoteSerializer(note,many=True)
+#         return Response(serial_class.data)   
+
+# class PinNoteList(GenericAPIView):
+
+#     serializer_class = DisplayNoteSerializer
+#     queryset = Notes.objects.all()
+
+#     def get(self,request):
+#         user = User.objects.get(id=self.request.user.id)
+#         note = Notes.objects.filter(pin = True,user_id=user.id)
+#         serial_class = DisplayNoteSerializer(note,many=True)
+#         return Response(serial_class.data)
+
+
+# class TrashNote(GenericAPIView):
+
+#     serializer_class = RestoreNoteSerializer
+#     queryset = Notes.objects.all()
+
+#     def get(self,request,pk):
+#         try:
+#             user = User.objects.get(id=self.request.user.id)
+#             note = Notes.objects.get(id = pk ,trash=True, user_id=user)
+#             serial_class = DisplayNoteSerializer(note)
+#             return Response(serial_class.data)
+#         except Notes.DoesNotExist:
+#             return Response("Not found")
+
+#     def put(self,request,pk):
+#         user = User.objects.get(id=self.request.user.id)
+#         note = Notes.objects.get(id=pk,user_id=self.request.user.id)
+#         serializer = RestoreNoteSerializer(note,data=request.data)
+#         if serializer.is_valid():
+#             serializer.save(user_id=self.request.user.id)
+#             return Response('Restore Note')
 

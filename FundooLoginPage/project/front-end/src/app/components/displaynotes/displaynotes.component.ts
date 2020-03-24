@@ -26,17 +26,10 @@ export class DisplaynotesComponent implements OnInit,OnDestroy {
 
 fileNameDialogRef: MatDialogRef<NoteDialogComponent>;
 
-  // notes = [
-  //   {   title: ' ',
-  //       note: ' '}
-  //     ]
   notes =[]
 
   constructor(private userSerive: UserService,public dialog:MatDialog,
     private sharedService: SharedService) {
-
-    // this.getNotes();
-    // this.note$ = this.sharedService.getMessage();
 
    }
 
@@ -68,8 +61,7 @@ fileNameDialogRef: MatDialogRef<NoteDialogComponent>;
     
     }
   ngOnDestroy() {
-    // unsubscribe to ensure no memory leaks
-    // this.subscription.unsubscribe();
+ 
     }
   
     openDialog(note) {

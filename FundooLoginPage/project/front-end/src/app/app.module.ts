@@ -26,7 +26,6 @@ import { NoteComponent } from './components/note/note.component';
 import { LabelComponent } from './components/label/label.component';
 import { ReminderComponent } from './components/reminder/reminder.component';
 import { ArchiveComponent } from './components/archive/archive.component';
-import { ColorPickerComponent } from './components/color-picker/color-picker.component';
 import { DisplaynotesComponent } from './components/displaynotes/displaynotes.component';
 import { NotedataComponent } from './components/notedata/notedata.component';
 import { TrashComponent } from './components/trash/trash.component';
@@ -53,8 +52,6 @@ import { DataService } from './/services/data.service';
     LabelComponent,
     ReminderComponent,
     ArchiveComponent,
-
-    ColorPickerComponent,
     DisplaynotesComponent,
     NotedataComponent,
     TrashComponent,

@@ -1,14 +1,1 @@
-<div fxLayoutAlign="center" fxLayout="row wrap-reverse" fxLayoutGap="20px" >
-  <mat-card class="mat-card" *ngFor="let note of notes" style="margin-top:10px;">
-
-      <textarea class="textarea" matInput matTextareaAutosize placeholder="Take a note...">
-      {{note.title}}
-      {{note.note}}
-      </textarea>
-
-      <div class="footer-close-button-div" fxLayoutAlign="end center">
-        <button mat-button (click)="updateNotes(); panelOpenState=!panelOpenState;">Close</button>
-    </div>
-
-    </mat-card>
-</div>
+<app-displaynotes [sendDataToChild]="ParentData"></app-displaynotes>

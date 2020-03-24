@@ -11,18 +11,26 @@ export class TrashComponent implements OnInit {
     {   title: ' ',
         note: ' '}
       ]
-
+      ParentData
 
   constructor(private userSerive: UserService) {
 
-    this.getNotes();
+   
+  }
 
-   }
+    ngOnInit(){
+      
+      this.getNotes();
+
+    }
+   
    getNotes=()=>{
 
-      this.userSerive.Trash().subscribe(
+      this.userSerive.bin().subscribe(
         data => {
+          console.log("my data",data)
           this.notes = data;
+          this.ParentData = this.notes
         },
         error => {
           console.log(error);
@@ -30,11 +38,7 @@ export class TrashComponent implements OnInit {
       );
     }
 
-
-  ngOnInit(){
-
-  }
+  
 
 
 }
-

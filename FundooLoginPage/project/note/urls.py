@@ -18,6 +18,7 @@ urlpatterns = [
     path('search/', SearchNote.as_view(),name="search"),
     path('archive/', ArchivedNotes.as_view(),name="archive"),
     path('bin/', BinNotes.as_view(),name="bin"),
+    # path('trashnote/', TrashList.as_view(),name="trashnote"),  
     path('reminder/', Remider.as_view(),name="reminder"),
     path('reminder_update/<id>' ,ReminderUpdate.as_view(),name="ReminderUpdate"),
    

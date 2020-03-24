@@ -15,32 +15,31 @@ export class NotedataComponent implements OnInit {
  
   notes = [
     {   title: ' ',
-        note: ' '}
+        note: ' ',
+        color: ' '}
       ]
-      
   ParentData
- 
+  message:string;
 
   constructor(private userService: UserService,private dataService:DataService) {
     
    }
  
   ngOnInit() {
+    
     this.getNotes();
-    // this.dataService.currentMessage.subscribe((message)=>{
-    //   if(message=="Note added" || message=="Note Edited")
-    //   this.getNotes();
-    // })
+    this.dataService.currentMessage.subscribe((message)=>{
+      if(message=="Note added" || message=="Note Edited")
+      this.getNotes();
+    })
 
    
   }
   getNotes=()=>{
 
-   
-
     this.userService.getAllNote().subscribe(
       data => {
-        console.log(data)
+        console.log("my data",data)
         this.notes = data;
         this.ParentData = this.notes
       },

@@ -88,7 +88,7 @@ ArchiveNote():Observable<any>
   } });
 }
 
-Trash():Observable<any>
+bin():Observable<any>
 {
   return this.http.get(this.baseUrl+'/bin/',
   { headers: {
@@ -102,10 +102,5 @@ return this.http.put(this.baseUrl+'noteupdate/'+note_id,userData,{headers:{
 'token':localStorage.getItem('token')}}
 );
 }
-updateBackgroundColor(data) {
-  console.log(localStorage.getItem('token'))
-  return this.http.post(this.baseUrl+'/color/', { headers: {
-    'token': localStorage.getItem('token')
-  } });
-}
+
 }
