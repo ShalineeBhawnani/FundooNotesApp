@@ -13,7 +13,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatExpansionModule} from '@angular/material'
+import {MatExpansionModule} from '@angular/material';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 
 
@@ -34,6 +36,8 @@ import {MatExpansionModule} from '@angular/material'
         MatFormFieldModule,
         MatCheckboxModule,
         MatExpansionModule,
+        MatSnackBarModule,
+        MatButtonToggleModule,
 
 
     ],
@@ -51,7 +55,10 @@ import {MatExpansionModule} from '@angular/material'
         FlexLayoutModule,
         MatFormFieldModule,
         MatCheckboxModule,
-        MatExpansionModule
+        MatExpansionModule,
+        MatSnackBarModule,
+        MatButtonToggleModule,
+        MatDialogModule
 
 
 

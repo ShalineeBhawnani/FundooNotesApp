@@ -1,8 +1,9 @@
-import { Component,Output,EventEmitter, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators}from '@angular/forms';
-import { AlertService } from '../../services/alert.service';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators}from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { AuthenticationService } from '../../services/authentication.service';
+import { SharedService } from '../../services/shared.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import { DataService } from '../../services/data.service';
 
 @Component({
@@ -14,9 +15,11 @@ import { DataService } from '../../services/data.service';
 export class NoteComponent implements OnInit {
 
   title = new FormControl('', [
+    Validators.required,
 
   ]);
   note = new FormControl('', [
+    Validators.required,
 
   ]);
   save: Boolean
@@ -25,12 +28,12 @@ export class NoteComponent implements OnInit {
   labelIdList=[];
   color:string ="#ffffff";
   notes:string = "";
+
   constructor(
     private userService: UserService,
-    private alertService: AlertService,
-    private dataService:DataService
-
-  ) {
+    private snackBar:MatSnackBar,
+    private dataService:DataService,
+    private sharedService: SharedService) {
 
    }
 
@@ -54,20 +57,21 @@ export class NoteComponent implements OnInit {
      color:this.color,
 
   }
-    this.userService.note(noteData)
-
-  .subscribe(
-      (data) => {
-          console.log('Name: ' + this.title.value);
-          this.newMessage();
-          this.alertService.success('notes created successfully', true);
-          // this.router.navigate(['/label']);
-      },
-      error => {
-          this.alertService.error(error);
-
+ 
+  this.userService.createNote(noteData).subscribe(
+    (data) => {
+      this.snackBar.open(data.toString(),'',{
+        duration:3000,
+        verticalPosition:'bottom'
       });
+      console.log("data ",data)
+    },
+    error => {
+      alert('Note Creation failed')
+    
+    });
     }
+    
 
     recieveMessageFromIcon($event){
     if($event.purpose=="color"){
@@ -82,3 +86,4 @@ export class NoteComponent implements OnInit {
 
   }
 }
+

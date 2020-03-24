@@ -56,11 +56,11 @@ export class UserService {
       } });
     }
 
-  note(noteData):Observable<any>
+createNote(userData):Observable<any>
   {
 
         console.log(localStorage.getItem('token'))
-        return this.http.post(this.baseUrl+'/note/', noteData, { headers: {
+        return this.http.post(this.baseUrl+'/note/', userData, { headers: {
           'token': localStorage.getItem('token')
         } });
       }

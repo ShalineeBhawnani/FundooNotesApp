@@ -117,13 +117,11 @@ class LabelDetails(generics.ListAPIView):
         
 # @login_required
 class CreateNote(generics.GenericAPIView):
-    print("post")
     serializer_class = NoteSerializer
     queryset= Note.objects.all().filter(is_archived=False,is_bin=False)
     # print(queryset)
    
     def get(self, request, *args, **kwargs):
-        print("get request")
         token = request.headers.get('Token')
         mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
         user_id=mytoken.get('username')
@@ -142,22 +140,15 @@ class CreateNote(generics.GenericAPIView):
     
     def post(self,request):
         data=request.data
-        print(data)
         note_serializer = NoteSerializer(data=request.data)
         print(note_serializer.is_valid())
         if note_serializer.is_valid():
-            print("valid")
+        
             token = request.headers.get('Token')
-            print(token)
             mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
-            print(mytoken)
             user_id=mytoken.get('username')
-            print(user_id)
             user=User.objects.get(username=user_id)
-            print(user)
-            print("valid")
             note_serializer.save(user_id=user.id)
-            print("saved")
             return Response({"data": "data created successfully"}, 
                             status=status.HTTP_201_CREATED)
         else:
