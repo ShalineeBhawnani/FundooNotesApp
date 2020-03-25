@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
-import { AlertService } from '../../services/alert.service';
 import { UserService } from '../../services/user.service';
 import { DataService } from '../../services/data.service';
-import { AuthenticationService } from '../../services/authentication.service';
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+
 
 @Component({
   selector: 'app-notedata',
@@ -28,6 +25,7 @@ export class NotedataComponent implements OnInit {
   ngOnInit() {
     
     this.getNotes();
+    this.dataService.currentMessage.subscribe(message => this.message = message)
     this.dataService.currentMessage.subscribe((message)=>{
       if(message=="Note added" || message=="Note Edited")
       this.getNotes();
@@ -49,5 +47,17 @@ export class NotedataComponent implements OnInit {
       }
     );
   }
-
-}
+  checkNoteAdded(){
+    //console.log("in note add")
+    if(this.message="Note Added")
+      this.getNotes();
+      //this.message="";
+  
+  
+  }
+  recieveMessageFromDisplay(event){
+    if(event.purpose=="refresh")
+    this.getNotes()
+  }
+  
+  }

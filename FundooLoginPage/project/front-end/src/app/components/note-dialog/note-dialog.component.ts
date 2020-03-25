@@ -1,8 +1,7 @@
 import { Component, OnInit ,Inject} from '@angular/core';
-import {MatDialog, MatDialogRef,MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialogRef,MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { AlertService } from '../../services/alert.service';
 import { UserService } from '../../services/user.service';
-import { AuthenticationService } from '../../services/authentication.service';
 
 
 @Component({
@@ -27,20 +26,20 @@ constructor( private dialogRef: MatDialogRef<NoteDialogComponent>,
   updateClick(title:string,note:string): void {
     let notedata = {
       title: title,
-      note:note
+      note: note,
 
       }
       this.userService.updateNotes(notedata,this.data.id)
       .subscribe(
           (data) => {
-              this.alertService.success('notes created successfully', true);
-              // this.router.navigate(['/label']);
+              this.alertService.success('notes updated successfully', true);
+              
           },
           error => {
               this.alertService.error(error);
 
           });
-          this.dialogRef.close();
+          this.dialogRef.close(notedata);
     }
 
       }

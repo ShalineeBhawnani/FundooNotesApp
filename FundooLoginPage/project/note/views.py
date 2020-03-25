@@ -115,7 +115,6 @@ class LabelDetails(generics.ListAPIView):
         queryset= Label.objects.filter(user_id=user)
         return queryset
         
-# @login_required
 class CreateNote(generics.GenericAPIView):
     serializer_class = NoteSerializer
     queryset= Note.objects.all().filter(is_archived=False,is_bin=False)
@@ -141,9 +140,7 @@ class CreateNote(generics.GenericAPIView):
     def post(self,request):
         data=request.data
         note_serializer = NoteSerializer(data=request.data)
-        print(note_serializer.is_valid())
         if note_serializer.is_valid():
-        
             token = request.headers.get('Token')
             mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
             user_id=mytoken.get('username')
@@ -177,45 +174,20 @@ class NoteDetails(generics.ListAPIView):
         print(queryset)
         return queryset
         
-
 class NoteUpdate(generics.GenericAPIView):
     queryset=Note.objects.all()
     serializer_class=NoteSerializer
+
     def put(self,request,pk):
-        data=request.data
-        print(data)
-        note_serializer = NoteSerializer(data=request.data)
-        print(note_serializer.is_valid())
-        if note_serializer.is_valid():
-            print("valid")
-            token = request.headers.get('Token')
-            print(token)
-            mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
-            print(mytoken)
-            user_id=mytoken.get('username')
-            print(user_id)
-            user=User.objects.get(username=user_id)
-            print(user)
-            print("valid")
-            note_serializer.save(user_id=user.id)
-            print("saved")
-            return Response({"data": "data created successfully"}, 
-                            status=status.HTTP_201_CREATED)
-        else:
-            error_details = []
-            for key in note_serializer.errors.keys():
-                error_details.append({"field": key, "message": note_serializer.errors[key][0]})
-
-            data = {
-                    "Error": {
-                        "status": 400,
-                        "message": "Your submitted data was not valid - please correct the below errors",
-                        "error_details": error_details
-                        }
-                    }
-
-            return Response(data, status=status.HTTP_400_BAD_REQUEST)
-
+        token = request.headers.get('Token')
+        mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+        user_id=mytoken.get('username')
+        user=User.objects.get(username=user_id)
+        note = Note.objects.get(id=pk,user_id=user.id)
+        serializer = NoteSerializer(note,data=request.data)
+        if serializer.is_valid():
+            serializer.save(user_id=user.id)
+            return Response("Notes Updated Successfully")
   
 # class ArchivedNotes(generics.GenericAPIView):
     
@@ -240,17 +212,15 @@ class NoteUpdate(generics.GenericAPIView):
 class ArchivedNotes(generics.GenericAPIView):
     serializer_class = ArchiveNoteSerializer
     queryset = Note.objects.all()
-    print(queryset)
+   
     def get(self, request):
         token = request.headers.get('Token')
         mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
         user_id=mytoken.get('username')
-        print(user_id)
         user=User.objects.get(username=user_id)
         note = Note.objects.filter(is_archived=True, user_id=user.id)
         seri = NoteSerializer(note, many=True)
         return Response(seri.data, status=status.HTTP_200_OK)
-
 
 class BinNotes(generics.GenericAPIView):
     serializer_class = RestoreNoteSerializer
@@ -258,13 +228,11 @@ class BinNotes(generics.GenericAPIView):
 
     def get(self,request):
         try:
-
             token = request.headers.get('Token')
             print(token)
             received_token = jwt.decode(token,SECRET_KEY,algorithms=['HS256'])
             token_username = received_token.get('username')
             user=User.objects.get(username=token_username)
-
             userid = User.objects.get(id=user.id)
             note = Note.objects.filter(is_bin=True , user_id=userid)
             serial_class = NoteSerializer(note, many=True)
@@ -331,8 +299,6 @@ class LabelUpdate(generics.GenericAPIView,mixins.UpdateModelMixin,mixins.Destroy
         user_id= self.request.user.id
         return self.destroy(request,user_id)
 
-
-
 @method_decorator(login_required, name='dispatch') 
 class SearchNote(generics.GenericAPIView):
     serializer_class = SearchSerializer
@@ -340,10 +306,8 @@ class SearchNote(generics.GenericAPIView):
     
     def post(self, request, id=None):
         elastic_client = Elasticsearch(hosts=["localhost"])
-        
         user_request = SearchSerializer(data=request.data)
         print(user_request)
-
         if user_request.is_valid():
             query_body = {
                 "query": {
@@ -369,7 +333,7 @@ class SearchNote(generics.GenericAPIView):
 
 
 
-# lass UpdateNoteList(GenericAPIView):
+# class UpdateNoteList(GenericAPIView):
 
 #     serializer_class = DisplayNoteSerializer
 #     def get(self,request,pk):

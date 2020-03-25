@@ -1,5 +1,4 @@
-
-  <div fxLayoutAlign="start center" fxLayout="column">
+<div fxLayoutAlign="start center" fxLayout="column">
     <div fxLayoutAlign="center center">
 
     <mat-card class="matcard" ngClass.gt-xs="mat-card-gt-xs"
@@ -7,14 +6,13 @@
 
         <mat-card-content>
         <div class="inputtag">
-      <textarea #titleinput matInput matTextareaAutosize [formControl]="title" class="textarea" > {{ data.title }}</textarea>
+      <textarea #titleinput matInput matTextareaAutosize class="textarea" [formControl]="title" > {{data.title}}</textarea>
         </div>
       </mat-card-content>
     
-
         <mat-card-content>
        <div class="takeanote">
-      <textarea #textinput matInput matTextareaAutosize class="textarea" [formControl]="notes"> {{ data.note }}</textarea>
+      <textarea #textinput matInput matTextareaAutosize class="textarea" [formControl]="note"> {{data.note}}</textarea>
       </div>
      </mat-card-content>
 

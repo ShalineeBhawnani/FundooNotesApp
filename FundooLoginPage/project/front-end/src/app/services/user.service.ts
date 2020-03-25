@@ -98,7 +98,7 @@ bin():Observable<any>
 
 updateNotes(userData,note_id):Observable<any>
 {
-return this.http.put(this.baseUrl+'noteupdate/'+note_id,userData,{headers:{
+return this.http.put(this.baseUrl+'/noteupdate/'+note_id,userData,{headers:{
 'token':localStorage.getItem('token')}}
 );
 }
