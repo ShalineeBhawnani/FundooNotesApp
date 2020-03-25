@@ -36,7 +36,12 @@ export class IconComponent implements OnInit {
    
     this.eventCarrier.emit(this.event);
   }
-
+  deleteNotes(){
+    this.event={
+      "purpose":"deleteNote",
+    }
+    this.eventCarrier.emit(this.event);
+  }
 
   colorElement(color){
     console.log("color",color)

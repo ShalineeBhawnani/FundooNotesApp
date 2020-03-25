@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators}from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { AuthenticationService } from '../../services/authentication.service';
-import { SharedService } from '../../services/shared.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { DataService } from '../../services/data.service';
 
@@ -29,13 +28,14 @@ export class NoteComponent implements OnInit {
   color:string ="#ffffff";
   notes:string = ""; 
   is_archived:boolean=false;
+  is_bin:boolean=false;
+
 
 
   constructor(
     private userService: UserService,
     private snackBar:MatSnackBar,
-    private dataService:DataService,
-    private sharedService: SharedService) {
+    private dataService:DataService,) {
 
    }
 
@@ -57,7 +57,8 @@ export class NoteComponent implements OnInit {
      title : this.title.value,
      note : this.note.value,
      color:this.color,
-     is_archived:this.is_archived,  
+     is_archived:this.is_archived, 
+     is_bin:this.is_bin, 
 
   }
  
@@ -92,7 +93,13 @@ export class NoteComponent implements OnInit {
     
 
   }
+  if($event.purpose=="deleteNote"){
+    console.log("deleteNote");
+    this.is_bin=true;
+    this.saveNotes();
+    
 
+  }
 
   }
 }
