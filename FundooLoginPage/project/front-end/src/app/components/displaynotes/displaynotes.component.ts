@@ -54,10 +54,7 @@ fileNameDialogRef: MatDialogRef<NoteDialogComponent>;
     } catch (error) {
     
     console.log('error in ngAfterContentInit in display component');
-    
-    
     }
-    
     }
   ngOnDestroy() {
  

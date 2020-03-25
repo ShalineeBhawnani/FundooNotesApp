@@ -27,7 +27,9 @@ export class NoteComponent implements OnInit {
   noteLabels=[];
   labelIdList=[];
   color:string ="#ffffff";
-  notes:string = "";
+  notes:string = ""; 
+  is_archived:boolean=false;
+
 
   constructor(
     private userService: UserService,
@@ -55,6 +57,7 @@ export class NoteComponent implements OnInit {
      title : this.title.value,
      note : this.note.value,
      color:this.color,
+     is_archived:this.is_archived,  
 
   }
  
@@ -81,6 +84,13 @@ export class NoteComponent implements OnInit {
       console.log("my color",this.color)
 
     }
+  }
+  if($event.purpose=="archive"){
+    console.log("archiving");
+    this.is_archived=true;
+    this.saveNotes();
+    
+
   }
 
 

@@ -16,8 +16,10 @@ export class IconComponent implements OnInit {
   ]
   save:Boolean=false;
   note:any;
+  dummy:boolean=false;
   @Output() eventCarrier = new EventEmitter<Events>();
   @Output() saveNotes = new EventEmitter<Boolean>();
+
   constructor(private dataService:DataService,) { }
 
   ngOnInit() {
@@ -27,6 +29,14 @@ export class IconComponent implements OnInit {
     this.save=true;
     this.saveNotes.emit(this.save);
   }
+  archive(){
+    this.event={
+      "purpose":"archive",
+    }
+   
+    this.eventCarrier.emit(this.event);
+  }
+
 
   colorElement(color){
     console.log("color",color)

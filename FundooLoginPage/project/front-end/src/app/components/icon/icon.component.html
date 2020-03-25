@@ -6,8 +6,8 @@
 <button mat-icon-button [matMenuTriggerFor]="color">  
 <mat-icon>color_lens</mat-icon>  </button>
 <button mat-icon-button color=""><mat-icon matTooltip="Add image">crop_original</mat-icon></button>
-<button mat-icon-button (click)="setArchive()" [fxHide]="isArchived" color=""><mat-icon matTooltip="Archive">archive</mat-icon></button>
-<button mat-icon-button (click)="setArchive()" [fxHide]="!isArchived" color=""><mat-icon matTooltip="Unarchive">archive</mat-icon></button>
+<button mat-icon-button (click)=archive()> 
+<mat-icon>archive</mat-icon> </button>
 <button mat-icon-button color="" [matMenuTriggerFor]="more_vert"><mat-icon matTooltip="More">more_vert</mat-icon></button>
 <mat-menu #more_vert="matMenu">
     <button mat-menu-item (click)=deleteNotes()>Delete Note</button>

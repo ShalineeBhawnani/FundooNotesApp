@@ -47,15 +47,17 @@ const routes: Route[] = [
        path:'archive',
        component: ArchiveComponent
     },
+
+    {
+      path:'label',
+      component: LabelComponent,
+      
+    
+    },
     ]
 },
 
-{
-  path:'label',
-  component: LabelComponent,
-  canActivate: [AuthGuard],
 
-},
 
 
 
