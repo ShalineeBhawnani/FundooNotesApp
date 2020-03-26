@@ -60,14 +60,17 @@ class CreateLabel(generics.GenericAPIView):
     queryset= Label.objects.all()
     
     def get(self, request, *args, **kwargs):
-        print("get request")
+        token = request.headers.get('Token')
+        mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+        user_id=mytoken.get('username') 
+        user=User.objects.get(username=user_id)
         try:
-            user_id = request.user
-           
-            label = self.queryset.filter(user_id=user_id)
+            label = self.queryset.filter(user_id=user.id)
+            print(label.values())
             return Response(label.values(), status=status.HTTP_200_OK)
         except Exception:
             return Response(Exception, status=status.HTTP_403_FORBIDDEN)
+        
    
     def post(self,request,id=None):
         # pdb.set_trace()
@@ -132,7 +135,8 @@ class CreateNote(generics.GenericAPIView):
             # user_id = request.user
             # print(user_id)
             note = self.queryset.filter(user_id=user.id)
-            return Response(note.values(), status=status.HTTP_200_OK)
+            # return Response(note.values(), status=status.HTTP_200_OK)
+            return Response(note.values())
         except Exception:
             return Response(Exception, status=status.HTTP_403_FORBIDDEN)
         
@@ -146,8 +150,9 @@ class CreateNote(generics.GenericAPIView):
             user_id=mytoken.get('username')
             user=User.objects.get(username=user_id)
             note_serializer.save(user_id=user.id)
-            return Response({"data": "data created successfully"}, 
-                            status=status.HTTP_201_CREATED)
+            return Response("Note added")
+            # return Response({"data": "Note added"}, 
+            #                 status=status.HTTP_201_CREATED)
         else:
             error_details = []
             for key in note_serializer.errors.keys():
@@ -187,7 +192,7 @@ class NoteUpdate(generics.GenericAPIView):
         serializer = NoteSerializer(note,data=request.data)
         if serializer.is_valid():
             serializer.save(user_id=user.id)
-            return Response("Notes Updated Successfully")
+            return Response("Note Edited")
   
 # class ArchivedNotes(generics.GenericAPIView):
     

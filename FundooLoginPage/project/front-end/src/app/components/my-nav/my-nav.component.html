@@ -71,27 +71,27 @@
 
          <a mat-list-item routerLink="." ><mat-icon aria-label="Side nav toggle" >notifications_none</mat-icon>
           <span style="padding-left: 24px;">Remainder</span></a><br>
-          <mat-divider></mat-divider><br>
+          <mat-divider></mat-divider>
 
           <button mat-button  *ngFor="let label of labels" >
             <div fxLayout="row" (click)="navigateToLabel(label.label)" >
-                <mat-icon class="icons">turned_in</mat-icon>
-              <a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{label.label}}</a>
+            <mat-icon aria-label="Side nav toggle" >turned_in</mat-icon>
+            <a>{{label.label}}</a>
 
         </div>
         </button>
 
-        <button mat-button (click)="openLabelEditBox()">
+      <button mat-button (click)="openLabelEditBox()">
         <div fxLayout="row" >
-            <mat-icon class="icons">edit</mat-icon>
-            <a><span style="padding-left: 24px;">Edit Label</span></a>
-        </div></button>
+          <mat-icon>edit</mat-icon>
+        <a><span style="padding-left: 24px;">Edit Label</span></a>
+        </div></button><br>
         
         <!-- <a mat-list-item routerLink="/nav/label" ><mat-icon aria-label="Side nav toggle" >label</mat-icon>
         <span style="padding-left: 24px;">Label</span></a><br> -->
         <mat-divider></mat-divider>
         <a mat-list-item routerLink="/nav/archive/" ><mat-icon aria-label="Side nav toggle" >archive</mat-icon>
-          <span style="padding-left: 24px;">Archive</span></a><br>
+          <span style="padding-left: 24px;">Archive</span></a>
 
         <a mat-list-item routerLink="/nav/bin/" ><mat-icon aria-label="Side nav toggle" >restore_from_trash</mat-icon>
           <span style="padding-left: 24px;">Bin</span></a><br>

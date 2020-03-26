@@ -103,4 +103,24 @@ return this.http.put(this.baseUrl+'/noteupdate/'+note_id,userData,{headers:{
 );
 }
 
+updateLabel(data):Observable<any>
+{
+return this.http.put(this.baseUrl+'/labelupdate/',data,{headers:{
+'token':localStorage.getItem('token')}}
+);
+}
+deleteLabel(data):Observable<any>
+{
+  return this.http.put(this.baseUrl+'/labelupdate/',data,
+  { headers: {
+    'token': localStorage.getItem('token')
+  } });
+}
+getAllLabel():Observable<any>
+{
+  return this.http.get(this.baseUrl+'/label/',
+  { headers: {
+    'token': localStorage.getItem('token')
+  } });
+}
 }

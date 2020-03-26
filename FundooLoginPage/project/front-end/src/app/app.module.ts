@@ -33,6 +33,8 @@ import { NoteDialogComponent } from './components/note-dialog/note-dialog.compon
 import { IconComponent } from './components/icon/icon.component';
 import { SharedService } from './/services/shared.service';
 import { DataService } from './/services/data.service';
+import { LabelEditComponent } from './components/label-edit/label-edit.component';
+import {MatDialogModule, MatDialog,MatDialogRef }from '@angular/material/dialog';
 // import { TokenInterceptorService } from './services/token-interceptor.service';
 
 
@@ -57,12 +59,13 @@ import { DataService } from './/services/data.service';
     TrashComponent,
     NoteDialogComponent,
     IconComponent,
+    LabelEditComponent,
 
     // TokenInterceptorService,
 
 
   ],
-
+ 
   imports: [
     ReactiveFormsModule,
     BrowserModule,
@@ -87,6 +90,7 @@ import { DataService } from './/services/data.service';
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
+    
    
 
   ],
@@ -94,10 +98,13 @@ import { DataService } from './/services/data.service';
 
   providers: [
     // { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true },
-    UserService,AuthGuard,AlertService,AuthenticationService,SharedService,DataService
-    ],
+    UserService,AuthGuard,AlertService,AuthenticationService,SharedService,DataService,
+    {
+      provide: MatDialogRef,
+      useValue: {}
+    },],
   bootstrap: [AppComponent],
-  entryComponents: [NoteDialogComponent]
+  entryComponents: [NoteDialogComponent,LabelEditComponent]
 })
 
 

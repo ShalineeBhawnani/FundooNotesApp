@@ -35,7 +35,7 @@ fileNameDialogRef: MatDialogRef<NoteDialogComponent>;
   ngOnInit(){
 
     console.log("data",this.sendDataToChild)
-    this.dataService.currentMessage.subscribe(message => this.message = message)
+    // this.dataService.currentMessage.subscribe(message => this.message = message)
     
   }
 
@@ -60,27 +60,20 @@ fileNameDialogRef: MatDialogRef<NoteDialogComponent>;
  
     }
   
-    // displayNotes(){
-    //   this.event={
-    //     "purpose":"refresh",
-    //   }
-    
-    
-    //   this.eventCarrier.emit(this.event)
-    //  }
-    
+  
     openDialog(note) {
       {
       this.fileNameDialogRef = this.dialog.open(NoteDialogComponent, {
       hasBackdrop: false,
       data: note
-      });
-      }
-      }
+       
+    });
 
-
+    this.fileNameDialogRef.afterClosed().subscribe(
+      data => console.log("Dialog output:", data)
+  );    
+  
+  }
 }
 
-
-
-
+}

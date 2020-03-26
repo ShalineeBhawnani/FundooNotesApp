@@ -23,18 +23,26 @@ export class NotedataComponent implements OnInit {
    }
  
   ngOnInit() {
-    
+
+    // this.userService.getAllNote().subscribe(
+    //   data => {
+    //     console.log("my data",data)
+    //     this.notes = data;
+    //     this.ParentData = this.notes
+    //   })
+
     this.getNotes();
-    this.dataService.currentMessage.subscribe(message => this.message = message)
+    // this.dataService.currentMessage.subscribe(message => this.message = message)
     this.dataService.currentMessage.subscribe((message)=>{
+      console.log("my msg",message)
       if(message=="Note added" || message=="Note Edited")
       this.getNotes();
     })
-
-   
-  }
+    }
+  
+    
   getNotes=()=>{
-
+    console.log("called when note added ")
     this.userService.getAllNote().subscribe(
       data => {
         console.log("my data",data)
@@ -47,14 +55,7 @@ export class NotedataComponent implements OnInit {
       }
     );
   }
-  checkNoteAdded(){
-    //console.log("in note add")
-    if(this.message="Note Added")
-      this.getNotes();
-      //this.message="";
   
-  
-  }
   recieveMessageFromDisplay(event){
     if(event.purpose=="refresh")
     this.getNotes()

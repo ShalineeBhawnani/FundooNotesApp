@@ -18,7 +18,6 @@ export class ArchiveComponent implements OnInit {
 
   constructor(private userSerive: UserService) {
 
-   
   }
 
     ngOnInit(){
@@ -40,8 +39,5 @@ export class ArchiveComponent implements OnInit {
         }
       );
     }
-
-  
-
 
 }

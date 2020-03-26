@@ -2,7 +2,8 @@
 <div fxLayout="row" fxLayoutAlign="space-between center">
     <div class="icons" >
 <button mat-icon-button color=""><mat-icon matTooltip="Remind me">notifications_none</mat-icon></button>
-<button mat-icon-button color=""><mat-icon matTooltip="Collaborator">person_add</mat-icon></button>
+<button mat-icon-button (click)=addCollaborator()> 
+  <mat-icon>group_add</mat-icon> </button>
 <button mat-icon-button [matMenuTriggerFor]="color">  
 <mat-icon>color_lens</mat-icon>  </button>
 <button mat-icon-button color=""><mat-icon matTooltip="Add image">crop_original</mat-icon></button>
@@ -10,9 +11,9 @@
 <mat-icon>archive</mat-icon> </button>
 <button mat-icon-button color="" [matMenuTriggerFor]="more_vert"><mat-icon matTooltip="More">more_vert</mat-icon></button>
 <mat-menu #more_vert="matMenu">
-    <button mat-menu-item (click)=deleteNotes()>Delete Note</button>
-    <!-- <button mat-menu-item [matMenuTriggerFor]="addLAbel">Add Label</button>
-    <button mat-menu-item (click)=labelAdd()>CheckList</button> -->
+<button mat-menu-item (click)=deleteNotes()>Delete Note</button>
+<button mat-menu-item [matMenuTriggerFor]="addLAbel">Add Label</button>
+<button mat-menu-item (click)=labelAdd()>CheckList</button>
 </mat-menu>
 </div>
 </div>
@@ -26,3 +27,25 @@
         </div>
                   
     </mat-menu>
+
+<mat-menu #addLAbel="matMenu" fxLayout="column" class="labelMenu" >
+    <div fxLayout="row" class="menu">
+        <textarea (click) = "$event.stopPropagation()" class="input" 
+        matInput placeholder="Add a label" name="newLabel"
+         [(ngModel)]="newLabel"></textarea>
+        <button mat-icon-button class="doneIcon" 
+        (click)=addLabel() (click) = "$event.stopPropagation()" > 
+         <mat-icon>done</mat-icon>      </button>
+    </div>
+  <div *ngFor="let label of labels;let i = index">
+      <section>
+    <mat-checkbox  fxLayout="column" fxLayoutAlign="space-between start" 
+    class="labels" 
+    (click) = "$event.stopPropagation(); labelAddOrRemove(label)" 
+    [(formControl)]="labelCheck" 
+    >{{label.label}}</mat-checkbox>
+</section>
+  </div>      
+   
+        
+</mat-menu>

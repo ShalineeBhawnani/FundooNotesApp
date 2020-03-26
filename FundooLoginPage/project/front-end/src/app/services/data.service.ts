@@ -8,20 +8,24 @@ import {Events} from '../models/eventModel'
 export class DataService {
   event:Events
   private eventCarrier=new BehaviorSubject('');
+ 
   private messageSource = new BehaviorSubject('default message');
-  private labelName=new BehaviorSubject('');
   eventObservable=this.eventCarrier.asObservable();
+  private label=new BehaviorSubject('');
   currentMessage = this.messageSource.asObservable();
-  labelObservable=this.labelName.asObservable();
+  labelObservable=this.label.asObservable();
+ 
   constructor() { }
   
-  sendEvent(search:string){
-   this.eventCarrier.next(search);
-  }
-
   changeMessage(message: string) {
+    console.log("Sharing Bet 2component",message)
     this.messageSource.next(message)
   }
 
+  
+  labelNext(label:string){
+    this.label.next(label);
+    console.log("label",label)
+  }
 
 }

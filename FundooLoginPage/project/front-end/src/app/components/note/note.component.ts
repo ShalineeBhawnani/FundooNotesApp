@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators}from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { AuthenticationService } from '../../services/authentication.service';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DataService } from '../../services/data.service';
 
 @Component({
@@ -42,6 +42,7 @@ export class NoteComponent implements OnInit {
    ngOnInit() {
   
     this.dataService.currentMessage.subscribe(message => this.message = message)
+    
     }
     newMessage() {
       this.dataService.changeMessage("Note added")
@@ -54,21 +55,24 @@ export class NoteComponent implements OnInit {
     
     console.log(this.title.value);
      let noteData = {
+       
      title : this.title.value,
      note : this.note.value,
      color:this.color,
      is_archived:this.is_archived, 
      is_bin:this.is_bin, 
+     
 
   }
  
   this.userService.createNote(noteData).subscribe(
     (data) => {
+      // this.newMessage();
       this.snackBar.open(data.toString(),'',{
         duration:3000,
         verticalPosition:'bottom'
       });
-      console.log("data ",data)
+      console.log("data creation ",data.toString())
     },
     error => {
       alert('Note Creation failed')

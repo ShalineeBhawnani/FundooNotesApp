@@ -16,47 +16,29 @@ import { HttpClient, HttpResponse ,HttpHeaders} from '@angular/common/http';
 
 })
 export class LabelComponent implements OnInit {
-  label:FormControl=new FormControl('');
-  labels:any;
-  editLabel:boolean=true;
-  editedTextLabel=new FormControl('');
+  labels = [
+    {   
+        label: ' '}
+      ]
+constructor(private userService: UserService) {
+    
+      }
 
-  // loading = false;
-  // submitted = false;
+ngOnInit() {
+  this.getLabels();
 
-    constructor(public dialogRef: MatDialogRef<LabelComponent>,
-      private userService: UserService,
-      private alertService: AlertService,) { }
-
-    ngOnInit() {
-
-
+}
+getLabels=()=>{
+  console.log("called when note added ")
+  this.userService.getAllLabel().subscribe(
+    data => {
+      console.log("my data",data)
+      this.labels = data;
+    },
+    
+    error => {
+      console.log(error);
     }
-
-    // convenience getter for easy access to form fields
-    createLabel()
-
-    {
-      console.log(this.label.value);
-       let noteData = {
-
-             lable : this.label.value
-
-    }
-
-      this.userService.label(noteData)
-
-    .subscribe(
-        (data) => {
-            console.log('label: ' + noteData);
-            console.log(noteData.lable);
-            this.alertService.success('label created successfully', true);
-            // this.router.navigate(['/label']);
-        },
-        error => {
-            this.alertService.error(error);
-
-        });
-  }
-
-    }
+  );
+}
+}

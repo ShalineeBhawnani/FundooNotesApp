@@ -1,0 +1,23 @@
+<mat-card class="card" fxFlex="100" fxlayout="column" >
+  <h2>Edit Lables</h2>
+  <div *ngFor="let label of data.label " fxLayout="row" fxLayoutAlign="space-between center">
+
+    <div class="title">
+
+      <input mat-input class="labelNameField" class="text" [formControl]="label" 
+      value="{{label.label}}" (click)="isBeingEdited(label)">  
+      
+    
+    </div>
+    <div class="icons" fxLayout="row">
+        <button mat-icon-button (click)="updateLabel()"
+        [style.visibility]="isEditVisible(label) ? 'visible' : 'hidden'">
+            <mat-icon>done</mat-icon>     </button>
+        <button mat-icon-button (click)="deleteLabel(label)">  
+          <mat-icon>delete</mat-icon></button>
+      
+    </div>
+    
+  </div>
+
+</mat-card>
