@@ -21,6 +21,7 @@ constructor( private dialogRef: MatDialogRef<NoteDialogComponent>,
   }
 
   ngOnInit() {
+
   }
 
   updateClick(title:string,note:string): void {

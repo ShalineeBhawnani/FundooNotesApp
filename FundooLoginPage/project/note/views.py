@@ -66,7 +66,7 @@ class CreateLabel(generics.GenericAPIView):
         user=User.objects.get(username=user_id)
         try:
             label = self.queryset.filter(user_id=user.id)
-            print(label.values())
+            # print(label.values())
             return Response(label.values(), status=status.HTTP_200_OK)
         except Exception:
             return Response(Exception, status=status.HTTP_403_FORBIDDEN)
@@ -89,9 +89,9 @@ class CreateLabel(generics.GenericAPIView):
             user_id=mytoken.get('username')
             user=User.objects.get(username=user_id)
             serializer.save(user_id=user.id)
-
-            return Response({"data": "data created successfully"}, 
-                            status=status.HTTP_201_CREATED)
+            return Response("label added")
+            # return Response({"data": "data created successfully"}, 
+            #                 status=status.HTTP_201_CREATED)
         else:
             error_details = []
             for key in serializer.errors.keys():
@@ -144,12 +144,14 @@ class CreateNote(generics.GenericAPIView):
     def post(self,request):
         data=request.data
         note_serializer = NoteSerializer(data=request.data)
+        print(note_serializer)
         if note_serializer.is_valid():
             token = request.headers.get('Token')
             mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
             user_id=mytoken.get('username')
             user=User.objects.get(username=user_id)
             note_serializer.save(user_id=user.id)
+          
             return Response("Note added")
             # return Response({"data": "Note added"}, 
             #                 status=status.HTTP_201_CREATED)

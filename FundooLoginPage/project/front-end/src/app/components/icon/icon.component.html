@@ -37,13 +37,13 @@
         (click)=addLabel() (click) = "$event.stopPropagation()" > 
          <mat-icon>done</mat-icon>      </button>
     </div>
+    
   <div *ngFor="let label of labels;let i = index">
       <section>
     <mat-checkbox  fxLayout="column" fxLayoutAlign="space-between start" 
     class="labels" 
     (click) = "$event.stopPropagation(); labelAddOrRemove(label)" 
-    [(formControl)]="labelCheck" 
-    >{{label.label}}</mat-checkbox>
+    [(formControl)]="labelCheck" >{{label.label}}</mat-checkbox>
 </section>
   </div>      
    

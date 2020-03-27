@@ -116,6 +116,7 @@ deleteLabel(data):Observable<any>
     'token': localStorage.getItem('token')
   } });
 }
+
 getAllLabel():Observable<any>
 {
   return this.http.get(this.baseUrl+'/label/',

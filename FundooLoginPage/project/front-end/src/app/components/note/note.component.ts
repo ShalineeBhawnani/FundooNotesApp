@@ -5,6 +5,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DataService } from '../../services/data.service';
 
+
 @Component({
   selector: 'app-note',
   templateUrl: './note.component.html',
@@ -21,17 +22,16 @@ export class NoteComponent implements OnInit {
     Validators.required,
 
   ]);
+ 
   save: Boolean
   message:string;
-  noteLabels=[];
-  labelIdList=[];
+  label_note=[];
   color:string ="#ffffff";
   notes:string = ""; 
+  id:string;
   is_archived:boolean=false;
   is_bin:boolean=false;
-
-
-
+  
   constructor(
     private userService: UserService,
     private snackBar:MatSnackBar,
@@ -60,14 +60,14 @@ export class NoteComponent implements OnInit {
      note : this.note.value,
      color:this.color,
      is_archived:this.is_archived, 
-     is_bin:this.is_bin, 
+     is_bin:this.is_bin,
+     label_note:this.label_note,
      
-
   }
- 
+  console.log(noteData.label_note)
   this.userService.createNote(noteData).subscribe(
     (data) => {
-      // this.newMessage();
+      this.newMessage();
       this.snackBar.open(data.toString(),'',{
         duration:3000,
         verticalPosition:'bottom'
@@ -104,7 +104,14 @@ export class NoteComponent implements OnInit {
     
 
   }
+  if($event.purpose=="addLabel"){
+   
+    console.log("addLabel",this.label_note.push($event.value.label));
+    this.label_note.push($event.value.label)
+  
+         }
+}
 
   }
-}
+
 

@@ -3,11 +3,15 @@
   <div *ngFor="let label of data.label " fxLayout="row" fxLayoutAlign="space-between center">
 
     <div class="title">
-
+      <div class="icons" fxLayout="row">
+      <mat-icon aria-label="Side nav toggle" >label_outline</mat-icon>
       <input mat-input class="labelNameField" class="text" [formControl]="label" 
-      value="{{label.label}}" (click)="isBeingEdited(label)">  
+      value="{{label.label}}" (click)="isBeingEdited(label)">
+    </div>
       
-    
+      <!-- <mat-icon aria-label="Side nav toggle" >label_outline</mat-icon>
+      <a>{{label.label}}</a>
+   -->
     </div>
     <div class="icons" fxLayout="row">
         <button mat-icon-button (click)="updateLabel()"

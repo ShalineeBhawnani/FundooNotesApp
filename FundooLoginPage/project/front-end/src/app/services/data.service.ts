@@ -25,7 +25,7 @@ export class DataService {
   
   labelNext(label:string){
     this.label.next(label);
-    console.log("label",label)
+    console.log("data service label",label)
   }
 
 }

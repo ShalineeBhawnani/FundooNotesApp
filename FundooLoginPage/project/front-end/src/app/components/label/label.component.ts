@@ -18,7 +18,8 @@ import { HttpClient, HttpResponse ,HttpHeaders} from '@angular/common/http';
 export class LabelComponent implements OnInit {
   labels = [
     {   
-        label: ' '}
+        label: ' ',
+    }
       ]
 constructor(private userService: UserService) {
     

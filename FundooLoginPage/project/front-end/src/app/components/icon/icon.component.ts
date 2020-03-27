@@ -6,8 +6,6 @@ import {Labels} from '../../models/labels';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 
-
-
 @Component({
   selector: 'app-icon',
   templateUrl: './icon.component.html',
@@ -21,16 +19,17 @@ export class IconComponent implements OnInit {
     "#cbf0f8","#aecbfa","#d7aefb"
   ]
   newLabel:string;
-  label:Labels[];
+  labels:Labels[];
   save:Boolean=false;
   message:string;
   note:any;
+ 
   labelCheck = new FormControl();
   dummy:boolean=false;
   @Output() eventCarrier = new EventEmitter<Events>();
   @Output() saveNotes = new EventEmitter<Boolean>();
 
-  constructor(private dataService:DataService,private userSerive:UserService) { }
+  constructor(private dataService:DataService,private userService:UserService) { }
 
   ngOnInit() {
     this.dataService.currentMessage.subscribe(message => this.message = message)
@@ -55,12 +54,29 @@ export class IconComponent implements OnInit {
     }
     this.eventCarrier.emit(this.event);
   }
+
+
+  addLabel(){
+    //console.log("in add lable")
+    let data={
+      "label":this.newLabel,
+      "isDeleted":false 
+    }
+    console.log("label add",data)
+    console.log("created label",data)
+    this.userService.label(data).subscribe((data:any)=>{
+      this.getLabels();
+      this.newLabel="";
+ 
+
+    })
+  }
+   
   getLabels(){
-    console.log("getting labels",this.label)
-    this.userSerive.getAllLabel().subscribe(
+    console.log("getting labels",this.labels)
+    this.userService.getAllLabel().subscribe(
       data => {
-       
-        this.label = data;
+        this.labels = data;
         console.log("my data label",data)
       },
       
@@ -70,40 +86,18 @@ export class IconComponent implements OnInit {
     );
   }
   
-  
-  // addLabel(){
-  //   //console.log("in add lable")
-  //   let data={
-  //     "label":this.newLabel,
-  //     "userId":localStorage.getItem('userId'),
-  //     "isDeleted":false 
-  //   }
-  //   this.userSerive.addLabel(data).subscribe((data:any)=>{
-  //     this.getLabels();
-  //     this.newLabel="";
- 
-
-  //   })
-
-    
-  //   //console.log(this.labels)
-  // }
-
-
- 
-  // labelAddOrRemove(label){
-  //   let data={
-  //     "noteId":this.noteId,
-  //     "label":label
-  //   }
-  //   this.event={
-  //     "purpose":"addLabel",
-  //     "value":data
-  //   }
+  labelAddOrRemove(label){
+    let data={
+      "label":label.id
+    }
+    console.log("checklist labelAddOrRemove",data)
+    this.event={
+      "purpose":"addLabel",
+      "value":data
+    }
    
-  //   this.eventCarrier.emit(this.event);
-  // }
-
+    this.eventCarrier.emit(this.event);
+  }
 
   colorElement(color){
     console.log("color",color)

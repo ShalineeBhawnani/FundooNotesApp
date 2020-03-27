@@ -8,7 +8,7 @@ import {Labels} from '../../models/labels';
 import {LabelEditComponent} from '../label-edit/label-edit.component';
 import {MatDialog} from '@angular/material/dialog';
 import { DataService } from '../../services/data.service';
-
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-my-nav',
@@ -17,16 +17,18 @@ import { DataService } from '../../services/data.service';
 })
 export class MyNavComponent implements OnDestroy{
   labels:Labels[];
-
+  message:string;
   mobileQuery: MediaQueryList;
 
   private _mobileQueryListener: () => void;
 
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private routing:Router,private dataService:DataService, private dialog:MatDialog) {
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private routing:Router,private userService:UserService,private dataService:DataService, private dialog:MatDialog) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
+    this.getLabels()
   }
+
 
   // navigateTrash(){ 
   //   console.log("navigating to trash")
@@ -42,6 +44,20 @@ export class MyNavComponent implements OnDestroy{
     this.dataService.labelNext(label)
     this.routing.navigate(['/nav/label'+label])
   }
+  
+  getLabels(){
+    console.log("getting labels",this.labels)
+    this.userService.getAllLabel().subscribe(
+      data => {
+        this.labels = data;
+        console.log("my data label",data)
+      },
+      
+      error => {
+        console.log(error);
+      }
+    );
+  }
   openLabelEditBox(){
     console.log("inside dash open label func")
     let dialogref = this.dialog.open(LabelEditComponent,
@@ -53,7 +69,7 @@ export class MyNavComponent implements OnDestroy{
         }
         
       });
-    
+      console.log("label in nav",this.labels)
     dialogref.afterClosed().subscribe(result=> {
       //console.log("dialog result ", result);
       

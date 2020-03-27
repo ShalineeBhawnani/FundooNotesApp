@@ -8,7 +8,9 @@
             <div>
               <mat-card-title>{{note.title}}</mat-card-title>
               <mat-card-content >{{note.note}}</mat-card-content>
+              <mat-card-content >{{note.label}}</mat-card-content>
             </div>
+            
               <mat-card-footer><app-icon (eventCarrier)="recieveMessageFromIconTray($event,value.id)"></app-icon></mat-card-footer>
             </mat-card>
               
