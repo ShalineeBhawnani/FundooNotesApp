@@ -30,8 +30,6 @@ export class LabelEditComponent implements OnInit {
 updateLabel(){
   let data={
     "label":this.label.value,
-    "userId":localStorage.getItem('userId'),
-    "isDeleted":false ,
     "id":this.editingLabel
   }
   this.userService.updateLabel(data).subscribe((data:any)=>{

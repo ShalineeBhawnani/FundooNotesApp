@@ -33,8 +33,10 @@ import { NoteDialogComponent } from './components/note-dialog/note-dialog.compon
 import { IconComponent } from './components/icon/icon.component';
 import { SharedService } from './/services/shared.service';
 import { DataService } from './/services/data.service';
+
 import { LabelEditComponent } from './components/label-edit/label-edit.component';
 import {MatDialogModule, MatDialog,MatDialogRef }from '@angular/material/dialog';
+import { CollaboratorComponent } from './components/collaborator/collaborator.component';
 // import { TokenInterceptorService } from './services/token-interceptor.service';
 
 
@@ -60,6 +62,8 @@ import {MatDialogModule, MatDialog,MatDialogRef }from '@angular/material/dialog'
     NoteDialogComponent,
     IconComponent,
     LabelEditComponent,
+    CollaboratorComponent,
+  
 
     // TokenInterceptorService,
 
@@ -91,6 +95,7 @@ import {MatDialogModule, MatDialog,MatDialogRef }from '@angular/material/dialog'
     ReactiveFormsModule,
     FlexLayoutModule,
     
+    
    
 
   ],
@@ -103,7 +108,7 @@ import {MatDialogModule, MatDialog,MatDialogRef }from '@angular/material/dialog'
       useValue: {}
     },],
   bootstrap: [AppComponent],
-  entryComponents: [NoteDialogComponent,LabelEditComponent]
+  entryComponents: [NoteDialogComponent,LabelEditComponent,CollaboratorComponent]
 })
 
 

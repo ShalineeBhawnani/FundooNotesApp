@@ -13,9 +13,11 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatExpansionModule} from '@angular/material';
+import {MatExpansionModule,MatDatepickerModule} from '@angular/material';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatSelectModule} from '@angular/material/select';
+import {MatNativeDateModule,MatRadioModule, MatTabsModule, MatTooltipModule,} from  '@angular/material';
 
 
 
@@ -38,6 +40,13 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
         MatExpansionModule,
         MatSnackBarModule,
         MatButtonToggleModule,
+        MatDatepickerModule,
+        MatSelectModule,
+        MatNativeDateModule,
+        MatRadioModule,
+        MatTabsModule,
+        MatTooltipModule
+
 
 
     ],
@@ -58,7 +67,13 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
         MatExpansionModule,
         MatSnackBarModule,
         MatButtonToggleModule,
-        MatDialogModule
+        MatDialogModule,
+        MatDatepickerModule,  
+        MatSelectModule,
+        MatNativeDateModule,
+        MatRadioModule,
+        MatTabsModule,
+        MatTooltipModule,
 
 
 

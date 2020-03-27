@@ -124,4 +124,11 @@ getAllLabel():Observable<any>
     'token': localStorage.getItem('token')
   } });
 }
+addCollaborator():Observable<any>
+{
+  return this.http.get(this.baseUrl+'/note/',
+  { headers: {
+    'token': localStorage.getItem('token')
+  } });
+}
 }

@@ -1,7 +1,8 @@
 
 <div fxLayout="row" fxLayoutAlign="space-between center">
     <div class="icons" >
-<button mat-icon-button color=""><mat-icon matTooltip="Remind me">notifications_none</mat-icon></button>
+<app-reminder (eventCarrier)="recieveMessageFromReminder($event)"></app-reminder>
+<!-- <button mat-icon-button color=""><mat-icon matTooltip="Remind me">notifications_none</mat-icon></button>  -->
 <button mat-icon-button (click)=addCollaborator()> 
   <mat-icon>group_add</mat-icon> </button>
 <button mat-icon-button [matMenuTriggerFor]="color">  
@@ -37,7 +38,6 @@
         (click)=addLabel() (click) = "$event.stopPropagation()" > 
          <mat-icon>done</mat-icon>      </button>
     </div>
-    
   <div *ngFor="let label of labels;let i = index">
       <section>
     <mat-checkbox  fxLayout="column" fxLayoutAlign="space-between start" 

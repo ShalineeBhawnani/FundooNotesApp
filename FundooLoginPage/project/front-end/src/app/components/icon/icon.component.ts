@@ -5,6 +5,7 @@ import { UserService } from '../../services/user.service';
 import {Labels} from '../../models/labels';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material';
+import { CollaboratorComponent } from '../collaborator/collaborator.component';
 
 @Component({
   selector: 'app-icon',
@@ -23,13 +24,13 @@ export class IconComponent implements OnInit {
   save:Boolean=false;
   message:string;
   note:any;
- 
+  reminder:any;
   labelCheck = new FormControl();
   dummy:boolean=false;
   @Output() eventCarrier = new EventEmitter<Events>();
   @Output() saveNotes = new EventEmitter<Boolean>();
 
-  constructor(private dataService:DataService,private userService:UserService) { }
+  constructor(private dataService:DataService,private userService:UserService,private dialog:MatDialog) { }
 
   ngOnInit() {
     this.dataService.currentMessage.subscribe(message => this.message = message)
@@ -55,7 +56,16 @@ export class IconComponent implements OnInit {
     this.eventCarrier.emit(this.event);
   }
 
-
+  addCollaborator(){
+    let dialogref = this.dialog.open(CollaboratorComponent,{
+      data : {
+        note:this.note     
+      }
+    });
+    dialogref.afterClosed().subscribe(result=> {
+      //console.log("dialog result ", result);
+    })
+  }
   addLabel(){
     //console.log("in add lable")
     let data={

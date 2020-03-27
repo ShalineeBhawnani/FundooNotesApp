@@ -31,6 +31,7 @@ export class NoteComponent implements OnInit {
   id:string;
   is_archived:boolean=false;
   is_bin:boolean=false;
+  collaborators=[];
   
   constructor(
     private userService: UserService,
@@ -62,6 +63,7 @@ export class NoteComponent implements OnInit {
      is_archived:this.is_archived, 
      is_bin:this.is_bin,
      label_note:this.label_note,
+     collaborators:this.collaborators,
      
   }
   console.log(noteData.label_note)
