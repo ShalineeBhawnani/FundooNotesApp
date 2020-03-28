@@ -366,7 +366,7 @@ class CreateProfile(GenericAPIView):
             print("profile",profile)
             data = request.data  
             print(data)  
-            img = data.get('image')
+            img = data.get('file')
             print("image",img)
             serializer = ProfileUpdate(profile,data={'image':img})
             print("data",serializer)

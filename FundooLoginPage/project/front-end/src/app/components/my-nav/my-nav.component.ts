@@ -1,7 +1,7 @@
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import {ChangeDetectorRef, Component, OnDestroy} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {Router} from '@angular/router'
 import {Labels} from '../../models/labels';
@@ -16,7 +16,7 @@ import { ProfileComponent } from '../profile/profile.component';
   templateUrl: './my-nav.component.html',
   styleUrls: ['./my-nav.component.scss']
 })
-export class MyNavComponent implements OnDestroy{
+export class MyNavComponent implements OnInit,OnDestroy{
   labels:Labels[];
   message:string;
   mobileQuery: MediaQueryList;
@@ -31,6 +31,10 @@ export class MyNavComponent implements OnDestroy{
     this.getLabels()
   }
 
+  ngOnInit(){
+     console.log("profile pic")
+     this.getProfilemage();
+  }
 
   // navigateTrash(){ 
   //   console.log("navigating to trash")
@@ -77,10 +81,14 @@ export class MyNavComponent implements OnDestroy{
       
     })
   }
+ 
   getProfilemage(){
-    let profileImageUrl=sessionStorage.getItem("profileImageUrl");
-    console.log("get profile",profileImageUrl)
-    this.profileImageUrl = `(${profileImageUrl})`;
+    let profileImage=sessionStorage.getItem("fundooProfileimage");
+   
+    this.profileImageUrl = `url(http://127.0.0.1:8000/${profileImage})`;
+    console.log("put profile",this.profileImageUrl)
+    
+
   }
 
   fileChangeEvent(event){
@@ -92,12 +100,10 @@ export class MyNavComponent implements OnDestroy{
 
     dialogRef.afterClosed().subscribe(result => {
       let fd=new FormData();
-      fd.append('image',result);
-      // console.log(result);
+      fd.append('file',result);
+      console.log(result);
       this.userService.uploadProfileImage(fd).subscribe((response:any)=>{
-        console.log("data creation ",response)
-        sessionStorage.setItem("profileImageUrl",response);
-        console.log(sessionStorage.getItem("profileImageUrl"))
+        sessionStorage.setItem("fundooProfileimage",response);
         this.getProfilemage();
       });
     });
