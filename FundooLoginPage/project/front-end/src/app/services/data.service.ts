@@ -10,9 +10,11 @@ export class DataService {
   private eventCarrier=new BehaviorSubject('');
  
   private messageSource = new BehaviorSubject('default message');
+  currentMessage = this.messageSource.asObservable();
+  
   eventObservable=this.eventCarrier.asObservable();
   private label=new BehaviorSubject('');
-  currentMessage = this.messageSource.asObservable();
+ 
   labelObservable=this.label.asObservable();
  
   constructor() { }

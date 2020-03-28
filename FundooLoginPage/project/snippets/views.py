@@ -349,23 +349,36 @@ class Logout(GenericAPIView):
             return Response({'details': 'something went wrong while logout'})
 
 
-@method_decorator(login_required, name='dispatch') 
+# @method_decorator(login_required, name='dispatch') 
 class CreateProfile(GenericAPIView):
     serializer_class = ProfileUpdate
+    print(serializer_class)
     
     def post(self,request):
-        profile = Profile.objects.get(user=request.user)
-        print(profile)
-        data = request.data    
-        img = data.get('image')
-        user = request.user
-        print(user)
-   
-        serializer = ProfileUpdate(profile,data={'image':img})
-        if serializer.is_valid():
-            print("valid")
-            serializer.save()
-            print("saved")
-            return Response(serializer.data,status=200)
-        else:
-            return Response(serializer.errors,status=400)
+        token = request.headers.get('Token')
+        mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+        user_id=mytoken.get('username') 
+        user=User.objects.get(username=user_id)
+        print("user",user)
+        #user=request.user
+        try:
+            profile = Profile.objects.get(user_id=user)
+            print("profile",profile)
+            data = request.data  
+            print(data)  
+            img = data.get('image')
+            print("image",img)
+            serializer = ProfileUpdate(profile,data={'image':img})
+            print("data",serializer)
+            if serializer.is_valid():
+               
+                serializer.save()
+                print("saved")
+                print("valid",serializer.data['image'])
+                return Response(serializer.data['image'])
+                # return Response(serializer.data,status=200)
+            else:
+                return Response(serializer.errors,status=400)
+        except Profile.DoesNotExist:
+            profile = None
+            return Response("error")

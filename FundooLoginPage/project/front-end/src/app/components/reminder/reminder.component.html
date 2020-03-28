@@ -11,13 +11,13 @@
               <a>{{reminder.Time}}</a>
           </div>
       </button>
-      <button mat-icon-button [matMenuTriggerFor]="datePicker" (click) = "$event.stopPropagation() "  >  <mat-icon>timer</mat-icon> <a>&nbsp;Custom Date</a> </button>
+      <button mat-icon-button> <mat-icon>timer</mat-icon> <a>&nbsp;Custom Date</a> </button>
      
 
 </mat-menu>
   
 
-<mat-menu #datePicker="matMenu" yPosition="above">
+<!-- <mat-menu #datePicker="matMenu" yPosition="above">
 <div class="datePickerContainer" fxLayout="column" fxLayoutAlign="space-between center" >
         <mat-form-field>
                 <input matInput (click) = "$event.stopPropagation()" [matDatepicker]="picker" [formControl]="pickedDate" [min]="minDate" placeholder="Choose a date" >
@@ -46,4 +46,4 @@
 <button mat-button class="saveButton" (click)=reminderAddPicked()>Save</button>
   
    
-</mat-menu>
+</mat-menu> -->

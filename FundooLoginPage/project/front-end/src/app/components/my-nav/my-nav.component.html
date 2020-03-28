@@ -35,17 +35,21 @@
           <div>
             <button mat-mini-fab color="" [matMenuTriggerFor]="account" [style.background-image]="profileImageUrl" style="background-size: 100% 100%;"></button>
               <mat-menu #account="matMenu">
-                <!-- <mat-card>
+                <mat-card>
                   <div style="height:20%; width:30%">
                     <div (click)="$event.stopPropagation()" fxLayout="row">
                       <button mat-fab color="primary" (click)="fileInput.click()" [style.background-image]="profileImageUrl" style="background-size: 100% 100%;">
                         <input #fileInput type="file" (change)="fileChangeEvent($event)" style="display:none;" />
                       </button>
-                      <h1>{{user.firstname}}</h1>
                     </div>
-                    <div>{{user.email}}</div>
-                  </div>
-                </mat-card> -->/
+                      <!-- <h1>{{user.firstname}}</h1> -->
+                      <div>
+                      <h4>Shalu</h4></div>
+                    </div>
+                    <h4>Shalineebhawnani90@gmail.com</h4>
+                    <!-- <div>{{user.email}}</div> -->
+                
+                </mat-card>
                 <div mat-menu-item>
                   <button mat-button>Add account</button>
                   <button mat-button (click)="logout()">Logout</button>

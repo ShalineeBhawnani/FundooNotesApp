@@ -124,6 +124,21 @@ getAllLabel():Observable<any>
     'token': localStorage.getItem('token')
   } });
 }
+
+uploadProfileImage(formData):Observable<any>
+{
+  return this.http.post(this.baseUrl+'/profile/',formData,
+  { headers: {
+    'token': localStorage.getItem('token')
+  } });
+}
+getProfilemage():Observable<any>
+{
+  return this.http.get(this.baseUrl+'/profile/',
+  { headers: {
+    'token': localStorage.getItem('token')
+  } });
+}
 addCollaborator():Observable<any>
 {
   return this.http.get(this.baseUrl+'/note/',

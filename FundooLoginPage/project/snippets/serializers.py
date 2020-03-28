@@ -61,3 +61,4 @@ class ProfileUpdate(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ['image']
+        

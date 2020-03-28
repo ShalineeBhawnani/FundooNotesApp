@@ -43,6 +43,7 @@ export class NoteComponent implements OnInit {
    ngOnInit() {
   
     this.dataService.currentMessage.subscribe(message => this.message = message)
+    console.log(this.message)
     
     }
     newMessage() {

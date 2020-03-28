@@ -18,7 +18,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatSelectModule} from '@angular/material/select';
 import {MatNativeDateModule,MatRadioModule, MatTabsModule, MatTooltipModule,} from  '@angular/material';
-
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 
 @NgModule({
@@ -45,7 +45,7 @@ import {MatNativeDateModule,MatRadioModule, MatTabsModule, MatTooltipModule,} fr
         MatNativeDateModule,
         MatRadioModule,
         MatTabsModule,
-        MatTooltipModule
+        MatTooltipModule,ImageCropperModule
 
 
 
@@ -74,6 +74,7 @@ import {MatNativeDateModule,MatRadioModule, MatTabsModule, MatTooltipModule,} fr
         MatRadioModule,
         MatTabsModule,
         MatTooltipModule,
+        ImageCropperModule
 
 
 

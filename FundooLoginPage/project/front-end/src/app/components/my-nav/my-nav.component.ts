@@ -9,6 +9,7 @@ import {LabelEditComponent} from '../label-edit/label-edit.component';
 import {MatDialog} from '@angular/material/dialog';
 import { DataService } from '../../services/data.service';
 import { UserService } from '../../services/user.service';
+import { ProfileComponent } from '../profile/profile.component';
 
 @Component({
   selector: 'app-my-nav',
@@ -19,8 +20,9 @@ export class MyNavComponent implements OnDestroy{
   labels:Labels[];
   message:string;
   mobileQuery: MediaQueryList;
-
+  profileImageUrl:any;
   private _mobileQueryListener: () => void;
+  
 
   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private routing:Router,private userService:UserService,private dataService:DataService, private dialog:MatDialog) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
@@ -75,7 +77,31 @@ export class MyNavComponent implements OnDestroy{
       
     })
   }
-  
+  getProfilemage(){
+    let profileImageUrl=sessionStorage.getItem("profileImageUrl");
+    console.log("get profile",profileImageUrl)
+    this.profileImageUrl = `(${profileImageUrl})`;
+  }
+
+  fileChangeEvent(event){
+    const dialogRef = this.dialog.open(ProfileComponent, {
+      width: 'auto',
+      height:"auto",
+      data: event
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      let fd=new FormData();
+      fd.append('image',result);
+      // console.log(result);
+      this.userService.uploadProfileImage(fd).subscribe((response:any)=>{
+        console.log("data creation ",response)
+        sessionStorage.setItem("profileImageUrl",response);
+        console.log(sessionStorage.getItem("profileImageUrl"))
+        this.getProfilemage();
+      });
+    });
+  }
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }

@@ -63,7 +63,7 @@ import { CollaboratorComponent } from './components/collaborator/collaborator.co
     IconComponent,
     LabelEditComponent,
     CollaboratorComponent,
-  
+
 
     // TokenInterceptorService,
 
@@ -94,6 +94,7 @@ import { CollaboratorComponent } from './components/collaborator/collaborator.co
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
+
     
     
    
@@ -108,7 +109,7 @@ import { CollaboratorComponent } from './components/collaborator/collaborator.co
       useValue: {}
     },],
   bootstrap: [AppComponent],
-  entryComponents: [NoteDialogComponent,LabelEditComponent,CollaboratorComponent]
+  entryComponents: [NoteDialogComponent,ProfileComponent,LabelEditComponent,CollaboratorComponent,]
 })
 
 
