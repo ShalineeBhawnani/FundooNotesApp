@@ -85,7 +85,8 @@ export class MyNavComponent implements OnInit,OnDestroy{
   getProfilemage(){
     let profileImage=sessionStorage.getItem("fundooProfileimage");
    
-    this.profileImageUrl = `url(http://127.0.0.1:8000/${profileImage})`;
+    // this.profileImageUrl = `url(http://127.0.0.1:8000/${profileImage})`;
+    this.profileImageUrl = profileImage
     console.log("put profile",this.profileImageUrl)
     
 

@@ -141,3 +141,43 @@
   height: 500px;
   margin: 200px 0px 0px 200px;
 }
+.user {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  border-radius: 50%;
+ 
+}
+.account-div-gt-xs{
+  width:50%;
+  div{
+    width:35px;
+  }
+}
+.account-div-lt-sm{
+  width:20%;
+  div{
+    width:100%;
+  }
+}
+.user img{
+  width: 100%;
+  height: auto;
+ 
+}
+.inside{
+  display: inline-block;
+  width: 200px;
+  height: 70px;
+  overflow: hidden;
+  border-radius: 50%;
+  
+ 
+}
+.inside img{
+  width: 150%;
+  height: auto;
+  margin-left: -10px;
+
+}
