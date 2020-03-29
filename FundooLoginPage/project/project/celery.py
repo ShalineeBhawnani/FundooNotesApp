@@ -1,29 +1,18 @@
-from __future__ import absolute_import, unicode_literals
+from __future__ import absolute_import
 import os
 from celery import Celery
-from .settings import CELERY_BROKER_URL
 from django.conf import settings
-from celery.schedules import crontab
+
+# set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
+app = Celery('project')
 
-celery_app = Celery('project', broker=CELERY_BROKER_URL)
-celery_app.config_from_object('django.conf:settings')
-celery_app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
-#celery_app.conf.beat_schedule = {'add-every-05-seconds':
-                                  # {'task': 'note.tasks.send_mail_task', 
-                                   # 'schedule': 05.0, }, }
-# celery_app.conf.beat_schedule = {
-#         'add-every-1-minute': {
-#             'task': 'note.tasks.task_check_reminder',
-#             'schedule': crontab(),
-#         },
-#     }
+# Using a string here means the worker will not have to
+# pickle the object when using Windows.
+app.config_from_object('django.conf:settings')
+app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
+# app.autodiscover_tasks()
 
-@celery_app.task(bind=True)
+@app.task(bind=True)
 def debug_task(self):
     print('Request: {0!r}'.format(self.request))
-
-# @celery_app.task
-# def send_mail(x, y):
-#     return x + y
-

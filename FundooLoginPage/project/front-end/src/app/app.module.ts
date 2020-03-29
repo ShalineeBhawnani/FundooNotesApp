@@ -37,6 +37,7 @@ import { DataService } from './/services/data.service';
 import { LabelEditComponent } from './components/label-edit/label-edit.component';
 import {MatDialogModule, MatDialog,MatDialogRef }from '@angular/material/dialog';
 import { CollaboratorComponent } from './components/collaborator/collaborator.component';
+import { ReminderDisplayComponent } from './components/reminder-display/reminder-display.component';
 // import { TokenInterceptorService } from './services/token-interceptor.service';
 
 
@@ -63,6 +64,7 @@ import { CollaboratorComponent } from './components/collaborator/collaborator.co
     IconComponent,
     LabelEditComponent,
     CollaboratorComponent,
+    ReminderDisplayComponent,
 
 
     // TokenInterceptorService,

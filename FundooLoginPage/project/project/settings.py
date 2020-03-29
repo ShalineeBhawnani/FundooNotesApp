@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django_elasticsearch_dsl_drf',
     'django_celery_results',
     'corsheaders', #Cross Origin Resource Sharing.
+    'djcelery',
     
     
 ]
@@ -205,11 +206,11 @@ ELASTICSEARCH_DSL = {
 
 
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
+# CELERY_BROKER_URL = 'redis://localhost:6379/0'
+# CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+# CELERY_ACCEPT_CONTENT = ['json']
+# CELERY_TASK_SERIALIZER = 'json'
+# CELERY_RESULT_SERIALIZER = 'json'
 
 # CELERYBEAT_SCHEDULE = {
 #     "send_mail": {
@@ -218,6 +219,17 @@ CELERY_RESULT_SERIALIZER = 'json'
 #     },
 # }
 # CELERYBEAT_SCHEDULER ="django_celery_beat.schedulers:DatabaseScheduler"
+BROKER_TRANSPORT = 'redis'
+# BROKER_URL = 'redis://localhost:6379'
+# CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+# CELERY_ACCEPT_CONTENT = ['application/json']
+# CELERY_TASK_SERIALIZER = 'json'
+# CELERY_RESULT_SERIALIZER = 'json'
+# CELERY_TIMEZONE = 'Asia/Makassar'
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+
+
+CELERY_IMPORTS = ("note.tasks",)
 
 
 STATIC_URL = '/static/'

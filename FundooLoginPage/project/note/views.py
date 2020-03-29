@@ -144,6 +144,7 @@ class CreateNote(generics.GenericAPIView):
     def post(self,request):
         data=request.data
         note_serializer = NoteSerializer(data=request.data)
+        print(note_serializer)
         if note_serializer.is_valid():
             token = request.headers.get('Token')
             mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
@@ -269,16 +270,16 @@ class BinNotes(generics.GenericAPIView):
         except Note.DoesNotExist:
             return Response("Not found")
 
-
-
-@method_decorator(login_required, name='dispatch')   
+# @method_decorator(login_required, name='dispatch')   
 class Remider(generics.GenericAPIView):
     def get(self, request, id=None):
        
         try:
-            user = request.user
-            print(user)
-            notes_with_reminder = Note.objects.filter(user_id=user, reminder__isnull=False)
+            token = request.headers.get('Token')
+            mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+            user_id=mytoken.get('username')
+            user=User.objects.get(username=user_id)
+            notes_with_reminder = Note.objects.filter(user_id=user.id, reminder__isnull=False)
             return Response(notes_with_reminder.values(), status=status.HTTP_200_OK)
         except Exception:
             smd = {'success': 'Fail', 'message': 'something wrong in reminder', 'data': []}

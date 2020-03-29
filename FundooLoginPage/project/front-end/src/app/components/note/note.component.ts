@@ -32,7 +32,10 @@ export class NoteComponent implements OnInit {
   is_archived:boolean=false;
   is_bin:boolean=false;
   collaborators=[];
-  image:File;
+  add_picture: [null]
+  ImageUrl:any;
+  fileToUpload: any;
+  profileImageUrl:any;
   
   constructor(
     private userService: UserService,
@@ -50,7 +53,7 @@ export class NoteComponent implements OnInit {
     newMessage() {
       this.dataService.changeMessage("Note added")
     }
-
+    
   saveNotes()
 
   {
@@ -66,8 +69,10 @@ export class NoteComponent implements OnInit {
      is_bin:this.is_bin,
      label_note:this.label_note,
      collaborators:this.collaborators,
+     add_picture:this.add_picture,
      
   }
+
   console.log(noteData.label_note)
   this.userService.createNote(noteData).subscribe(
     (data) => {
@@ -114,7 +119,16 @@ export class NoteComponent implements OnInit {
     this.label_note.push($event.value.label)
   
          }
+    
+  if($event.purpose=="add_picture"){
+   
+    console.log("file upload");
+    
+  }
+  
+  
 }
+
 
   }
 

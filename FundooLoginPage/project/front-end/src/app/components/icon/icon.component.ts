@@ -25,6 +25,7 @@ export class IconComponent implements OnInit {
   message:string;
   note:any;
   reminder:any;
+  
   labelCheck = new FormControl();
   dummy:boolean=false;
   @Output() eventCarrier = new EventEmitter<Events>();
@@ -63,7 +64,7 @@ export class IconComponent implements OnInit {
       }
     });
     dialogref.afterClosed().subscribe(result=> {
-      //console.log("dialog result ", result);
+      console.log("dialog result ", result);
     })
   }
   addLabel(){
@@ -118,5 +119,13 @@ export class IconComponent implements OnInit {
     console.log(this.note)
     this.eventCarrier.emit(this.event);
 
+  }
+  fileInput(){
+    console.log("clicked")
+    this.event={
+      "purpose":"add_picture",
+    }
+   
+    this.eventCarrier.emit(this.event);
   }
 }

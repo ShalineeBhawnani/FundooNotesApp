@@ -139,6 +139,13 @@ getProfilemage():Observable<any>
     'token': localStorage.getItem('token')
   } });
 }
+getReminder():Observable<any>
+{
+  return this.http.get(this.baseUrl+'/reminder/',
+  { headers: {
+    'token': localStorage.getItem('token')
+  } });
+}
 addCollaborator():Observable<any>
 {
   return this.http.get(this.baseUrl+'/note/',
@@ -146,4 +153,5 @@ addCollaborator():Observable<any>
     'token': localStorage.getItem('token')
   } });
 }
+
 }
