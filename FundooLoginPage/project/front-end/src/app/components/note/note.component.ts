@@ -32,6 +32,7 @@ export class NoteComponent implements OnInit {
   is_archived:boolean=false;
   is_bin:boolean=false;
   collaborators=[];
+  image:File;
   
   constructor(
     private userService: UserService,
