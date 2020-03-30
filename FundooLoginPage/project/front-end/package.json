@@ -23,6 +23,8 @@
     "@angular/platform-browser": "^6.1.0",
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
+    "ag-grid-angular": "^23.0.2",
+    "ag-grid-community": "^23.0.2",
     "angular-material": "^1.1.21",
     "bootstrap": "^4.4.1",
     "core-js": "^2.5.4",

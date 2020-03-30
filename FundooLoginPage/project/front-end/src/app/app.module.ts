@@ -33,7 +33,7 @@ import { NoteDialogComponent } from './components/note-dialog/note-dialog.compon
 import { IconComponent } from './components/icon/icon.component';
 import { SharedService } from './/services/shared.service';
 import { DataService } from './/services/data.service';
-
+import { AgGridModule } from 'ag-grid-angular';
 import { LabelEditComponent } from './components/label-edit/label-edit.component';
 import {MatDialogModule, MatDialog,MatDialogRef }from '@angular/material/dialog';
 import { CollaboratorComponent } from './components/collaborator/collaborator.component';
@@ -65,7 +65,7 @@ import { ReminderDisplayComponent } from './components/reminder-display/reminder
     LabelEditComponent,
     CollaboratorComponent,
     ReminderDisplayComponent,
-
+    // AgGridModule,
 
     // TokenInterceptorService,
 
@@ -96,6 +96,7 @@ import { ReminderDisplayComponent } from './components/reminder-display/reminder
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
+    // AgGridModule
 
     
     

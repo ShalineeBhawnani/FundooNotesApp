@@ -99,9 +99,10 @@ export class IconComponent implements OnInit {
   
   labelAddOrRemove(label){
     let data={
-      "label":label.id
+      "label":label
     }
     console.log("checklist labelAddOrRemove",data)
+    
     this.event={
       "purpose":"addLabel",
       "value":data

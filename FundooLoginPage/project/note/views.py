@@ -336,29 +336,40 @@ class SearchNote(generics.GenericAPIView):
     queryset = Note.objects.all()
     
     def post(self, request, id=None):
-        elastic_client = Elasticsearch(hosts=["localhost"])
+        # elastic_client = Elasticsearch(hosts=["localhost"])
         user_request = SearchSerializer(data=request.data)
         print(user_request)
         if user_request.is_valid():
-            query_body = {
-                "query": {
-                    "bool": {
-                        "must": {
-                            "match": {  
-                                "title": user_request.data.get('title'),
-                                #"note": user_request.data.get('note')
-                                      
-                                }
-                            }
-                        }
-                    }
-                }
+            user=request.user
+            print(user)
+            search_result = NoteDocument().search().query({
+                'bool': {
+                    'must': [
+                        {'match': {'title': user_request.data.get('title')}},
+                        {'match': {'note': user_request.data.get('note')}},   
+                    ]
+                },
+               
+            })
+            
+            result = search_result.execute()
+            print(result)
+            note_search = [Note.objects.filter(user_id=user.id, title=hits.title, note=hits.note).values()
+                         for hits in result.hits]
+
+            return Response(note_search, status=status.HTTP_200_OK)
+        else:
+            return Response("not found", status=status.HTTP_400_BAD_REQUEST)
+
+
+    
+
        
-            result = elastic_client.search(index="note", body=query_body)
-            print ("total hits:", len(result["hits"]["hits"]))
-            return Response(result, status=status.HTTP_201_CREATED)
-        return Response(result.errors, status=status.HTTP_400_BAD_REQUEST)
-        
+
+           
+           
+
+
 
 
 # class NoteUpdate(generics.GenericAPIView):
