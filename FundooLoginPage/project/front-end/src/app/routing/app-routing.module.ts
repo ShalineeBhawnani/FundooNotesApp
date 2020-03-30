@@ -12,6 +12,7 @@ import { NoteComponent } from '../components/note/note.component';
 import { NotedataComponent } from '../components/notedata/notedata.component';
 import { ArchiveComponent}  from '../components/archive/archive.component';
 import { TrashComponent } from '../components/trash/trash.component';
+import { SearchComponent } from '../components/search/search.component';
 import { ReminderDisplayComponent} from '../components/reminder-display/reminder-display.component';
 // import { LabelEditComponent } from './components/label-edit/label-edit.component';
 
@@ -62,6 +63,9 @@ const routes: Route[] = [
       
     
     },
+    {path: 'search',
+    component:SearchComponent
+  },
     
     
     ]

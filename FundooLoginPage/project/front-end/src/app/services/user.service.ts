@@ -140,6 +140,14 @@ getProfilemage():Observable<any>
     'token': localStorage.getItem('token')
   } });
 }
+
+searchNote():Observable<any>
+{
+  return this.http.get(this.baseUrl+'/search/',
+  { headers: {
+    'token': localStorage.getItem('token')
+  } });
+}
 getReminder():Observable<any>
 {
   return this.http.get(this.baseUrl+'/reminder/',

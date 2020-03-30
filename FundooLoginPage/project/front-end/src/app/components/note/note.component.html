@@ -36,7 +36,7 @@
 <!-- 
       <mat-card-actions> -->
       <mat-chip-list >
-        <mat-chip *ngFor="let label of label_note"  [selectable]="selectable"
+        <mat-chip *ngFor="let label of label_note;let i = index" [selectable]="selectable"
         [removable]="removable" (removed)="remove(label)">
           {{label.label}}
           <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>

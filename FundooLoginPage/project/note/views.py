@@ -68,7 +68,6 @@ class CreateLabel(generics.GenericAPIView):
         user=User.objects.get(username=user_id)
         try:
             label = self.queryset.filter(user_id=user.id)
-            # print(label.values())
             return Response(label.values(), status=status.HTTP_200_OK)
         except Exception:
             return Response(Exception, status=status.HTTP_403_FORBIDDEN)

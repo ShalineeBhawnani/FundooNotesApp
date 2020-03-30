@@ -68,12 +68,12 @@ export class IconComponent implements OnInit {
     })
   }
   addLabel(){
-    //console.log("in add lable")
+   
     let data={
       "label":this.newLabel,
       "isDeleted":false 
     }
-    console.log("label add",data)
+    console.log("label add again",data)
     console.log("created label",data)
     this.userService.label(data).subscribe((data:any)=>{
       this.getLabels();
@@ -99,7 +99,7 @@ export class IconComponent implements OnInit {
   
   labelAddOrRemove(label){
     let data={
-      "label":label
+      "label":label.id
     }
     console.log("checklist labelAddOrRemove",data)
     
