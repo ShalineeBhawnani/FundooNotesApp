@@ -26,29 +26,6 @@ export class SearchComponent implements OnInit {
   ngOnInit() {
   
   }
-  getNotes(){
-    this.dataService.eventObservable.subscribe((searchText) => {
-      this.searchText = searchText
-    
-    console.log('inside search bar c........',this.searchText);
-
-    return this.userService.searchNote().subscribe((response: any) => {
-      this.result1 = this.getFilter(response.data.data);
-          this.notes = this.result1.reverse();
-          this.filteredRecords=this.filterPipe.transform(this.notes,this.searchText);
-          this.searchNote=this.filteredRecords;
-          console.log("Serached notesssssssss==--", this.filteredRecords);
-        }, (error) => {
-      
-        });
-      });
-  }
-  getFilter(result) {
-    const pass = result.filter(function(result) {
-      return (result.isDeleted == false && result.isArchived == false);
-    });
-    return pass;
-  }
 }
 
 

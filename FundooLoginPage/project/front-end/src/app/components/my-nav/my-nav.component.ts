@@ -1,6 +1,3 @@
-import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {Router} from '@angular/router'
@@ -10,6 +7,7 @@ import {MatDialog} from '@angular/material/dialog';
 import { DataService } from '../../services/data.service';
 import { UserService } from '../../services/user.service';
 import { ProfileComponent } from '../profile/profile.component';
+
 
 @Component({
   selector: 'app-my-nav',
@@ -22,7 +20,7 @@ export class MyNavComponent implements OnInit,OnDestroy{
   mobileQuery: MediaQueryList;
   profileImageUrl:any;
   private _mobileQueryListener: () => void;
-  
+ 
 
   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private routing:Router,private userService:UserService,private dataService:DataService, private dialog:MatDialog) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
@@ -82,6 +80,7 @@ export class MyNavComponent implements OnInit,OnDestroy{
     })
   }
  
+
   getProfilemage(){
     let profileImage=sessionStorage.getItem("fundooProfileimage");
    
