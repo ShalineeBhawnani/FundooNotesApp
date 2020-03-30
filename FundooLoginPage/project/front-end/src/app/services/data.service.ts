@@ -23,7 +23,9 @@ export class DataService {
     console.log("Sharing Bet 2component",message)
     this.messageSource.next(message)
   }
-
+  sendEvent(search:string){
+    this.eventCarrier.next(search);
+   }
   
   labelNext(label:string){
     this.label.next(label);
