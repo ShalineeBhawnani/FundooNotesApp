@@ -29,6 +29,7 @@ export class MyNavComponent implements OnInit,OnDestroy{
     viewStyling:true
   }
   getData(){
+    console.log("grid",this.data)
     return this.data;
   }
   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private routing:Router,private userService:UserService,private dataService:DataService, private dialog:MatDialog) {
@@ -64,6 +65,7 @@ export class MyNavComponent implements OnInit,OnDestroy{
     );
   }
   listOrGridview(type){
+    console.log("came here")
     this.view=!this.view;
     this.data.viewStyling=!this.data.viewStyling;
     this.data.viewLayoutType = ((type=="grid")? "row wrap":"column");

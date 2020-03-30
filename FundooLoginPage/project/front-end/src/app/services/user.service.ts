@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpResponse,HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 
 
 @Injectable()
 export class UserService {
-
+  public emitObservable: Subject<void> = new Subject<void>();
   baseUrl = environment.baseUrl;
   httpHeaders = new HttpHeaders({'Content-type': 'application/json'})
 
