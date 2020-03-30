@@ -17,8 +17,7 @@ export interface DialogData {
 })
 
 export class DisplaynotesComponent implements OnInit,OnDestroy {
-  // note$: any;
-  // subscription: Subscription;
+
   message:string;
   @Input() sendDataToChild=[];
 
@@ -35,7 +34,7 @@ fileNameDialogRef: MatDialogRef<NoteDialogComponent>;
   ngOnInit(){
 
     console.log("data",this.sendDataToChild)
-    // this.dataService.currentMessage.subscribe(message => this.message = message)
+   
     
   }
 
