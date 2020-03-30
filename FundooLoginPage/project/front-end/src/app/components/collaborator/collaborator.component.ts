@@ -30,17 +30,7 @@ export class CollaboratorComponent implements OnInit {
     }
   }
 
-  // searchlist(data) {
-    
-  //   //console.log("inside searching",data)
-  //   if (data != '') {
-  //     this.noteService.searchUserList(
-  //       { "searchWord": data }).subscribe(data => {
-  //         //console.log(data)
-  //         this.searchResultList = data['data']['details'];
-  //       })
-  //   }
-  // }
+  
   addCollaborator() {
     
     try {
@@ -78,25 +68,7 @@ export class CollaboratorComponent implements OnInit {
       }
     }
   }
-  // removeCollaborator(collaboratorId) {
-  //   if (this.data['id'] !== undefined) {
-  //     this.noteService.removeCollaborator(this.data['id'], collaboratorId).subscribe(result => {
-  //       this.snackbar.open('Collaborator removed successfully')
-  //     },
-  //     error=>{
-  //       this.snackbar.open('Error in removing Collaborator', 'Retry')
-  //     })
-  //   }
-  //   var count = 0;
-  //   this.collaborators.forEach(collaborator => {
-  //     if (collaborator.userId == collaboratorId) {
-  //       this.collaborators.splice(count, 1);
-  //     }
-  //     else
-  //       count++;
-  //   });
-  //   return;
-  // }
+
   cancel() {
     this.dialogRef.close();
   }

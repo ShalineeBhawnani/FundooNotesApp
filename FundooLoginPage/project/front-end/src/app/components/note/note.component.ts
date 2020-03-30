@@ -89,7 +89,6 @@ export class NoteComponent implements OnInit {
     });
     }
     
-
     recieveMessageFromIcon($event){
     if($event.purpose=="color"){
     {

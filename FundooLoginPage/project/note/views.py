@@ -122,7 +122,7 @@ class LabelDetails(generics.ListAPIView):
         
 class CreateNote(generics.GenericAPIView):
     serializer_class = NoteSerializer
-    queryset= Note.objects.all().filter(is_archived=False,is_bin=False)
+    queryset= Note.objects.all().filter(is_archived=False,is_bin=False,reminder__isnull=True)
     def get(self, request, *args, **kwargs):
         token = request.headers.get('Token')
         mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
