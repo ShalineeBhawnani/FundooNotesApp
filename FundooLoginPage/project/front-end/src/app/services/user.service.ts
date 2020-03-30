@@ -8,7 +8,9 @@ import { environment } from '../../environments/environment';
 
 @Injectable()
 export class UserService {
+
   public emitObservable: Subject<void> = new Subject<void>();
+  
   baseUrl = environment.baseUrl;
   httpHeaders = new HttpHeaders({'Content-type': 'application/json'})
 

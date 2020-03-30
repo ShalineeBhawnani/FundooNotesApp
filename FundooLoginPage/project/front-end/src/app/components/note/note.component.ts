@@ -45,6 +45,7 @@ export class NoteComponent implements OnInit {
     // to emit an event after every modifications
   public emitObservable: Subject<void> = new Subject<void>();
   
+  
   constructor(
     private userService: UserService,
     private snackBar:MatSnackBar,
@@ -55,6 +56,7 @@ export class NoteComponent implements OnInit {
 
     this.mynav.emitView.subscribe(() => {
     this.data = this.mynav.getData();
+    console.log("grid note",this.data = this.mynav.getData())
       })
    }
 

@@ -21,7 +21,7 @@ export class MyNavComponent implements OnInit,OnDestroy{
   mobileQuery: MediaQueryList;
   profileImageUrl:any;
   private _mobileQueryListener: () => void;
- // list and gird view variables
+ 
   view:boolean=false;
   emitView=new Subject();
   data={
@@ -65,7 +65,6 @@ export class MyNavComponent implements OnInit,OnDestroy{
     );
   }
   listOrGridview(type){
-    console.log("came here")
     this.view=!this.view;
     this.data.viewStyling=!this.data.viewStyling;
     this.data.viewLayoutType = ((type=="grid")? "row wrap":"column");
