@@ -4,6 +4,7 @@ import { UserService } from '../../services/user.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DataService } from '../../services/data.service';
+import { MyNavComponent } from './../my-nav/my-nav.component';
 
 
 @Component({
@@ -22,6 +23,10 @@ export class NoteComponent implements OnInit {
     Validators.required,
 
   ]);
+  data = {
+    viewLayoutType: "row wrap",
+    viewStyling: true
+  }
  
   save: Boolean
   message:string;
@@ -40,8 +45,13 @@ export class NoteComponent implements OnInit {
   constructor(
     private userService: UserService,
     private snackBar:MatSnackBar,
-    private dataService:DataService,) {
+    private dataService:DataService,
+    private mynav:MyNavComponent) {
+      this.data = this.mynav.getData();
 
+      this.mynav.emitView.subscribe(() => {
+        this.data = this.mynav.getData();
+      })
    }
 
    ngOnInit() {

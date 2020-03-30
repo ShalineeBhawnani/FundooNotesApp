@@ -28,7 +28,9 @@ export class MyNavComponent implements OnInit,OnDestroy{
     viewLayoutType:"row wrap",
     viewStyling:true
   }
-
+  getData(){
+    return this.data;
+  }
   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private routing:Router,private userService:UserService,private dataService:DataService, private dialog:MatDialog) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
