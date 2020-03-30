@@ -7,6 +7,7 @@ import {MatDialog} from '@angular/material/dialog';
 import { DataService } from '../../services/data.service';
 import { UserService } from '../../services/user.service';
 import { ProfileComponent } from '../profile/profile.component';
+import { Subject } from 'rxjs';
 
 
 @Component({
@@ -20,7 +21,13 @@ export class MyNavComponent implements OnInit,OnDestroy{
   mobileQuery: MediaQueryList;
   profileImageUrl:any;
   private _mobileQueryListener: () => void;
- 
+ // list and gird view variables
+  view:boolean=false;
+  emitView=new Subject();
+  data={
+    viewLayoutType:"row wrap",
+    viewStyling:true
+  }
 
   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private routing:Router,private userService:UserService,private dataService:DataService, private dialog:MatDialog) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
@@ -33,14 +40,6 @@ export class MyNavComponent implements OnInit,OnDestroy{
      console.log("profile pic")
      this.getProfilemage();
   }
-
-  // navigateTrash(){ 
-  //   console.log("navigating to trash")
-  //   this.routing.navigate(['nav/bin']);
-  // }
-  // navigateArchive(){
-  //   this.routing.navigate(['nav/archive']);
-  // }
 
   navigateToLabel(label){
   console.log(label);
@@ -62,6 +61,14 @@ export class MyNavComponent implements OnInit,OnDestroy{
       }
     );
   }
+  listOrGridview(type){
+    this.view=!this.view;
+    this.data.viewStyling=!this.data.viewStyling;
+    this.data.viewLayoutType = ((type=="grid")? "row wrap":"column");
+    this.data={viewLayoutType:this.data.viewLayoutType,viewStyling:this.data.viewStyling};
+    this.emitView.next();
+  }
+
   openLabelEditBox(){
     console.log("inside dash open label func")
     let dialogref = this.dialog.open(LabelEditComponent,
@@ -75,7 +82,7 @@ export class MyNavComponent implements OnInit,OnDestroy{
       });
       console.log("label in nav",this.labels)
     dialogref.afterClosed().subscribe(result=> {
-      //console.log("dialog result ", result);
+
       
     })
   }
