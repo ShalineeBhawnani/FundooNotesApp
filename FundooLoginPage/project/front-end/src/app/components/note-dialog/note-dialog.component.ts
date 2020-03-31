@@ -109,7 +109,7 @@ constructor( private dialogRef: MatDialogRef<NoteDialogComponent>,
             
           }
             
-          
+        }
          this.userService.updateNotes(this.notedata,this.data.id)
          .subscribe(
          (data) => {
@@ -124,7 +124,7 @@ constructor( private dialogRef: MatDialogRef<NoteDialogComponent>,
   
          });
         }
-      }
+      
       if($event.purpose=="archive"){
         this.is_archived=true;
 
