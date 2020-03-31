@@ -7,7 +7,7 @@
         cdkAutosizeMaxRows="25" class="text" placeholder="Take a Note" [formControl]="note" value="{{data.note}}" [ngStyle]="{background: data.color}"></textarea>
     
     <div class="footer" fxLayoutAlign="space-between center">
-        <app-icon (eventCarrier)="recieveMessageFromIconTray($event)"> </app-icon>
+        <app-icon (eventCarrier)="recieveMessageFromIcon($event)"> </app-icon>
       <button mat-button (click)=" updateNote()">Close</button>
     </div>
     </div>
