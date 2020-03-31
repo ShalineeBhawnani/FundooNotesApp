@@ -24,7 +24,7 @@ export class NoteDialogComponent implements OnInit {
   is_bin:boolean=false;
   collaborators=[];
   add_picture: [null]
-  descriptionFinal:string;
+  noteFinal:string;
   titleFinal:string;
   notedata:any;
 
@@ -40,21 +40,24 @@ constructor( private dialogRef: MatDialogRef<NoteDialogComponent>,
 
   }
   updateNote() {
-    this.descriptionFinal=this.note.value;
-    console.log("title.value-----",this.title.value)
+    this.noteFinal=this.note.value;
     this.titleFinal=this.title.value;
+
+    
     if(this.note.value==null){
-      this.descriptionFinal=this.data.note;
+      this.noteFinal=this.data.note;
     }
 
     if(this.title.value==null){
       this.titleFinal=this.data.title;
     }
-    console.log(this.titleFinal,this.descriptionFinal)
+ 
 
     this.notedata = {
       title: this.titleFinal,
-      note: this.descriptionFinal,
+      note: this.noteFinal,
+      is_archived:this.is_archived,
+      color:this.color,
     }
     if((this.notedata.title == null) && (this.data.title != null))
     {
@@ -69,57 +72,89 @@ constructor( private dialogRef: MatDialogRef<NoteDialogComponent>,
     {
       this.notedata.title = "both are empty";
       this.notedata.note = "both are empty";
+    
     }
     this.dialogRef.close();
  
-    
-      this.userService.updateNotes(this.notedata,this.data.id)
-      .subscribe(
-          (data) => {
-            this.snackBar.open(data.toString(),'',{
-              duration:3000,
-              verticalPosition:'bottom'
-            });
-              
-          },
-          error => {
-            alert('Note updation failed')
-
+    this.userService.updateNotes(this.notedata,this.data.id)
+    .subscribe(
+        (data) => {
+          this.snackBar.open(data.toString(),'',{
+            duration:3000,
+            verticalPosition:'bottom'
           });
-          this.dialogRef.close(this.notedata);
-    }
-    recieveMessageFromIcon($event){
-      if($event.purpose=="color"){
-      {
-        
-        this.color=$event.value;
-        console.log("my color",this.color)
-  
-      }
-    }
-    if($event.purpose=="archive"){
-      console.log("archiving");
-      this.is_archived=true;
-     
-      
-  
-    }
-    if($event.purpose=="deleteNote"){
-      console.log("deleteNote");
-      this.is_bin=true;
-    
-      
-  
-    }
-    
-    if($event.purpose=="addLabel"){
-     
-      console.log("addLabel",this.label_note.push($event.value.label));
-      this.label_note.push($event.value.label)
-    
-           }
-      
+            
+        },
+        error => {
+          alert('Note updation failed')
 
-          }}
+        });
+        this.dialogRef.close(this.notedata);
+  }
+
+
+    recieveMessageFromIcon($event)
+    {
+    
+      if($event.purpose=="color"){
+        console.log("color func nside")
+        this.data.color=$event.value;
+        {
+      
+          this.notedata = {
+            title: this.titleFinal,
+            note: this.noteFinal,
+            is_archived:true,
+            color:$event.value,
+            
+          }
+            
+          
+         this.userService.updateNotes(this.notedata,this.data.id)
+         .subscribe(
+         (data) => {
+           this.snackBar.open(data.toString(),'',{
+             duration:3000,
+             verticalPosition:'bottom'
+           });
+             
+         },
+         error => {
+           alert('Note updation failed')
+  
+         });
+        }
+      }
+      if($event.purpose=="archive"){
+        this.is_archived=true;
+
+        this.notedata = {
+          title: this.titleFinal,
+          note: this.noteFinal,
+          is_archived:true,
+          
+        }
+          
+        
+       this.userService.updateNotes(this.notedata,this.data.id)
+       .subscribe(
+       (data) => {
+         this.snackBar.open(data.toString(),'',{
+           duration:3000,
+           verticalPosition:'bottom'
+         });
+           
+       },
+       error => {
+         alert('Note updation failed')
+
+       });
+        
+       
+     }
+   }
+     
+      }
+    
 
 

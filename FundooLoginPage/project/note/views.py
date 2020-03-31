@@ -213,6 +213,7 @@ class NoteUpdate(generics.GenericAPIView):
         user=User.objects.get(username=user_id)
         note = Note.objects.get(id=pk,user_id=user.id)
         serializer = NoteSerializer(note,data=request.data)
+        print(serializer)
         if serializer.is_valid():
             serializer.save(user_id=user.id)
             return Response("Note Edited")
