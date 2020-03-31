@@ -33,16 +33,14 @@
         <textarea matInput matTextareaAutosize placeholder="Take a note..."
           [formControl]="note" [ngStyle]="{background: color}" name="note">{{note.value}}</textarea>
       </mat-card-content>
-<!-- 
-      <mat-card-actions> -->
+
+      <mat-card-actions>
       <mat-chip-list >
-        <mat-chip *ngFor="let label of label_note;let i = index" [selectable]="selectable"
-        [removable]="removable" (removed)="remove(label)">
-          {{label.label}}
-          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        <mat-chip *ngFor="let label of label_note;let i = index">
+          {{label}}
         </mat-chip>
       </mat-chip-list>
-    <!-- </mat-card-actions> -->
+    </mat-card-actions>
       <mat-card-footer>
         <div fxLayout="row" fxLayoutAlign="start center">
           <app-icon (eventCarrier)="recieveMessageFromIcon($event)" (saveNotes)="saveButtonClick($event)" ></app-icon>
