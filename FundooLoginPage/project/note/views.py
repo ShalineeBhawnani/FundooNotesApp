@@ -206,7 +206,6 @@ class NoteDetails(generics.ListAPIView):
 class NoteUpdate(generics.GenericAPIView):
     queryset=Note.objects.all()
     serializer_class=NoteSerializer
-
     def put(self,request,pk):
         token = request.headers.get('Token')
         mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])

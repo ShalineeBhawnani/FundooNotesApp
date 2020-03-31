@@ -4,8 +4,6 @@ import { UserService } from '../../services/user.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DataService } from '../../services/data.service';
-import { MyNavComponent } from './../my-nav/my-nav.component';
-import { Subject } from 'rxjs';
 
 
 @Component({
@@ -24,10 +22,6 @@ export class NoteComponent implements OnInit {
     Validators.required,
 
   ]);
-  data = {
-    viewLayoutType: "row wrap",
-    viewStyling: true
-  }
  
   save: Boolean
   message:string;
@@ -42,22 +36,12 @@ export class NoteComponent implements OnInit {
   ImageUrl:any;
   fileToUpload: any;
   profileImageUrl:any;
-    // to emit an event after every modifications
-  public emitObservable: Subject<void> = new Subject<void>();
-  
   
   constructor(
     private userService: UserService,
     private snackBar:MatSnackBar,
-    private dataService:DataService,
-    private mynav:MyNavComponent) {
+    private dataService:DataService,) {
 
-    this.data = this.mynav.getData();
-
-    this.mynav.emitView.subscribe(() => {
-    this.data = this.mynav.getData();
-    console.log("grid note",this.data = this.mynav.getData())
-      })
    }
 
    ngOnInit() {

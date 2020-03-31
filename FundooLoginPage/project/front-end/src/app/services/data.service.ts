@@ -2,14 +2,13 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import {Events} from '../models/eventModel'
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
   event:Events
   private eventCarrier=new BehaviorSubject('');
-  
+ 
   private messageSource = new BehaviorSubject('default message');
   currentMessage = this.messageSource.asObservable();
   

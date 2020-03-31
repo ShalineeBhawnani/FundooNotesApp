@@ -1,3 +1,6 @@
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {Router} from '@angular/router'
@@ -7,8 +10,6 @@ import {MatDialog} from '@angular/material/dialog';
 import { DataService } from '../../services/data.service';
 import { UserService } from '../../services/user.service';
 import { ProfileComponent } from '../profile/profile.component';
-import { Subject } from 'rxjs';
-
 
 @Component({
   selector: 'app-my-nav',
@@ -21,17 +22,8 @@ export class MyNavComponent implements OnInit,OnDestroy{
   mobileQuery: MediaQueryList;
   profileImageUrl:any;
   private _mobileQueryListener: () => void;
- 
-  view:boolean=false;
-  emitView=new Subject();
-  data={
-    viewLayoutType:"row wrap",
-    viewStyling:true
-  }
-  getData(){
-    console.log("grid",this.data)
-    return this.data;
-  }
+  
+
   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private routing:Router,private userService:UserService,private dataService:DataService, private dialog:MatDialog) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -43,6 +35,14 @@ export class MyNavComponent implements OnInit,OnDestroy{
      console.log("profile pic")
      this.getProfilemage();
   }
+
+  // navigateTrash(){ 
+  //   console.log("navigating to trash")
+  //   this.routing.navigate(['nav/bin']);
+  // }
+  // navigateArchive(){
+  //   this.routing.navigate(['nav/archive']);
+  // }
 
   navigateToLabel(label){
   console.log(label);
@@ -64,14 +64,6 @@ export class MyNavComponent implements OnInit,OnDestroy{
       }
     );
   }
-  listOrGridview(type){
-    this.view=!this.view;
-    this.data.viewStyling=!this.data.viewStyling;
-    this.data.viewLayoutType = ((type=="grid")? "row wrap":"column");
-    this.data={viewLayoutType:this.data.viewLayoutType,viewStyling:this.data.viewStyling};
-    this.emitView.next();
-  }
-
   openLabelEditBox(){
     console.log("inside dash open label func")
     let dialogref = this.dialog.open(LabelEditComponent,
@@ -85,12 +77,11 @@ export class MyNavComponent implements OnInit,OnDestroy{
       });
       console.log("label in nav",this.labels)
     dialogref.afterClosed().subscribe(result=> {
-
+      //console.log("dialog result ", result);
       
     })
   }
  
-
   getProfilemage(){
     let profileImage=sessionStorage.getItem("fundooProfileimage");
    

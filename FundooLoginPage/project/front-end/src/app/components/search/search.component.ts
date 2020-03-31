@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { DataService } from '../../services/data.service';
-import { SearchPipe } from '../../search.pipe';
 
 @Component({
   selector: 'app-search',
@@ -16,10 +15,9 @@ export class SearchComponent implements OnInit {
   searchText:any;
   message:any;
   searchNote:any;
-  filterPipe: SearchPipe = new SearchPipe();
+  // filterPipe: SearchPipe = new SearchPipe();
   filteredRecords:any;
   component='search';
-
   constructor(private userService: UserService,private dataService:DataService) {
   }
 
@@ -27,5 +25,3 @@ export class SearchComponent implements OnInit {
   
   }
 }
-
-

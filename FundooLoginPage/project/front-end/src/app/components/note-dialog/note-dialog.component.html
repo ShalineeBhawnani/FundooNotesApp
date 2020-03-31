@@ -1,25 +1,14 @@
-<div fxLayoutAlign="start center" fxLayout="column">
-    <div fxLayoutAlign="center center">
+<div class="container" fxFlex="100" fxLayout="column" fxLayoutAlign="space-between stretch" [ngStyle]="{background: data.color}">
 
-    <mat-card class="matcard" ngClass.gt-xs="mat-card-gt-xs"
-                        ngClass.lt-sm="mat-card-lt-sm">
-
-        <mat-card-content>
-        <div class="inputtag">
-      <textarea #titleinput matInput matTextareaAutosize class="textarea" [formControl]="title" > {{data.title}}</textarea>
-        </div>
-      </mat-card-content>
+      <textarea matInput type="text" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="25"class="text"  placeholder="Title" [formControl]="title" value="{{data.title}}" [ngStyle]="{background: data.color}"></textarea>
     
-        <mat-card-content>
-       <div class="takeanote">
-      <textarea #textinput matInput matTextareaAutosize class="textarea" [formControl]="note"> {{data.note}}</textarea>
-      </div>
-     </mat-card-content>
-
-    <app-icon ></app-icon>
-    <button mat-button (click)="updateClick(titleinput.value,textinput.value)" class="button">Close</button>
-
-    </mat-card>
-
+      <textarea matInput type="text" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="25" class="text" placeholder="Take a Note" [formControl]="note" value="{{data.note}}" [ngStyle]="{background: data.color}"></textarea>
+    
+    <div class="footer" fxLayoutAlign="space-between center">
+        <app-icon (eventCarrier)="recieveMessageFromIconTray($event)"> </app-icon>
+      <button mat-button (click)=" updateNote()">Close</button>
     </div>
     </div>
+    

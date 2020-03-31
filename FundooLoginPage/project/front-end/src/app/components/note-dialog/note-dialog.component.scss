@@ -1,0 +1,29 @@
+.container
+{
+    display: flex;
+    min-width: 400px;
+        min-height: 150px;
+        padding:10px;
+        
+        //-ms-flex: auto;
+        
+        word-break: break-word;
+        position: relative;
+}
+::ng-deep .mat-dialog-container {
+    padding:0px;
+
+    border-radius:5%;
+  }
+.text
+{
+    width:100%;
+    border : none;
+    outline: none;
+}
+
+.footer
+{
+    display: flex;
+}
+    
