@@ -331,7 +331,7 @@ class LabelUpdate(generics.GenericAPIView,mixins.UpdateModelMixin,mixins.Destroy
         user_id= self.request.user.id
         return self.destroy(request,user_id)
 
-@method_decorator(login_required, name='dispatch') 
+
 class SearchNote(generics.GenericAPIView):
     serializer_class = SearchSerializer
     queryset = Note.objects.all()
@@ -341,8 +341,11 @@ class SearchNote(generics.GenericAPIView):
         user_request = SearchSerializer(data=request.data)
         print(user_request)
         if user_request.is_valid():
-            user=request.user
-            print(user)
+            token = request.headers.get('Token')
+            mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+            user_id=mytoken.get('username')
+            user=User.objects.get(username=user_id)
+
             search_result = NoteDocument().search().query({
                 'bool': {
                     'must': [

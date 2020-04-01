@@ -5,7 +5,6 @@ import { DataService } from '../../services/data.service';
 import {MatDialog, MatDialogRef,MAT_DIALOG_DATA,MatDialogConfig} from '@angular/material/dialog';
 import { NoteDialogComponent } from '../note-dialog/note-dialog.component';
 import { HostListener } from "@angular/core";
-import { MyNavComponent } from '../my-nav/my-nav.component';
 export interface DialogData {
   
   }
@@ -30,12 +29,12 @@ fileNameDialogRef: MatDialogRef<NoteDialogComponent>;
   notes =[]
   labels=[]
   data = {
-    viewLayoutType: "row wrap",
+    viewLayoutType: "row-wrap",
     viewStyling: true
   }
 
   constructor(private userSerive: UserService,public dialog:MatDialog,
-    private dataService: DataService,private nav: MyNavComponent,) {
+    private dataService: DataService) {
 
    }
 

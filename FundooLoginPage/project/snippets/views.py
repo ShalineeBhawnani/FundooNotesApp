@@ -51,7 +51,6 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.models import User, auth
-
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.db.models import Q
@@ -118,7 +117,7 @@ class Login(GenericAPIView):
             
                 rdb.set(user.username, token)
                 print(rdb)
-                rdb.get(user.username)
+            
                 print(rdb.get(user.username))
                 return Response({'details': 'user succesfully loggedin,thakyou','token':token})
                 # return Response({ token })

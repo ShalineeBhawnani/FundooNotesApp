@@ -67,7 +67,7 @@ export class MyNavComponent implements OnInit,OnDestroy{
     this.dataService.labelNext(label)
     this.routing.navigate(['/nav/label'+label])
   }
-  
+ 
   getLabels(){
     console.log("getting labels",this.labels)
     this.userService.getAllLabel().subscribe(
@@ -126,6 +126,7 @@ export class MyNavComponent implements OnInit,OnDestroy{
       });
     });
   }
+  
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
