@@ -10,7 +10,7 @@ import {MatDialog} from '@angular/material/dialog';
 import { DataService } from '../../services/data.service';
 import { UserService } from '../../services/user.service';
 import { ProfileComponent } from '../profile/profile.component';
-import { Subject } from 'rxjs';
+import { HostListener } from "@angular/core";
 
 @Component({
   selector: 'app-my-nav',
@@ -22,8 +22,10 @@ export class MyNavComponent implements OnInit,OnDestroy{
   message:string;
   mobileQuery: MediaQueryList;
   profileImageUrl:any;
-  emitView=new Subject();
-   // list and gird view variables
+  viewType:string="view_list";
+  screenHeight:number;
+  screenWidth:number;
+  
    view:boolean=false;
    data={
      viewLayoutType:"row wrap",
@@ -42,26 +44,22 @@ export class MyNavComponent implements OnInit,OnDestroy{
   ngOnInit(){
      console.log("profile pic")
      this.getProfilemage();
+     this.dataService.currentMessage.subscribe(message => this.message = message)
   }
-  listOrGridview(type){
-    this.view=!this.view;
-    this.data.viewStyling=!this.data.viewStyling;
-    this.data.viewLayoutType = ((type=="grid")? "row wrap":"column");
-    this.data={viewLayoutType:this.data.viewLayoutType,viewStyling:this.data.viewStyling};
-    
-    this.emitView.next();
+  @HostListener('window:resize', ['$event'])
+  onResize(event?) {
+     this.screenHeight = window.innerHeight;
+     this.screenWidth = window.innerWidth;
+     console.log(this.screenHeight, this.screenWidth);
   }
-
-  getData(){
-    return this.data;
+ 
+  rowToggle(){
+    this.dataService.changeMessage("grid View")
+    if(this.viewType=="view_list")
+      this.viewType="grid_on"
+      else
+      this.viewType="view_list"
   }
-  // navigateTrash(){ 
-  //   console.log("navigating to trash")
-  //   this.routing.navigate(['nav/bin']);
-  // }
-  // navigateArchive(){
-  //   this.routing.navigate(['nav/archive']);
-  // }
 
   navigateToLabel(label){
   console.log(label);

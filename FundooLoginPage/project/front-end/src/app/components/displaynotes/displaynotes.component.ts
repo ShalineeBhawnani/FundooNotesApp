@@ -4,7 +4,7 @@ import { UserService } from '../../services/user.service';
 import { DataService } from '../../services/data.service';
 import {MatDialog, MatDialogRef,MAT_DIALOG_DATA,MatDialogConfig} from '@angular/material/dialog';
 import { NoteDialogComponent } from '../note-dialog/note-dialog.component';
-import { Subject } from 'rxjs';
+import { HostListener } from "@angular/core";
 import { MyNavComponent } from '../my-nav/my-nav.component';
 export interface DialogData {
   
@@ -18,8 +18,11 @@ export interface DialogData {
 })
 
 export class DisplaynotesComponent implements OnInit,OnDestroy {
-
+  screenWidth:number=1300;
+  screenHeight:number;
   message:string;
+  displayValue:string="flex";
+  widthCard:string="250px";
   @Input() sendDataToChild=[];
 
 fileNameDialogRef: MatDialogRef<NoteDialogComponent>;
@@ -33,22 +36,42 @@ fileNameDialogRef: MatDialogRef<NoteDialogComponent>;
 
   constructor(private userSerive: UserService,public dialog:MatDialog,
     private dataService: DataService,private nav: MyNavComponent,) {
-      this.data = this.nav.getData();
-
-    this.nav.emitView.subscribe(() => {
-      console.log("emited",this.data = this.nav.getData())
-      this.data = this.nav.getData();
-    })
 
    }
 
   ngOnInit(){
 
-    console.log("data",this.sendDataToChild)
-   
+    this.dataService.currentMessage.subscribe(message => {
+      if(message=='grid View')
+      { 
+        this.setView();
+      
+      }
+    })
+     
     
+
+  }
+  @HostListener('window:resize', ['$event'])
+  onResize(event?) {
+
+     this.screenHeight = window.innerHeight;
+     this.screenWidth = window.innerWidth;
+     this.setView();
+  }
+  setView(){
+    if(this.displayValue=="flex")
+    {
+      this.displayValue="table-cell";
+      this.widthCard=this.screenWidth/2.4+"px";
+  }
+    else
+    {
+    this.displayValue="flex";
+      this.widthCard="250px"
   }
 
+  }
   ngAfterContentInit() {
 
     try {

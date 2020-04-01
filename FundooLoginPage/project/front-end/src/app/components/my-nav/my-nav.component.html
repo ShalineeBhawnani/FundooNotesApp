@@ -18,7 +18,7 @@
       </mat-form-field>
     </div>
   </div>
-
+ 
   <div fxLayout="row" class="mat-icon-class" fxLayoutAlign="space-around center">
     <div fxLayoutAlign="center center" style="z-index: 1;">
       <button mat-icon-button color="" fxHide.gt-xs="true"
@@ -28,9 +28,10 @@
     </div>
     <div style="margin-right:4.5em" fxLayoutAlign="center">
       <mat-icon matTooltip="refresh">refresh</mat-icon></div>
-      <div fxLayoutAlign="center center" [fxHide]="view" (click)="listOrGridview('list')" fxHide.lt-sm="true" matTooltip="List view"><mat-icon>list</mat-icon></div>
-      <div fxLayoutAlign="center center" [fxHide]="!view" (click)="listOrGridview('grid')" fxHide.lt-sm="true" matTooltip="Grid view"><mat-icon>view_comfy</mat-icon></div>
-    
+      <div  fxLayout="row" fxLayoutAlign="space-around center">
+        <button mat-icon-button (click)="rowToggle()" fxHide.xs="true">  
+          <mat-icon>{{viewType}}</mat-icon></button>
+      </div>
         <div ngClass.gt-xs="account-div-gt-xs" ngClass.lt-sm="account-div-lt-sm" fxLayoutAlign="end center">
 
           <div>

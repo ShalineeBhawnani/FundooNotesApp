@@ -1,5 +1,5 @@
 <div  class="noteGridContainer" >
-  <div  class="grid-row" >
+  <div  class="grid-row" [style.display]="displayValue">
       <mat-card *ngFor="let note of sendDataToChild; let i = index"  (click)="openDialog(note)" matRipple class="clickable" class="grid-item"  
       [ngStyle]="{background: note.color}" fxLayout="column" 
       fxLayoutAlign="space-between stretch">
