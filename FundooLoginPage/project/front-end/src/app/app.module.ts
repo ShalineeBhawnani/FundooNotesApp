@@ -21,7 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AuthenticationService } from './services/authentication.service';
 /* Angular Flex Layout */
-import { FlexLayoutModule } from "@angular/flex-layout";
+import { FlexLayoutModule, GridModule } from '@angular/flex-layout';
 import { NoteComponent } from './components/note/note.component';
 import { LabelComponent } from './components/label/label.component';
 import { ReminderComponent } from './components/reminder/reminder.component';
@@ -67,6 +67,7 @@ import { SearchComponent } from './components/search/search.component';
     CollaboratorComponent,
     ReminderDisplayComponent,
     SearchComponent,
+
     // AgGridModule,
 
     // TokenInterceptorService,
@@ -98,6 +99,7 @@ import { SearchComponent } from './components/search/search.component';
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
+    GridModule,
     // AgGridModule
 
     
