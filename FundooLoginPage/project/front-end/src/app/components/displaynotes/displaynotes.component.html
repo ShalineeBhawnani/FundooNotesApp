@@ -1,4 +1,3 @@
-
 <div  class="noteGridContainer" >
   <div  class="grid-row" >
       <mat-card *ngFor="let note of sendDataToChild; let i = index"  (click)="openDialog(note)" matRipple class="clickable" class="grid-item"  
@@ -8,10 +7,19 @@
             <div>
               <mat-card-title>{{note.title}}</mat-card-title>
               <mat-card-content >{{note.note}}</mat-card-content>
-              <mat-card-content >{{note.label}}</mat-card-content>
+            
             </div>
             
-              <mat-card-footer><app-icon (eventCarrier)="recieveMessageFromIconTray($event,value.id)"></app-icon></mat-card-footer>
+              <mat-card-footer>
+              <mat-card-actions>
+                 <mat-chip-list>
+                 <mat-chip *ngFor="let label of labels">
+                  {{label.label}}
+                 </mat-chip>
+               </mat-chip-list>
+               </mat-card-actions>
+                <app-icon (eventCarrier)="recieveMessageFromIconTray($event,value.id)"></app-icon>
+              </mat-card-footer>
             </mat-card>
               
     </div>

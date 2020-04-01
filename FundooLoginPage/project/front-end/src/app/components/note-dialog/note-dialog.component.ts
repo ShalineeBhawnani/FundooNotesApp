@@ -59,7 +59,7 @@ constructor( private dialogRef: MatDialogRef<NoteDialogComponent>,
       title: this.titleFinal,
       note: this.noteFinal,
       is_archived:this.is_archived,
-      color:this.color,
+      // color:this.color,
       is_bin:this.is_bin,
     }
     if((this.notedata.title == null) && (this.data.title != null))

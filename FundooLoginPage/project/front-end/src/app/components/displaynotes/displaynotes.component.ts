@@ -4,7 +4,8 @@ import { UserService } from '../../services/user.service';
 import { DataService } from '../../services/data.service';
 import {MatDialog, MatDialogRef,MAT_DIALOG_DATA,MatDialogConfig} from '@angular/material/dialog';
 import { NoteDialogComponent } from '../note-dialog/note-dialog.component';
-
+import { Subject } from 'rxjs';
+import { MyNavComponent } from '../my-nav/my-nav.component';
 export interface DialogData {
   
   }
@@ -24,10 +25,20 @@ export class DisplaynotesComponent implements OnInit,OnDestroy {
 fileNameDialogRef: MatDialogRef<NoteDialogComponent>;
 
   notes =[]
- 
+  labels=[]
+  data = {
+    viewLayoutType: "row wrap",
+    viewStyling: true
+  }
 
   constructor(private userSerive: UserService,public dialog:MatDialog,
-    private dataService: DataService) {
+    private dataService: DataService,private nav: MyNavComponent,) {
+      this.data = this.nav.getData();
+
+    this.nav.emitView.subscribe(() => {
+      console.log("emited",this.data = this.nav.getData())
+      this.data = this.nav.getData();
+    })
 
    }
 

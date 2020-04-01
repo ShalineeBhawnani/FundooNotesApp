@@ -10,6 +10,7 @@ import {MatDialog} from '@angular/material/dialog';
 import { DataService } from '../../services/data.service';
 import { UserService } from '../../services/user.service';
 import { ProfileComponent } from '../profile/profile.component';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-my-nav',
@@ -21,6 +22,13 @@ export class MyNavComponent implements OnInit,OnDestroy{
   message:string;
   mobileQuery: MediaQueryList;
   profileImageUrl:any;
+  emitView=new Subject();
+   // list and gird view variables
+   view:boolean=false;
+   data={
+     viewLayoutType:"row wrap",
+     viewStyling:true
+   }
   private _mobileQueryListener: () => void;
   
 
@@ -35,7 +43,18 @@ export class MyNavComponent implements OnInit,OnDestroy{
      console.log("profile pic")
      this.getProfilemage();
   }
+  listOrGridview(type){
+    this.view=!this.view;
+    this.data.viewStyling=!this.data.viewStyling;
+    this.data.viewLayoutType = ((type=="grid")? "row wrap":"column");
+    this.data={viewLayoutType:this.data.viewLayoutType,viewStyling:this.data.viewStyling};
+    
+    this.emitView.next();
+  }
 
+  getData(){
+    return this.data;
+  }
   // navigateTrash(){ 
   //   console.log("navigating to trash")
   //   this.routing.navigate(['nav/bin']);

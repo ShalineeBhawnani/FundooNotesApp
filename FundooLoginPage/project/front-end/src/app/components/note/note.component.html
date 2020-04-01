@@ -39,8 +39,8 @@
       <mat-chip-list >
         <mat-chip *ngFor="let label of label_note;let i = index" [selectable]="selectable"
         [removable]="removable" (removed)="remove(label)">
-          <!-- {{label.label}} -->
-          {{label}}
+          {{label.label}}
+          <!-- {{label}} -->
           <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
         </mat-chip>
       </mat-chip-list>
