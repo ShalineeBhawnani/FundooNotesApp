@@ -11,7 +11,7 @@ import { DataService } from '../../services/data.service';
 import { UserService } from '../../services/user.service';
 import { ProfileComponent } from '../profile/profile.component';
 import { HostListener } from "@angular/core";
-
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-my-nav',
   templateUrl: './my-nav.component.html',
@@ -27,10 +27,8 @@ export class MyNavComponent implements OnInit,OnDestroy{
   screenWidth:number;
   
    view:boolean=false;
-   data={
-     viewLayoutType:"row wrap",
-     viewStyling:true
-   }
+  
+   emitSearchEvent=new Subject();
   private _mobileQueryListener: () => void;
   
 
@@ -107,6 +105,9 @@ export class MyNavComponent implements OnInit,OnDestroy{
     console.log("put profile",this.profileImageUrl)
     
 
+  }
+  searchBox(event){
+    this.emitSearchEvent.next(event.target.value);
   }
 
   fileChangeEvent(event){
