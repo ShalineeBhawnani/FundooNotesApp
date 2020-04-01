@@ -29,6 +29,7 @@ export class MyNavComponent implements OnInit,OnDestroy{
    view:boolean=false;
   
    emitSearchEvent=new Subject();
+   openSearhBar:boolean=false;
   private _mobileQueryListener: () => void;
   
 
@@ -107,6 +108,7 @@ export class MyNavComponent implements OnInit,OnDestroy{
 
   }
   searchBox(event){
+    console.log("search",event)
     this.emitSearchEvent.next(event.target.value);
   }
 

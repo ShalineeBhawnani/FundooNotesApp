@@ -141,9 +141,9 @@ getProfilemage():Observable<any>
   } });
 }
 
-searchNote():Observable<any>
+searchNote(data):Observable<any>
 {
-  return this.http.get(this.baseUrl+'/search/',
+  return this.http.post(this.baseUrl+'/search/',data,
   { headers: {
     'token': localStorage.getItem('token')
   } });
