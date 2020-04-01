@@ -1,3 +1,4 @@
+ 
 import { Component, OnInit ,Inject} from '@angular/core';
 import { MatDialogRef,MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { UserService } from '../../services/user.service';
@@ -27,6 +28,7 @@ export class NoteDialogComponent implements OnInit {
   noteFinal:string;
   titleFinal:string;
   notedata:any;
+
 
 constructor( private dialogRef: MatDialogRef<NoteDialogComponent>,
   @Inject(MAT_DIALOG_DATA) public data: any,
@@ -58,6 +60,7 @@ constructor( private dialogRef: MatDialogRef<NoteDialogComponent>,
       note: this.noteFinal,
       is_archived:this.is_archived,
       color:this.color,
+      is_bin:this.is_bin,
     }
     if((this.notedata.title == null) && (this.data.title != null))
     {
@@ -74,8 +77,7 @@ constructor( private dialogRef: MatDialogRef<NoteDialogComponent>,
       this.notedata.note = "both are empty";
     
     }
-    this.dialogRef.close();
- 
+    
     this.userService.updateNotes(this.notedata,this.data.id)
     .subscribe(
         (data) => {
@@ -95,21 +97,17 @@ constructor( private dialogRef: MatDialogRef<NoteDialogComponent>,
 
     recieveMessageFromIcon($event)
     {
-    
+
       if($event.purpose=="color"){
-        console.log("color func nside")
+        
         this.data.color=$event.value;
-        {
-      
-          this.notedata = {
+        console.log("color",this.data.color)
+        this.color=this.data.color;
+        this.notedata = {
             title: this.titleFinal,
             note: this.noteFinal,
-            is_archived:true,
-            color:$event.value,
-            
-          }
-            
-        }
+            color:this.data.color,
+            }
          this.userService.updateNotes(this.notedata,this.data.id)
          .subscribe(
          (data) => {
@@ -156,5 +154,3 @@ constructor( private dialogRef: MatDialogRef<NoteDialogComponent>,
      
       }
     
-
-

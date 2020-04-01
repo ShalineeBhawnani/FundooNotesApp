@@ -359,7 +359,6 @@ class CreateProfile(GenericAPIView):
         mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
         user_id=mytoken.get('username') 
         user=User.objects.get(username=user_id)
-        print("user",user)
         #user=request.user
         try:
             profile = Profile.objects.get(user_id=user)
@@ -367,14 +366,9 @@ class CreateProfile(GenericAPIView):
             data = request.data  
             print(data)  
             img = data.get('file')
-            print("image",img)
             serializer = ProfileUpdate(profile,data={'image':img})
-            print("data",serializer)
             if serializer.is_valid():
-               
                 serializer.save()
-                print("saved")
-                print("valid",serializer.data['image'])
                 return Response(serializer.data['image'])
                 # return Response(serializer.data,status=200)
             else:

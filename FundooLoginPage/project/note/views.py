@@ -213,10 +213,12 @@ class NoteUpdate(generics.GenericAPIView):
         user=User.objects.get(username=user_id)
         note = Note.objects.get(id=pk,user_id=user.id)
         serializer = NoteSerializer(note,data=request.data)
-        print(serializer)
+        print(request.data)
+        print(serializer.is_valid())
         if serializer.is_valid():
+            print("valid")
             serializer.save(user_id=user.id)
-            return Response("Note Edited")
+            return Response('Note updated', status=status.HTTP_202_ACCEPTED)
   
 # class ArchivedNotes(generics.GenericAPIView):
     
