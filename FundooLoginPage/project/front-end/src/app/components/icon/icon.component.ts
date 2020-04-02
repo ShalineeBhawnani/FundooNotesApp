@@ -129,4 +129,23 @@ export class IconComponent implements OnInit {
    
     this.eventCarrier.emit(this.event);
   }
+  addReminder(){
+    let data={
+      "noteIdList":[this.note['id']],
+      "reminder":this.reminder
+    }
+    this.event={
+      "purpose":"reminder",
+      "value":data
+    }
+
+    this.eventCarrier.emit(this.event);
+
+  }
+  recieveMessageFromReminder($event){
+    
+      this.eventCarrier.emit($event)
+    
+  }
+  
 }

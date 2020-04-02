@@ -22,7 +22,6 @@ export class NoteComponent implements OnInit {
     Validators.required,
 
   ]);
- 
   save: Boolean
   message:string;
   label_note=[];
@@ -32,6 +31,7 @@ export class NoteComponent implements OnInit {
   is_archived:boolean=false;
   is_bin:boolean=false;
   collaborators=[];
+  reminder:string;
   add_picture: [null]
   ImageUrl:any;
   fileToUpload: any;
@@ -70,6 +70,7 @@ export class NoteComponent implements OnInit {
      title : this.title.value,
      note : this.note.value,
      color:this.color,
+     reminder:this.reminder,
      is_archived:this.is_archived, 
      is_bin:this.is_bin,
      label_note:this.label_note,

@@ -162,5 +162,12 @@ addCollaborator():Observable<any>
     'token': localStorage.getItem('token')
   } });
 }
+addUpdateReminder(userData):Observable<any>
+{
 
+      console.log(localStorage.getItem('token'))
+      return this.http.post(this.baseUrl+'/reminder_update/', userData, { headers: {
+        'token': localStorage.getItem('token')
+      } });
+    }
 }
