@@ -45,6 +45,7 @@ export class MyNavComponent implements OnInit,OnDestroy{
      console.log("profile pic")
      this.getProfilemage();
      this.dataService.currentMessage.subscribe(message => this.message = message)
+     
   }
   @HostListener('window:resize', ['$event'])
   onResize(event?) {

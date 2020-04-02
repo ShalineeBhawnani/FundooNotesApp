@@ -19,11 +19,9 @@ export class NotedataComponent implements OnInit {
   message:string;
   searchWord: string;
   searchLabel:string;
-  note: any;
-  searchRes: any;
-  searchStr: any;
+  
   constructor(private userService: UserService,private dataService:DataService,private nav: MyNavComponent) {
-    this.note = [];
+    
    }
  
   ngOnInit() {
@@ -34,7 +32,7 @@ export class NotedataComponent implements OnInit {
     })
 
     this.getNotes();
-    // this.dataService.currentMessage.subscribe(message => this.message = message)
+    
     this.dataService.currentMessage.subscribe((message)=>{
       console.log("my msg",message)
       if(message=="Note added" || message=="Note Edited")
@@ -63,11 +61,5 @@ export class NotedataComponent implements OnInit {
     this.getNotes()
   }
  
-  searchBox() {
-    this.userService.searchNote(this.searchStr).subscribe(
-      (data) => {
-        this.searchRes = data.results;
-    });
- }
   
   }

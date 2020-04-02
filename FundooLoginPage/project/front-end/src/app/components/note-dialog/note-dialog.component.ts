@@ -150,6 +150,33 @@ constructor( private dialogRef: MatDialogRef<NoteDialogComponent>,
         
        
      }
+     if($event.purpose=="deleteNote"){
+      this.is_bin=true;
+
+      this.notedata = {
+        title: this.titleFinal,
+        note: this.noteFinal,
+        is_bin:true,
+        
+      }
+        
+      
+     this.userService.updateNotes(this.notedata,this.data.id)
+     .subscribe(
+     (data) => {
+       this.snackBar.open(data.toString(),'',{
+         duration:3000,
+         verticalPosition:'bottom'
+       });
+         
+     },
+     error => {
+       alert('Note updation failed')
+
+     });
+      
+     
+   }
    }
      
       }
