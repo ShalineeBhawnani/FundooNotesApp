@@ -59,5 +59,7 @@ export class NotedataComponent implements OnInit {
     if(event.purpose=="refresh")
     this.getNotes()
   }
+ 
+  
   
   }

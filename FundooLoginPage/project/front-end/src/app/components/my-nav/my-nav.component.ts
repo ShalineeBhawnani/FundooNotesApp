@@ -113,7 +113,7 @@ export class MyNavComponent implements OnInit,OnDestroy{
     this.emitSearchEvent.next(event.target.value);
     console.log("searched value",this.emitSearchEvent.next(event.target.value));
   }
-
+ 
   fileChangeEvent(event){
     const dialogRef = this.dialog.open(ProfileComponent, {
       width: 'auto',
@@ -131,7 +131,9 @@ export class MyNavComponent implements OnInit,OnDestroy{
       });
     });
   }
-  
+  logout(){
+    sessionStorage.removeItem('token');
+  }
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
