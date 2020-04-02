@@ -40,7 +40,8 @@ export class NoteComponent implements OnInit {
   constructor(
     private userService: UserService,
     private snackBar:MatSnackBar,
-    private dataService:DataService,) {
+    private dataService:DataService,
+    ) {
 
    }
 
@@ -48,6 +49,9 @@ export class NoteComponent implements OnInit {
   
     this.dataService.currentMessage.subscribe(message => this.message = message)
     console.log(this.message)
+
+
+   
     
     }
     newMessage() {

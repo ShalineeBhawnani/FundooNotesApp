@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { DataService } from '../../services/data.service';
-
+import { MyNavComponent } from '../my-nav/my-nav.component';
 
 @Component({
   selector: 'app-notedata',
@@ -17,19 +17,18 @@ export class NotedataComponent implements OnInit {
       ]
   ParentData
   message:string;
-
-  constructor(private userService: UserService,private dataService:DataService) {
+  searchWord: string;
+  searchLabel:string;
+  constructor(private userService: UserService,private dataService:DataService,private nav: MyNavComponent) {
     
    }
  
   ngOnInit() {
 
-    // this.userService.getAllNote().subscribe(
-    //   data => {
-    //     console.log("my data",data)
-    //     this.notes = data;
-    //     this.ParentData = this.notes
-    //   })
+    this.nav.emitSearchEvent.subscribe((search: string) => {
+      console.log("got it",this.searchWord = search);
+      this.searchWord = search;
+    })
 
     this.getNotes();
     // this.dataService.currentMessage.subscribe(message => this.message = message)

@@ -1,16 +1,19 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'search'
+  name: 'search',
+  pure:false
 })
 export class SearchPipe implements PipeTransform {
 
-  transform(records: any[], searchText: string): any[] {
-    if (!records) return [];
-    if (!searchText) return records;
-    return records.filter(response => {
-      return (response.title.toLowerCase().includes(searchText.toLowerCase())||response.description.toLowerCase().includes(searchText.toLowerCase()));
-    });
-}
+  transform(notes: any, searchWord: string): any {
+    if(!notes || !searchWord)
+      return notes;
+    
+    return notes.filter((note)=>{
+      return ((note.title.toLowerCase().indexOf(searchWord.toLowerCase()) !==-1) || (note.note.toLowerCase().indexOf(searchWord.toLowerCase())!==-1));
+    })
+  }
+
 
 }

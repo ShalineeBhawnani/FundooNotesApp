@@ -23,7 +23,7 @@ export class DisplaynotesComponent implements OnInit,OnDestroy {
   displayValue:string="flex";
   widthCard:string="250px";
   @Input() sendDataToChild=[];
-
+  @Input() searchWord:string;
 fileNameDialogRef: MatDialogRef<NoteDialogComponent>;
 
   notes =[]

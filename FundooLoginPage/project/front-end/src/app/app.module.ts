@@ -38,7 +38,7 @@ import { LabelEditComponent } from './components/label-edit/label-edit.component
 import {MatDialogModule, MatDialog,MatDialogRef }from '@angular/material/dialog';
 import { CollaboratorComponent } from './components/collaborator/collaborator.component';
 import { ReminderDisplayComponent } from './components/reminder-display/reminder-display.component';
-import { SearchComponent } from './components/search/search.component';
+
 // import { TokenInterceptorService } from './services/token-interceptor.service';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { SearchPipe } from './search.pipe';
@@ -65,7 +65,6 @@ import { SearchPipe } from './search.pipe';
     LabelEditComponent,
     CollaboratorComponent,
     ReminderDisplayComponent,
-    SearchComponent,
     SearchPipe,
 
     // AgGridModule,
