@@ -14,6 +14,16 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
+  allRegisterdUsers(): Observable<any>
+  {
+
+    console.log(localStorage.getItem('token'))
+    return this.http.get(this.baseUrl+'/allusers/', { headers: {
+      'token': localStorage.getItem('token')
+    } });
+  }
+
+
   login(userData): Observable<any>
   {
     return this.http.post(this.baseUrl+'/login/',userData,{

@@ -16,7 +16,12 @@ class RegistrationSerializer(serializers.ModelSerializer):
             }
         }
 
+class AllUserSerializer(serializers.ModelSerializer):
 
+    class Meta:
+        model = User
+        fields = ['pk', 'username', 'email']
+        
 
 class UserSerializer(serializers.ModelSerializer):
 

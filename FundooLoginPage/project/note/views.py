@@ -310,25 +310,35 @@ class ReminderUpdate(generics.GenericAPIView):
                 return Response(reminder_time_byte, status=status.HTTP_200_OK)
      
   
-
-@method_decorator(login_required, name='dispatch') 
 class LabelUpdate(generics.GenericAPIView,mixins.UpdateModelMixin,mixins.DestroyModelMixin):
     lookup_field='id'
 
     serializer_class=LabelFunctionSerializer
     queryset = Label.objects.all()
     def put(self,request,id):
-        user = self.request.user
-        print("user:",user)
-        user_id= self.request.user.id
-        print(user_id)
-
+        # user = self.request.user
+        # print("user:",user)
+        # user_id= self.request.user.id
+        # print(user_id)
+        token = request.headers.get('Token')
+        print(token)
+        received_token = jwt.decode(token,SECRET_KEY,algorithms=['HS256'])
+        token_username = received_token.get('username')
+        user=User.objects.get(username=token_username)
+        user_id = User.objects.get(id=user.id)
         print(user)
         return self.update(request,id=user_id)
     
     def delete(self,request,id=None):
-        user = self.request.user
-        user_id= self.request.user.id
+        # user = self.request.user
+        # user_id= self.request.user.id
+        token = request.headers.get('Token')
+        print(token)
+        received_token = jwt.decode(token,SECRET_KEY,algorithms=['HS256'])
+        token_username = received_token.get('username')
+        user=User.objects.get(username=token_username)
+        user_id = User.objects.get(id=user.id)
+        print(user_id)
         return self.destroy(request,user_id)
 
 

@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators}from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { AuthenticationService } from '../../services/authentication.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { DataService } from '../../services/data.service';
-
+import { CollaboratorComponent } from '../collaborator/collaborator.component';
 
 @Component({
   selector: 'app-note',
@@ -31,6 +31,7 @@ export class NoteComponent implements OnInit {
   is_archived:boolean=false;
   is_bin:boolean=false;
   collaborators=[];
+  collaboratorsArray = [];
   reminder:string;
   add_picture: [null]
   ImageUrl:any;
@@ -41,6 +42,7 @@ export class NoteComponent implements OnInit {
     private userService: UserService,
     private snackBar:MatSnackBar,
     private dataService:DataService,
+    public dialog: MatDialog,
     ) {
 
    }
@@ -50,9 +52,6 @@ export class NoteComponent implements OnInit {
     this.dataService.currentMessage.subscribe(message => this.message = message)
     console.log(this.message)
 
-
-   
-    
     }
     newMessage() {
       this.dataService.changeMessage("Note added")
@@ -62,8 +61,7 @@ export class NoteComponent implements OnInit {
   saveNotes()
 
   {
-    // this.messageEvent.emit(this.message);
-    
+   
     console.log(this.title.value);
      let noteData = {
        
@@ -138,6 +136,8 @@ export class NoteComponent implements OnInit {
 }
 
 
-  }
+}
+
+  
 
 

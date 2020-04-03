@@ -2,7 +2,7 @@ from django.urls import path
 from django.conf.urls import url, include
 from rest_framework_jwt.views import obtain_jwt_token
 from snippets import views
-from snippets.views import login, Login,CreateProfile, Registrations, activate, ForgotPassword, Logout, reset_password,ResetPassword,session
+from snippets.views import login,AllUserList, Login,CreateProfile, Registrations, activate, ForgotPassword, Logout, reset_password,ResetPassword,session
 from django_short_url.views import get_surl
 from django_short_url.models import ShortURL
 from django.conf import settings
@@ -20,7 +20,7 @@ urlpatterns = [
     path('resetpassword/<user_reset>',
          views.ResetPassword.as_view(), name="resetpassword"),
     path('session/', views.session),
-
+    path('allusers/',views.AllUserList.as_view(),name="forgotpassword"),
     path('profile/',CreateProfile.as_view(), name='profile'),
     #path('upload/',UploadView.as_view(), name ='file_upload'),
 

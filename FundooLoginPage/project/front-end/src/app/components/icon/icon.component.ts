@@ -25,7 +25,7 @@ export class IconComponent implements OnInit {
   message:string;
   note:any;
   reminder:any;
-  
+  allUsers
   labelCheck = new FormControl();
   dummy:boolean=false;
   @Output() eventCarrier = new EventEmitter<Events>();
@@ -58,11 +58,17 @@ export class IconComponent implements OnInit {
   }
 
   addCollaborator(){
+    
     let dialogref = this.dialog.open(CollaboratorComponent,{
+      
       data : {
-        note:this.note     
+        
+        data: this.allUsers,
+        
       }
+     
     });
+    console.log("opend collab",this.allUsers )
     dialogref.afterClosed().subscribe(result=> {
       console.log("dialog result ", result);
     })
@@ -131,7 +137,6 @@ export class IconComponent implements OnInit {
   }
   addReminder(){
     let data={
-      "noteIdList":[this.note['id']],
       "reminder":this.reminder
     }
     this.event={

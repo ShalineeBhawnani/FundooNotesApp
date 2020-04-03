@@ -14,6 +14,7 @@ urlpatterns = [
     path('notedetails/', views.NoteDetails.as_view() ,name="notedetails"),
     # path('noteupdate/', views.NoteUpdate.as_view() ,name="noteupdate"),
     path('noteupdate/<int:pk>', views.NoteUpdate.as_view() ,name="noteupdate"),
+    path('labelupdate/', views.LabelUpdate.as_view() ,name="noteupdate"),
     path('labelupdate/<int:id>/', views.LabelUpdate.as_view() ,name="noteupdate"),
     path('search/', SearchNote.as_view(),name="search"),
     path('archive/', ArchivedNotes.as_view(),name="archive"),
