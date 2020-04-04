@@ -290,7 +290,7 @@ class ReminderUpdate(generics.GenericAPIView):
      
   
 class LabelUpdate(generics.GenericAPIView):
-    lookup_field='id'
+    # lookup_field='id'
 
     serializer_class=LabelFunctionSerializer
     queryset = Label.objects.all()
@@ -302,7 +302,7 @@ class LabelUpdate(generics.GenericAPIView):
         serializer = LabelFunctionSerializer(data=request.data)
         print(request.data)
         if serializer.is_valid():
-            label = self.queryset.get(pk=id)
+            label = self.queryset.get(pk=id,user_id=user.id)
             print("label",label)
             serializer.update(label, request.data)
         return Response("label updated", status=200)
@@ -312,9 +312,7 @@ class LabelUpdate(generics.GenericAPIView):
         mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
         user_id=mytoken.get('username')
         user=User.objects.get(username=user_id)
-        print(user)
-        user_id= self.request.user.id
-        label = self.queryset.get(pk=id)
+        label = self.queryset.get(pk=id,user_id=user.id)
         if label is not None:
             label.delete()
             return Response("label Deleted", status=200)

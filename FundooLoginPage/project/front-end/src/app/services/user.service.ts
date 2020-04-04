@@ -106,8 +106,9 @@ return this.http.put(this.baseUrl+'/labelupdate/'+label_id,userData,{headers:{
 );
 }
 
-deleteLabel(label_id){
-  return this.http.put(this.baseUrl+'/labelupdate/'+label_id,{headers:{
+deleteLabel(label_id):Observable<any>{
+
+  return this.http.delete(this.baseUrl+'/labelupdate/'+label_id,{headers:{
     'token':localStorage.getItem('token')}}
   );
 }
