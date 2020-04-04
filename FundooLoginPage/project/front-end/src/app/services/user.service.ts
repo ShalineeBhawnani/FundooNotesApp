@@ -4,8 +4,6 @@ import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 
-
-
 @Injectable()
 export class UserService {
 
@@ -103,23 +101,17 @@ return this.http.put(this.baseUrl+'/noteupdate/'+note_id,userData,{headers:{
 }
 updateLabel(userData,label_id):Observable<any>
 {
-return this.http.put(`${this.baseUrl}/labelupdate/${label_id}`,userData,{headers:{
+return this.http.put(this.baseUrl+'/labelupdate/'+label_id,userData,{headers:{
 'token':localStorage.getItem('token')}}
 );
 }
-updateLabel1(data):Observable<any>
-{
-return this.http.put(this.baseUrl+'/labelupdate/',data,{headers:{
-'token':localStorage.getItem('token')}}
-);
+
+deleteLabel(label_id){
+  return this.http.put(this.baseUrl+'/labelupdate/'+label_id,{headers:{
+    'token':localStorage.getItem('token')}}
+  );
 }
-deleteLabel(data: any):Observable<any>
-{
-  return this.http.put(this.baseUrl+'/labelupdate/',data,
-  { headers: {
-    'token': localStorage.getItem('token')
-  } });
-}
+
 
 getAllLabel():Observable<any>
 {

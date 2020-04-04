@@ -21,7 +21,6 @@ export class IconComponent implements OnInit {
   ]
   newLabel:string;
   labels:Labels[];
-  
   save:Boolean=false;
   message:string;
   note:any;
@@ -106,9 +105,10 @@ export class IconComponent implements OnInit {
   
   labelAddOrRemove(label){
     let data={
-      "label":label.id
+      "label":label,
+      
     }
-    console.log("checklist labelAddOrRemove",data)
+    console.log("checklist labelAddOrRemove",label)
     
     this.event={
       "purpose":"addLabel",

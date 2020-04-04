@@ -219,26 +219,6 @@ class NoteUpdate(generics.GenericAPIView):
             print("valid")
             serializer.save(user_id=user.id)
             return Response('Note updated', status=status.HTTP_202_ACCEPTED)
-  
-# class ArchivedNotes(generics.GenericAPIView):
-    
-#     def get(self, request, *args, **kwargs):
-#         print("get request")
-#         token = request.headers.get('Token')
-#         print(token)
-#         mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
-#         print(SECRET_KEY)
-#         print(mytoken)
-#         print(str(mytoken))
-#         user_id=mytoken.get('username')
-#         print(user_id)
-#         user=User.objects.get(username=user_id)
-#         print(user)
-#         is_archived=Note.objects.all().filter(is_archived=True,user_id=user.id)
-#         print(is_archived)
-#         serializer_class=NoteSerializer
-#         return Response(is_archived.values(),status=status.HTTP_200_OK)
-        
  
 class ArchivedNotes(generics.GenericAPIView):
     serializer_class = ArchiveNoteSerializer
@@ -270,8 +250,7 @@ class BinNotes(generics.GenericAPIView):
             return Response(serial_class.data)
         except Note.DoesNotExist:
             return Response("Not found")
-
-# @method_decorator(login_required, name='dispatch')   
+   
 class Remider(generics.GenericAPIView):
     def get(self, request, id=None):
        
@@ -310,33 +289,38 @@ class ReminderUpdate(generics.GenericAPIView):
                 return Response(reminder_time_byte, status=status.HTTP_200_OK)
      
   
-class LabelUpdate(generics.GenericAPIView,mixins.UpdateModelMixin,mixins.DestroyModelMixin):
+class LabelUpdate(generics.GenericAPIView):
     lookup_field='id'
 
     serializer_class=LabelFunctionSerializer
     queryset = Label.objects.all()
-    def put(self,request,id):
-        # user = self.request.user
-        # print("user:",user)
-        # user_id= self.request.user.id
-        # print(user_id)
+    def put(self,request,id,*args, **kwargs):
         token = request.headers.get('Token')
         mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
         user_id=mytoken.get('username')
         user=User.objects.get(username=user_id)
-        print(user)
-        print(request)
-        return self.update(request,id=user.id)
-    
-    def delete(self,request,id=None):
+        serializer = LabelFunctionSerializer(data=request.data)
+        print(request.data)
+        if serializer.is_valid():
+            label = self.queryset.get(pk=id)
+            print("label",label)
+            serializer.update(label, request.data)
+        return Response("label updated", status=200)
+
+    def delete(self,request,id):
         token = request.headers.get('Token')
         mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
         user_id=mytoken.get('username')
         user=User.objects.get(username=user_id)
         print(user)
         user_id= self.request.user.id
-        return self.destroy(request,user_id)
-
+        label = self.queryset.get(pk=id)
+        if label is not None:
+            label.delete()
+            return Response("label Deleted", status=200)
+        else:
+            return Response("label not get Deleted", status=400)
+    
 
 class SearchNote(generics.GenericAPIView):
     serializer_class = SearchSerializer

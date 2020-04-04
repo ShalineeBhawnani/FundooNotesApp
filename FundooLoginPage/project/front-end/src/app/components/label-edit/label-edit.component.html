@@ -1,6 +1,6 @@
 <mat-card class="card" fxFlex="100" fxlayout="column" >
   <h2>Edit Lables</h2>
-  <button mat-icon-button (click)="label.setValue('')">
+  <button mat-icon-button (click)="data.setValue('')">
   <mat-icon >clear</mat-icon>
   </button>
   
@@ -16,15 +16,16 @@
       <div class="title">
         <div class="icons" fxLayout="row">
         <mat-icon aria-label="Side nav toggle" >label_outline</mat-icon>
-        <input mat-input class="labelNameField" class="text" [formControl]="labelName" value="{{label.label}}" >
+        <input mat-input class="labelNameField" class="text" [formControl]="labelName" value="{{label.label}}" (click)="isBeingEdited(label)" >
       </div>
 
       </div>
       <div class="icons" fxLayout="row">
-          <button mat-icon-button (click)="updateLabel(label)" >
-              <mat-icon>done</mat-icon> </button>
-          <button mat-icon-button (click)="deleteLabel(label)">  
-                <mat-icon>delete</mat-icon></button>
+        <button mat-icon-button (click)="updateLabel(label)"
+        [style.visibility]="isEditVisible(label) ? 'visible' : 'hidden'">
+            <mat-icon>done</mat-icon>     </button>
+        <button mat-icon-button (click)="deleteLabel(label)">  
+          <mat-icon>delete</mat-icon></button>
               
       </div>
       

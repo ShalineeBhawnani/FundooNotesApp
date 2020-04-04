@@ -36,7 +36,7 @@ export class NoteComponent implements OnInit {
   ImageUrl:any;
   fileToUpload: any;
   profileImageUrl:any;
-  
+  label:any;
   constructor(
     private userService: UserService,
     private snackBar:MatSnackBar,
@@ -76,6 +76,7 @@ export class NoteComponent implements OnInit {
      label_note:this.label_note,
      collaborators:this.collaborators,
      add_picture:this.add_picture,
+     
      
   }
   
@@ -120,12 +121,10 @@ export class NoteComponent implements OnInit {
     
 
   }
-  
+
   if($event.purpose=="addLabel"){
-   
-    console.log("addLabel",this.label_note.push($event.value.label));
-    this.label_note.push($event.value.label)
   
+    this.label_note.push($event.value.label.id)
          }
     
   if($event.purpose=="add_picture"){

@@ -16,7 +16,7 @@ export class LabelEditComponent implements OnInit {
     Validators.required,
 
   ]);
-  newLabel:string;
+
   labels:Labels[];
   editingLabel:string;
   event:Events;
@@ -26,11 +26,20 @@ export class LabelEditComponent implements OnInit {
   @Output() eventCarrier = new EventEmitter<Events>();
   ngOnInit() {
   }
-
+  isBeingEdited(label){
+    this.editingLabel=label.id;
+  }
+  isEditVisible(label){
+    if(this.editingLabel==label.id)
+    return true;
+    else
+    return false;
+  }
 updateLabel(label){
   
   this.notedata = {
-    labeldata:label,
+     labeldata:label,
+    "label":this.labelName.value,
   
   }
   this.labelid=this.notedata.labeldata.id
@@ -55,11 +64,10 @@ deleteLabel(label){
   
   this.data = {
     labeldata:label,
-  
   }
-  this.labelid=this.notedata.labeldata.id
+  this.labelid=this.data.labeldata.id
   console.log("label id data",this.labelid)
-  this.userService.updateLabel(this.notedata,this.labelid).subscribe(
+  this.userService.deleteLabel(this.labelid).subscribe(
       (data) => {
         console.log("label id",this.labelid)
         this.snackBar.open(data.toString(),'',{
@@ -75,6 +83,23 @@ deleteLabel(label){
      
 }
 
+// deleteLabel(){
+//   let data={
+  
+//     "isDeleted":true ,
+//     "id":this.editingLabel
+//   }
+//   this.userService.deleteLabel(data,data.id).subscribe((data:any)=>{
+    
+//     this.event={
+//       "purpose":"labelRefresh"
+//     }
+    
+
+//   }
+//   ) 
+// }
+
 
 createLabel(){
 
@@ -85,10 +110,7 @@ createLabel(){
     console.log("label add again",data)
     console.log("created label",data)
     this.userService.label(data).subscribe((data:any)=>{
-      // this.getLabels();
-      this.newLabel="";
- 
-
+   
     })
   }
 }
