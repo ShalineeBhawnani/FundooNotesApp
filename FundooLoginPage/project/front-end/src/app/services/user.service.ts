@@ -112,6 +112,14 @@ deleteLabel(label_id):Observable<any>{
     'token':localStorage.getItem('token')}}
   );
 }
+allRegisterdUsers(): Observable<any>
+  {
+
+    return this.http.get(this.baseUrl+'/allusers/', { headers: {
+      'token': localStorage.getItem('token')
+    } });
+  }
+
 
 
 getAllLabel():Observable<any>
