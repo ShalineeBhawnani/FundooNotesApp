@@ -21,6 +21,7 @@ export class IconComponent implements OnInit {
   ]
   newLabel:string;
   labels:Labels[];
+  
   save:Boolean=false;
   message:string;
   note:any;

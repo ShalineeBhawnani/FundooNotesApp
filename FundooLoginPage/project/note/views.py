@@ -83,8 +83,8 @@ class CreateLabel(generics.GenericAPIView):
         
         serializer = LabelSerializer(data=request.data)
         print(request.data)
-        print(serializer) #TODO Token Auth decorator
         if serializer.is_valid():
+            print(serializer)
             token = request.headers.get('Token')
             mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
             user_id=mytoken.get('username')
@@ -321,24 +321,20 @@ class LabelUpdate(generics.GenericAPIView,mixins.UpdateModelMixin,mixins.Destroy
         # user_id= self.request.user.id
         # print(user_id)
         token = request.headers.get('Token')
-        print(token)
-        received_token = jwt.decode(token,SECRET_KEY,algorithms=['HS256'])
-        token_username = received_token.get('username')
-        user=User.objects.get(username=token_username)
-        user_id = User.objects.get(id=user.id)
+        mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+        user_id=mytoken.get('username')
+        user=User.objects.get(username=user_id)
         print(user)
-        return self.update(request,id=user_id)
+        print(request)
+        return self.update(request,id=user.id)
     
     def delete(self,request,id=None):
-        # user = self.request.user
-        # user_id= self.request.user.id
         token = request.headers.get('Token')
-        print(token)
-        received_token = jwt.decode(token,SECRET_KEY,algorithms=['HS256'])
-        token_username = received_token.get('username')
-        user=User.objects.get(username=token_username)
-        user_id = User.objects.get(id=user.id)
-        print(user_id)
+        mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+        user_id=mytoken.get('username')
+        user=User.objects.get(username=user_id)
+        print(user)
+        user_id= self.request.user.id
         return self.destroy(request,user_id)
 
 

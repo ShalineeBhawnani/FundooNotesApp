@@ -26,9 +26,9 @@ export class MyNavComponent implements OnInit,OnDestroy{
   viewType:string="view_list";
   screenHeight:number;
   screenWidth:number;
-  
+ 
   view:boolean=false;
-  
+
   emitSearchEvent=new Subject();
   openSearhBar:boolean=false;
   private _mobileQueryListener: () => void;
@@ -88,7 +88,7 @@ export class MyNavComponent implements OnInit,OnDestroy{
       {
         
         data : {
-          label:this.labels  
+          label:this.labels
                 
         }
         

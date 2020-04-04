@@ -14,16 +14,6 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  allRegisterdUsers(): Observable<any>
-  {
-
-    console.log(localStorage.getItem('token'))
-    return this.http.get(this.baseUrl+'/allusers/', { headers: {
-      'token': localStorage.getItem('token')
-    } });
-  }
-
-
   login(userData): Observable<any>
   {
     return this.http.post(this.baseUrl+'/login/',userData,{
@@ -59,8 +49,6 @@ export class UserService {
 
   label(noteData):Observable<any>
 {
-
-      console.log(localStorage.getItem('token'))
       return this.http.post(this.baseUrl+'/label/', noteData, { headers: {
         'token': localStorage.getItem('token')
       } });
@@ -113,14 +101,19 @@ return this.http.put(this.baseUrl+'/noteupdate/'+note_id,userData,{headers:{
 'token':localStorage.getItem('token')}}
 );
 }
-
-updateLabel(data):Observable<any>
+updateLabel(userData,label_id):Observable<any>
+{
+return this.http.put(`${this.baseUrl}/labelupdate/${label_id}`,userData,{headers:{
+'token':localStorage.getItem('token')}}
+);
+}
+updateLabel1(data):Observable<any>
 {
 return this.http.put(this.baseUrl+'/labelupdate/',data,{headers:{
 'token':localStorage.getItem('token')}}
 );
 }
-deleteLabel(data):Observable<any>
+deleteLabel(data: any):Observable<any>
 {
   return this.http.put(this.baseUrl+'/labelupdate/',data,
   { headers: {
@@ -172,6 +165,7 @@ addCollaborator():Observable<any>
     'token': localStorage.getItem('token')
   } });
 }
+
 addUpdateReminder(userData):Observable<any>
 {
 
@@ -180,4 +174,5 @@ addUpdateReminder(userData):Observable<any>
         'token': localStorage.getItem('token')
       } });
     }
+    
 }
