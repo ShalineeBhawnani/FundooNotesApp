@@ -83,24 +83,6 @@ deleteLabel(label){
      
 }
 
-// deleteLabel(){
-//   let data={
-  
-//     "isDeleted":true ,
-//     "id":this.editingLabel
-//   }
-//   this.userService.deleteLabel(data,data.id).subscribe((data:any)=>{
-    
-//     this.event={
-//       "purpose":"labelRefresh"
-//     }
-    
-
-//   }
-//   ) 
-// }
-
-
 createLabel(){
 
     let data={
