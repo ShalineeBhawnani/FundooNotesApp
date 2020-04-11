@@ -159,13 +159,23 @@ getReminder():Observable<any>
     'token': localStorage.getItem('token')
   } });
 }
-addCollaborator():Observable<any>
-{
-  return this.http.get(this.baseUrl+'/note/',
-  { headers: {
-    'token': localStorage.getItem('token')
-  } });
-}
+addcollaborators(userData,data_id): Observable<any>
+  { 
+    console.log("DATA = ",data_id)
+
+    return this.http.post('http://127.0.0.1:8000/collab/'+ data_id,userData,{headers:{
+      'token':localStorage.getItem('token')}}
+    );
+  }
+
+ get_all_collab_users(data_id): Observable<any>
+  { 
+   
+    return this.http.get('http://127.0.0.1:8000/collab/'+ data_id,{headers:{
+      'token':localStorage.getItem('token')}}
+    );
+
+  }
 
 addUpdateReminder(userData):Observable<any>
 {

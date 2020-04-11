@@ -13,13 +13,12 @@ export class NotedataComponent implements OnInit {
   notes = [
     {   title: ' ',
         note: ' ',
-        color: ' '}
+     }
       ]
   ParentData
   message:string;
   searchWord: string;
-  searchLabel:string;
-  
+
   constructor(private userService: UserService,private dataService:DataService,private nav: MyNavComponent) {
     
    }
@@ -55,11 +54,5 @@ export class NotedataComponent implements OnInit {
       }
     );
   }
-  
-  recieveMessageFromDisplay(event){
-    if(event.purpose=="refresh")
-    this.getNotes()
-  }
- 
   
   }

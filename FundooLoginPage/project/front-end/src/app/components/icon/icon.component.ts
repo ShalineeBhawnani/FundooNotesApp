@@ -1,10 +1,10 @@
-import { Component, OnInit,EventEmitter,Output } from '@angular/core';
+import { Component, OnInit,EventEmitter,Output ,Input} from '@angular/core';
 import {Events} from '../../models/eventModel';
 import {DataService} from '../../services/data.service';
 import { UserService } from '../../services/user.service';
 import {Labels} from '../../models/labels';
 import { FormControl } from '@angular/forms';
-import { MatDialog } from '@angular/material';
+import { MatDialog,MatDialogRef } from '@angular/material';
 import { CollaboratorComponent } from '../collaborator/collaborator.component';
 
 @Component({
@@ -19,8 +19,10 @@ export class IconComponent implements OnInit {
   "#e8eaed","#e6c9a8","#fdcfe8","#d7aefb","#f28b82","#fbbc04","#fff475","#ccff90","#a7ffeb",
     "#cbf0f8","#aecbfa","#d7aefb"
   ]
+  @Input() sendnoteidtoicon:any = " ";
+
   newLabel:string;
-  labels:Labels[];
+  labels=[];
   save:Boolean=false;
   message:string;
   note:any;
@@ -30,6 +32,8 @@ export class IconComponent implements OnInit {
   dummy:boolean=false;
   @Output() eventCarrier = new EventEmitter<Events>();
   @Output() saveNotes = new EventEmitter<Boolean>();
+  DialogRef: MatDialogRef<CollaboratorComponent>; 
+
 
   constructor(private dataService:DataService,private userService:UserService,private dialog:MatDialog) { }
 
@@ -57,27 +61,29 @@ export class IconComponent implements OnInit {
     this.eventCarrier.emit(this.event);
   }
 
-  addCollaborator(){
-    
-    let dialogref = this.dialog.open(CollaboratorComponent,{
-      
-      data : {
-        
-        data: this.allUsers,
-        
+  addCollaborator() {
+    {
+      let noteid={
+        "received_note_id": this.sendnoteidtoicon    
       }
-     
-    });
-    console.log("opend collab",this.allUsers )
-    dialogref.afterClosed().subscribe(result=> {
-      console.log("dialog result ", result);
-    })
+     let  data  =  this.sendnoteidtoicon 
+        this.DialogRef = this.dialog.open(CollaboratorComponent, {
+        hasBackdrop: false,
+        data: data
+        
+      });
+      
+  
+      this.DialogRef.afterClosed().subscribe(
+        // data => console.log("Dialog output:", data)
+    );    
+    
+    }
   }
   addLabel(){
    
     let data={
       "label":this.newLabel,
-      "isDeleted":false 
     }
     console.log("label add again",data)
     console.log("created label",data)
@@ -105,8 +111,7 @@ export class IconComponent implements OnInit {
   
   labelAddOrRemove(label){
     let data={
-      "label":label,
-      
+      "label":label,     
     }
     console.log("checklist labelAddOrRemove",label)
     

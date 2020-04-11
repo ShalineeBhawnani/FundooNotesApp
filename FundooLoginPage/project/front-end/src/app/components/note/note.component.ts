@@ -51,14 +51,11 @@ export class NoteComponent implements OnInit {
     console.log(this.message)
 
 
-   
-    
     }
     newMessage() {
       this.dataService.changeMessage("Note added")
     }
    
-    
   saveNotes()
 
   {
@@ -75,12 +72,10 @@ export class NoteComponent implements OnInit {
      is_bin:this.is_bin,
      label_note:this.label_note,
      collaborators:this.collaborators,
-     add_picture:this.add_picture,
-     
+     add_picture:this.add_picture,   
      
   }
   
-
   console.log("note label",noteData.label_note)
   this.userService.createNote(noteData).subscribe(
     (data) => {
@@ -98,7 +93,7 @@ export class NoteComponent implements OnInit {
     }
   
     
-    recieveMessageFromIcon($event){
+recieveMessageFromIcon($event){
     if($event.purpose=="color"){
     {
       
@@ -123,7 +118,7 @@ export class NoteComponent implements OnInit {
   }
 
   if($event.purpose=="addLabel"){
-  
+    
     this.label_note.push($event.value.label.id)
          }
     

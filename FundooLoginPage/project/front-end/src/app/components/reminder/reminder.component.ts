@@ -71,7 +71,6 @@ export class ReminderComponent implements OnInit {
     });
   
   }
-  
- 
+
   
 }

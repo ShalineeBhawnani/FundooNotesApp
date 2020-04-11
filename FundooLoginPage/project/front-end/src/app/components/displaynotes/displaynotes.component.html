@@ -1,29 +1,30 @@
 <div class="noteGridContainer" >
   <div  class="grid-row" [style.display]="displayValue">
-      <mat-card *ngFor="let note of sendDataToChild | search:searchWord; let i = index " (click)="openDialog(note)" matRipple class="clickable" class="grid-item"  
+      <mat-card *ngFor="let note of sendDataToChild | search:searchWord; let i = index " (click)="senddata(note);"  matRipple class="clickable" class="grid-item"  
       [ngStyle]="{background: note.color}" fxLayout="column" 
       fxLayoutAlign="space-between stretch">
       
             <div>
-              <mat-card-title>{{note.title}}</mat-card-title>
-              <mat-card-content >{{note.note}}</mat-card-content>
-            
-            </div>
-            
-              <mat-card-footer>
+              <mat-card-title (click)="openDialog(note)">{{note.title}}</mat-card-title>
+              <mat-card-content (click)="openDialog(note)" >{{note.note}}</mat-card-content>
               <mat-card-actions>
-                 <mat-chip-list>
-                 <mat-chip *ngFor="let label of labels">
-                  {{label.label}}
-                 </mat-chip>
-               </mat-chip-list>
-               </mat-card-actions>
-               <app-icon (eventCarrier)="recieveMessageFromIconTray($event,value.id)"></app-icon>
-              </mat-card-footer>
+                <mat-chip-list >
+                  <mat-chip *ngFor="let label of label_note;let i = index" [selectable]="selectable"
+                  [removable]="removable" (removed)="remove(label)">
+                    {{label.label}}
+                    <!-- {{label}} -->
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                  </mat-chip>
+                </mat-chip-list>
+              </mat-card-actions>
+            </div>
+          <mat-card-footer>
+               <app-icon (eventCarrier)="recieveMessageFromIconTray($event,value.id)"  [sendnoteidtoicon]= "ParentData" ></app-icon>
+          </mat-card-footer>
             </mat-card>
               
     </div>
 
 </div>
 
-
+<!-- {{data.id}} -->

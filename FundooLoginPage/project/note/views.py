@@ -1,5 +1,5 @@
 from note.models import Note,Label
-from note.serializer import LabelSerializer,ArchiveNoteSerializer,RestoreNoteSerializer,Userserializer,ReminderSerializer,UpdateSerializer,SearchSerializer,NoteSerializer,LabelFunctionSerializer,NoteFunctionSerializer
+from note.serializer import LabelSerializer,CollaboratorSerializer,ArchiveNoteSerializer,RestoreNoteSerializer,Userserializer,ReminderSerializer,UpdateSerializer,SearchSerializer,NoteSerializer,LabelFunctionSerializer,NoteFunctionSerializer
 from rest_framework import mixins
 from rest_framework import generics
 from rest_framework.response import Response
@@ -122,23 +122,44 @@ class LabelDetails(generics.ListAPIView):
 class CreateNote(generics.GenericAPIView):
     serializer_class = NoteSerializer
     queryset= Note.objects.all().filter(is_archived=False,is_bin=False,reminder__isnull=True)
-    def get(self, request, *args, **kwargs):
+
+    # def get(self, request, *args, **kwargs):
+    #     token = request.headers.get('Token')
+    #     mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+    #     user_id=mytoken.get('username')
+    #     user=User.objects.get(username=user_id)
+    #     # user=request.user
+    #     try:
+    #         print("come here")
+    #         notes = user.note_set.filter(is_archived=False,is_bin=False)
+    #         print()
+    #         collaborated_notes = Note.objects.filter(is_archived=False,is_bin=False, collaborator__id = user.id)
+    #         print(collaborated_notes)
+    #         allnotes = notes.union(collaborated_notes)
+    #         print(allnotes)
+    #         return Response(allnotes.values())
+
+    #         # note = self.queryset.filter(user_id=user.id)
+    #         # print(note.values())
+    #         # return Response(note.values())
+    #     except Exception:
+    #         return Response(Exception, status=status.HTTP_403_FORBIDDEN)
+    def get(self,request):
         token = request.headers.get('Token')
-        mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
-        user_id=mytoken.get('username')
-        user=User.objects.get(username=user_id)
-        # user=request.user
-        try:
-            # data = request.data
-            # username = data.get('username')
-            # print(username)
-            # user_id = request.user
-            # print(user_id)
-            note = self.queryset.filter(user_id=user.id)
-            # return Response(note.values(), status=status.HTTP_200_OK)
-            return Response(note.values())
-        except Exception:
-            return Response(Exception, status=status.HTTP_403_FORBIDDEN)
+        print(token)
+        received_token = jwt.decode(token,SECRET_KEY,algorithms=['HS256'])
+        print(received_token)
+        username = received_token.get('username')
+        print(username)
+        user = User.objects.get(username=username)
+        print(user)
+        # notes = Notes.objects.filter(archive=False,trash=False,user__id = user.id)
+        notes = self.queryset.filter(user_id=user.id)
+        collaborated_notes = Note.objects.filter(is_archived=False,is_bin=False, collaborators__id = user.id)
+        print(collaborated_notes)
+        allnotes = notes.union(collaborated_notes)
+        print("this is all notes",allnotes)
+        return Response(allnotes.values())
     
     def post(self,request):
         data=request.data
@@ -149,9 +170,8 @@ class CreateNote(generics.GenericAPIView):
             mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
             user_id=mytoken.get('username')
             user=User.objects.get(username=user_id)
-            #user=request.user
+            # user=request.user
             mycollb = request.data.get('collaborators')
-            # collab =data['collaborators']
             print("mycollb",mycollb)
             collaborators_list = []
             print("list collab",collaborators_list)
@@ -205,14 +225,14 @@ class NoteDetails(generics.ListAPIView):
         
 class NoteUpdate(generics.GenericAPIView):
     queryset=Note.objects.all()
-    serializer_class=NoteSerializer
+    serializer_class=CollaboratorSerializer
     def put(self,request,pk):
         token = request.headers.get('Token')
         mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
         user_id=mytoken.get('username')
         user=User.objects.get(username=user_id)
         note = Note.objects.get(id=pk,user_id=user.id)
-        serializer = NoteSerializer(note,data=request.data)
+        serializer = CollaboratorSerializer(note,data=request.data)
         print(request.data)
         print(serializer.is_valid())
         if serializer.is_valid():
@@ -319,7 +339,54 @@ class LabelUpdate(generics.GenericAPIView):
         else:
             return Response("label not get Deleted", status=400)
     
+class Collaborator(generics.GenericAPIView):
+    serializer_class = CollaboratorSerializer
+    queryset = Note.objects.all()
+    def get(self, request,pk):
+        try:
+            note = Note.objects.get(id=pk)
+            coll = note.collaborator.all()
+            print(coll)
+            for i in coll:
+                print(i)
+                collaborator_list = []
+                for user_name in coll:
+                    user_mail = user_name.email
+                    collaborator_list.append(user_mail)
+                    for collab_list in collaborator_list:
+                        return Response(collaborator_list)
 
+        except Exception:
+            return Response(Exception)   
+
+    def post(self, request, pk):
+        try:
+            token = request.headers.get('Token')
+            received_token = jwt.decode(token,SECRET_KEY,algorithms=['HS256'])
+            token_username = received_token.get('username')
+            user=User.objects.get(username=token_username)
+            user_email = User.objects.get(email=user.email)
+
+            data =request.data 
+            collab_email = data.get('email')
+            getuser = User.objects.get(email = collab_email)
+            if getuser:
+                note = Note.objects.get(id=pk)
+                note.collaborators.add(getuser)
+                note.save()
+                sub = 'Hi'
+                msg = 'You have been added as a collaborators'
+                from_mail = user_email.email
+                to_list = [collab_email]
+                send_mail(sub, msg, from_mail, to_list, fail_silently=True)
+                print("email sent")
+                return Response("collaboraters added")
+            else:
+                return HttpResponse("didn add")
+
+        except Notes.DoesNotExist:
+            return Response("this note does not exit")
+        
 class SearchNote(generics.GenericAPIView):
     serializer_class = SearchSerializer
     queryset = Note.objects.all()
@@ -356,138 +423,4 @@ class SearchNote(generics.GenericAPIView):
 
     
 
-       
-
-           
-           
-
-
-
-
-# class NoteUpdate(generics.GenericAPIView):
-
-#     queryset = Note.objects.all()
-#     serializer_class = NoteSerializer
-
-#     def get(self, request, pk):
-#         try:
-#             note = Note.objects.get(id=pk, user_id=self.request.user.id)
-#             coll = note.collaborators.filter(id=pk)
-#             print(coll)
-#             print(Note.objects.filter(user_id=request.user.id).count())
-#             if (Note.objects.filter(user_id=request.user.id).count() > 0 or
-#                 note.collaborators.filter(id=request.user.id).count() == 1):
-#                 serializer = NoteSerializer(note)
-#                 return Response(serializer.data)
-#             else:
-#                 serializer = NoteSerializer(note)
-#                 return Response(serializer.data)
-
-#         except Note.DoesNotExist:
-#             return Response("this note does not exit", status=status.HTTP_404_NOT_FOUND)
-
-#     def put(self, request, pk):
-#         try:
-#             note = Note.objects.get(id=pk, user_id=self.request.user.id)
-#             serializer = NoteSerializer(note, data=request.data)
-#             if serializer.is_valid():
-#                 serializer.save()
-#             from_email = self.request.user.email
-#             coll = note.collaborators.all()
-#             collaborator = []
-#             for user_name in coll:
-#                 u = user_name.email
-#                 collaborator.append(u)
-#             print("cool : ",collaborator)
-#             if collaborator == []:
-#                 print("No collaborator list")
-
-#             else:
-#                 send_mail('Note id {}'.format(note.id),'sharing note',EMAIL_HOST_USER,collaborator)
-#                 print("send_mail",EMAIL_HOST_USER)
-#             return Response('Note updated', status=status.HTTP_202_ACCEPTED)
-#         except Note.DoesNotExist:
-#             return Response("this note does not exit", status=status.HTTP_404_NOT_FOUND)
-
-#     def delete(self, request, pk):
-#         try:
-#             note = Note.objects.get(id=pk)
-#             print(note)
-#             note.delete()
-
-#             return Response("Note deleted", status=status.HTTP_202_ACCEPTED)
-
-#         except Notes.DoesNotExist:
-#             return Response("Not found", status=status.HTTP_404_NOT_FOUND)
-
-
-# class UpdateNoteList(GenericAPIView):
-
-#     serializer_class = DisplayNoteSerializer
-#     def get(self,request,pk):
-
-#         user = User.objects.get(id=self.request.user.id)
-#         note = Notes.objects.get(id=pk,user_id=user.id)
-#         serial_class = DisplayNoteSerializer(note)
-#         return Response(serial_class.data)
-
-#     def put(self,request,pk):
-#         token = request.headers.get('Token')
-#         print(token)
-#         received_token = jwt.decode(token,SECRET_KEY,algorithms=['HS256'])
-#         token_username = received_token.get('username')
-#         user=User.objects.get(username=token_username)
-#         print(user)
-#         note = Notes.objects.get(id=pk,user_id=user.id)
-#         serializer = CreateNoteSerializer(note,data=request.data)
-#         if serializer.is_valid():
-#             serializer.save(user_id=user.id)
-#             return Response("Notes Updated Successfully")
-#         return Response('Oops Something went Wrong')
-
-
-# class ArchiveNoteList(GenericAPIView):
-
-#     serializer_class = DisplayNoteSerializer
-#     queryset = Notes.objects.all()
-
-#     def get(self,request):
-#         user = User.objects.get(id=self.request.user.id)
-#         note = Notes.objects.filter(archive = True,user_id=user.id)
-#         serial_class = DisplayNoteSerializer(note,many=True)
-#         return Response(serial_class.data)   
-
-# class PinNoteList(GenericAPIView):
-
-#     serializer_class = DisplayNoteSerializer
-#     queryset = Notes.objects.all()
-
-#     def get(self,request):
-#         user = User.objects.get(id=self.request.user.id)
-#         note = Notes.objects.filter(pin = True,user_id=user.id)
-#         serial_class = DisplayNoteSerializer(note,many=True)
-#         return Response(serial_class.data)
-
-
-# class TrashNote(GenericAPIView):
-
-#     serializer_class = RestoreNoteSerializer
-#     queryset = Notes.objects.all()
-
-#     def get(self,request,pk):
-#         try:
-#             user = User.objects.get(id=self.request.user.id)
-#             note = Notes.objects.get(id = pk ,trash=True, user_id=user)
-#             serial_class = DisplayNoteSerializer(note)
-#             return Response(serial_class.data)
-#         except Notes.DoesNotExist:
-#             return Response("Not found")
-
-#     def put(self,request,pk):
-#         user = User.objects.get(id=self.request.user.id)
-#         note = Notes.objects.get(id=pk,user_id=self.request.user.id)
-#         serializer = RestoreNoteSerializer(note,data=request.data)
-#         if serializer.is_valid():
-#             serializer.save(user_id=self.request.user.id)
-#             return Response('Restore Note')
-
+    

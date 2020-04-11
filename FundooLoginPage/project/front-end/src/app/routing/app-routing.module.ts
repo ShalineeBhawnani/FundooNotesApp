@@ -15,8 +15,6 @@ import { TrashComponent } from '../components/trash/trash.component';
 import { ReminderDisplayComponent} from '../components/reminder-display/reminder-display.component';
 // import { LabelEditComponent } from './components/label-edit/label-edit.component';
 
-
-
 const routes: Route[] = [
   {path:'', redirectTo: '/login', pathMatch:'full'},
   {path:'login', component: LoginComponent},

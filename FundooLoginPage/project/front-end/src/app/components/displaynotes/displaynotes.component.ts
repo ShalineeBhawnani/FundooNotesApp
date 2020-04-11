@@ -5,6 +5,7 @@ import { DataService } from '../../services/data.service';
 import {MatDialog, MatDialogRef,MAT_DIALOG_DATA,MatDialogConfig} from '@angular/material/dialog';
 import { NoteDialogComponent } from '../note-dialog/note-dialog.component';
 import { HostListener } from "@angular/core";
+import { MyNavComponent } from '../my-nav/my-nav.component';
 export interface DialogData {
   
   }
@@ -24,10 +25,13 @@ export class DisplaynotesComponent implements OnInit,OnDestroy {
   widthCard:string="250px";
   @Input() sendDataToChild=[];
   @Input() searchWord:string;
+  @Input() label_note
 fileNameDialogRef: MatDialogRef<NoteDialogComponent>;
+ParentData
+newdata
 
   notes =[]
-  labels=[]
+  // label_note=[]
   data = {
     viewLayoutType: "row-wrap",
     viewStyling: true
@@ -46,9 +50,7 @@ fileNameDialogRef: MatDialogRef<NoteDialogComponent>;
         this.setView();
       
       }
-    })
-     
-    
+    })    
 
   }
   @HostListener('window:resize', ['$event'])
@@ -92,20 +94,24 @@ fileNameDialogRef: MatDialogRef<NoteDialogComponent>;
  
     }
   
-  
     openDialog(note) {
       {
       this.fileNameDialogRef = this.dialog.open(NoteDialogComponent, {
       hasBackdrop: false,
       data: note
+      
        
     });
-
+    console.log("id",this.data)
     this.fileNameDialogRef.afterClosed().subscribe(
       data => console.log("Dialog output:", data)
   );    
   
   }
 }
+senddata(note){
+  this.newdata = note
+  this.ParentData = this.newdata.id
 
+}
 }

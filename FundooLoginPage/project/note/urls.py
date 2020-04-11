@@ -1,7 +1,7 @@
 from django.urls import path
 from django.conf.urls import url, include
 from note import views
-from note.views import LabelDetails,ReminderUpdate,ArchivedNotes,SearchNote,Remider,NoteDetails,BinNotes,CreateLabel,CreateNote,NoteUpdate,LabelUpdate
+from note.views import LabelDetails,Collaborator,ReminderUpdate,ArchivedNotes,SearchNote,Remider,NoteDetails,BinNotes,CreateLabel,CreateNote,NoteUpdate,LabelUpdate
 # LabelListCreate,NoteListDetail,NoteListDelete,NoteListUpdate
 from django.contrib.auth.decorators import login_required, permission_required
 
@@ -21,7 +21,7 @@ urlpatterns = [
     # path('trashnote/', TrashList.as_view(),name="trashnote"),  
     path('reminder/', Remider.as_view(),name="reminder"),
     path('reminder_update/<id>' ,ReminderUpdate.as_view(),name="ReminderUpdate"),
-   
+    path('collab/<int:pk>', Collaborator.as_view() , name="collab"),   
  
 ]
 
