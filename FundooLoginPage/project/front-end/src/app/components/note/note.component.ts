@@ -22,6 +22,7 @@ export class NoteComponent implements OnInit {
     Validators.required,
 
   ]);
+ 
   save: Boolean
   message:string;
   label_note=[];
@@ -31,17 +32,15 @@ export class NoteComponent implements OnInit {
   is_archived:boolean=false;
   is_bin:boolean=false;
   collaborators=[];
-  reminder:string;
   add_picture: [null]
   ImageUrl:any;
   fileToUpload: any;
   profileImageUrl:any;
-  label:any;
+  
   constructor(
     private userService: UserService,
     private snackBar:MatSnackBar,
-    private dataService:DataService,
-    ) {
+    private dataService:DataService,) {
 
    }
 
@@ -49,13 +48,13 @@ export class NoteComponent implements OnInit {
   
     this.dataService.currentMessage.subscribe(message => this.message = message)
     console.log(this.message)
-
-
+    
     }
     newMessage() {
       this.dataService.changeMessage("Note added")
     }
    
+    
   saveNotes()
 
   {
@@ -67,15 +66,15 @@ export class NoteComponent implements OnInit {
      title : this.title.value,
      note : this.note.value,
      color:this.color,
-     reminder:this.reminder,
      is_archived:this.is_archived, 
      is_bin:this.is_bin,
      label_note:this.label_note,
      collaborators:this.collaborators,
-     add_picture:this.add_picture,   
+     add_picture:this.add_picture,
      
   }
   
+
   console.log("note label",noteData.label_note)
   this.userService.createNote(noteData).subscribe(
     (data) => {
@@ -93,7 +92,7 @@ export class NoteComponent implements OnInit {
     }
   
     
-recieveMessageFromIcon($event){
+    recieveMessageFromIcon($event){
     if($event.purpose=="color"){
     {
       
@@ -116,10 +115,12 @@ recieveMessageFromIcon($event){
     
 
   }
-
+  
   if($event.purpose=="addLabel"){
-    
-    this.label_note.push($event.value.label.id)
+   
+    console.log("addLabel",this.label_note.push($event.value.label));
+    this.label_note.push($event.value.label)
+  
          }
     
   if($event.purpose=="add_picture"){

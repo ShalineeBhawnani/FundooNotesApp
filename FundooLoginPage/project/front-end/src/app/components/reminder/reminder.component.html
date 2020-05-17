@@ -1,4 +1,4 @@
-<button mat-icon-button [matMenuTriggerFor]="reminderSetter"> <mat-icon>add_alert</mat-icon> </button>
+<button mat-icon-button [matMenuTriggerFor]="reminderSetter">  <mat-icon>add_alert</mat-icon> </button>
 
 
 
@@ -15,30 +15,5 @@
      
 
 </mat-menu>
-<mat-menu #datePicker="matMenu" yPosition="above">
-    <div class="datePickerContainer" fxLayout="column" fxLayoutAlign="space-between center" >
-        <mat-form-field>
-                <input matInput (click) = "$event.stopPropagation()" [matDatepicker]="basicDatepicker" [formControl]="pickedDate" [min]="minDate" placeholder="Choose a date" >
-                <mat-datepicker-toggle matSuffix [for]="basicDatepicker"></mat-datepicker-toggle>
-                <mat-datepicker #basicDatepicker></mat-datepicker>
-        </mat-form-field>
-        
-              <mat-form-field (click) = "$event.stopPropagation()">
-                <mat-label>Select an option</mat-label>
-                <mat-select [(ngModel)]="timeSelected" >
-                  <mat-option *ngFor="let time of timeList " [value]="time">
-                      
-                        <div fxLayout="row" fxLayoutAlign="space-between center" class="reminderList" >
-                                <a>{{time.title}} &nbsp;</a>
-                                <a>{{time.time}}</a>
-                            </div>
-                        </mat-option>
-                 
-                </mat-select>
-              </mat-form-field>
-
-</div>
-<button mat-button class="saveButton" (click)=reminderAddPicked()>Save</button>
   
    
-</mat-menu>

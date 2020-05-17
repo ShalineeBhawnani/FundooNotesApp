@@ -1,35 +1,36 @@
 <mat-card class="card" fxFlex="100" fxlayout="column" >
-  <h2>Edit Lables</h2>
-  <button mat-icon-button (click)="setValue('')">
-  <mat-icon >clear</mat-icon>
-  </button>
-  
-  <mat-form-field appearance="fill legacy" style="width:70%">
-    <input matInput placeholder="create new label" [formControl]="labelName">
+<h2>Edit Lables</h2>
+<button mat-icon-button (click)="labelName.setValue('')">
+<mat-icon >clear</mat-icon>
+</button>
+<mat-form-field appearance="fill legacy" style="width:70%">
+  <input matInput placeholder="create new label" [formControl]="labelName">
   </mat-form-field>
-     
-    <button mat-icon-button (click)="createLabel()">
-    <mat-icon>done</mat-icon>
-    </button>
-    <div *ngFor="let label of data.label " fxLayout="row" fxLayoutAlign="space-between center">
-  
-      <div class="title">
-        <div class="icons" fxLayout="row">
-        <mat-icon aria-label="Side nav toggle" >label_outline</mat-icon>
-        <input mat-input class="labelNameField" class="text" [formControl]="labelName" value="{{label.label}}" (click)="isBeingEdited(label)" >
-      </div>
+  <button mat-icon-button (click)="createLabel()">
+  <mat-icon>done</mat-icon>
+  </button>
+  <div *ngFor="let label of data.label " fxLayout="row" fxLayoutAlign="space-between center">
 
-      </div>
+    <div class="title">
       <div class="icons" fxLayout="row">
-        <button mat-icon-button (click)="updateLabel(label)"
+      <mat-icon aria-label="Side nav toggle" >label_outline</mat-icon>
+      <input mat-input class="labelNameField" class="text" [formControl]="label" 
+      value="{{label.label}}" (click)="isBeingEdited(label)">
+    </div>
+      
+      <!-- <mat-icon aria-label="Side nav toggle" >label_outline</mat-icon>
+      <a>{{label.label}}</a>
+   -->
+    </div>
+    <div class="icons" fxLayout="row">
+        <button mat-icon-button (click)="updateLabel()"
         [style.visibility]="isEditVisible(label) ? 'visible' : 'hidden'">
             <mat-icon>done</mat-icon>     </button>
         <button mat-icon-button (click)="deleteLabel(label)">  
           <mat-icon>delete</mat-icon></button>
-              
-      </div>
       
     </div>
-  
-  </mat-card>
-  
+    
+  </div>
+
+</mat-card>

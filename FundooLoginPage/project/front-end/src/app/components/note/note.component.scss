@@ -1,16 +1,149 @@
 
-@import 'src/app/SCSS/styles';
+.mat-icon{
+  font-family: 'Material Icons' ;
+}
+$commonMatWidth:88%;
+
+$fullWidth:100%;
+
+$fullHeight:100%;
+
+$positionAbsolute:absolute;
+
+$overflowAuto:auto;
+
+@mixin page-resolution(){
+  width:100%;
+  height:100%;
+}
+@mixin border-gt-xs($width,$minWidth,$height){
+  width: $width;
+  min-width: $minWidth;
+  max-width: $fullWidth;
+  height:$height;
+  border: 1px solid darkgrey;
+  border-radius:10px;
+}
+a{
+  color: blue;
+  text-decoration: none;
+  cursor: pointer;
+}
 
 
+@mixin matCard(){
+  height:auto;
+  margin-top:1em;
+  border-radius:10px;
+}
+
+@mixin matCardHover(){
+
+  button{
+      visibility: hidden;
+  }
+  &:hover{
+      button{
+          visibility: visible;
+      }
+  }
+}
+
+.mat-card-list-lt-sm{
+  width:100%;
+  @include matCard();
+  @include matCardHover();
+}
+.mat-card-grid-gt-xs{
+  width:185px;
+  @include matCard();
+  @include matCardHover();
+}
+.mat-card-list-gt-xs{
+  width:600px;
+  @include matCard();
+  @include matCardHover();
+}
+
+.mat-menu-div{
+  div{
+      width:30px;
+      height:30px;
+      border-radius: 50%;
+  }
+}
+
+.mat-card-lt-sm{
+  width:80%;
+  min-width: 310px;
+  // max-width: 80%;
+  border-radius:10px;
+  padding-left: 2%;
+}
+
+.mat-card-gt-xs{
+  // width:60%;
+  max-width: 550px;
+  min-width:550px;
+  border-radius:10px;
+  padding-left: 2%;
+}
+
+.mat-card-footer{
+  margin-top:0.5em;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  .footer-icons-div{
+  width:70%;
+  } 
+  .footer-close-button-div{
+  width:20%;
+  }
+}
+@media screen and (max-width: 520px) {
+.mat-card-footer{
+  margin-top:0.5em; 
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  width:100%;
+  .footer-icons-div{
+  width:100%;
+  justify-content: start;
+  } 
+  .footer-close-button-div{
+  width:100%;
+  justify-content: end;
+  }
+  }
+
+}
+
+.matDialogBox{
+  mat-dialog-container {
+      padding: 0;
+      border-radius: 10px;
+      overflow: hidden;
+  }
+}
+
+.checkList-text-decoration{
+  text-decoration:line-through;
+}
+
+.checklist-unchecked{
+  word-break: break-all;
+  margin:0 0 10px 0;
+}
+.checklist-checked{
+  text-decoration:line-through;
+}
 ::ng-deep .mat-form-field-flex > .mat-form-field-infix { padding: 0.4em 0px !important;}
 ::ng-deep .mat-form-field-label-wrapper { top: -2em; }
 
 ::ng-deep .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
-    transform: translateY(-1.1em) scale(.75);
-    width: 133.33333%;
+  transform: translateY(-1.1em) scale(.75);
+  width: 133.33333%;
 }
-
-.example-chip-list {
-    width: 100%;
-  }
-  

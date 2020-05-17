@@ -11,8 +11,7 @@ import { DataService } from '../../services/data.service';
 import { UserService } from '../../services/user.service';
 import { ProfileComponent } from '../profile/profile.component';
 import { HostListener } from "@angular/core";
-import { Subject } from 'rxjs';
-import { MatSnackBar } from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-my-nav',
   templateUrl: './my-nav.component.html',
@@ -26,15 +25,16 @@ export class MyNavComponent implements OnInit,OnDestroy{
   viewType:string="view_list";
   screenHeight:number;
   screenWidth:number;
- 
-  view:boolean=false;
-
-  emitSearchEvent=new Subject();
-  openSearhBar:boolean=false;
+  
+   view:boolean=false;
+   data={
+     viewLayoutType:"row wrap",
+     viewStyling:true
+   }
   private _mobileQueryListener: () => void;
   
 
-  constructor(changeDetectorRef: ChangeDetectorRef,private snackBar:MatSnackBar, media: MediaMatcher,private routing:Router,private userService:UserService,private dataService:DataService, private dialog:MatDialog) {
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private routing:Router,private userService:UserService,private dataService:DataService, private dialog:MatDialog) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -45,13 +45,12 @@ export class MyNavComponent implements OnInit,OnDestroy{
      console.log("profile pic")
      this.getProfilemage();
      this.dataService.currentMessage.subscribe(message => this.message = message)
-     
   }
   @HostListener('window:resize', ['$event'])
   onResize(event?) {
      this.screenHeight = window.innerHeight;
      this.screenWidth = window.innerWidth;
-    
+     console.log(this.screenHeight, this.screenWidth);
   }
  
   rowToggle(){
@@ -68,7 +67,7 @@ export class MyNavComponent implements OnInit,OnDestroy{
     this.dataService.labelNext(label)
     this.routing.navigate(['/nav/label'+label])
   }
- 
+  
   getLabels(){
     console.log("getting labels",this.labels)
     this.userService.getAllLabel().subscribe(
@@ -88,14 +87,15 @@ export class MyNavComponent implements OnInit,OnDestroy{
       {
         
         data : {
-          label:this.labels
+          label:this.labels  
                 
         }
         
       });
       console.log("label in nav",this.labels)
     dialogref.afterClosed().subscribe(result=> {
-   
+      //console.log("dialog result ", result);
+      
     })
   }
  
@@ -108,13 +108,7 @@ export class MyNavComponent implements OnInit,OnDestroy{
     
 
   }
-  searchBox(event){
-    console.log("search",event)
-    
-    this.emitSearchEvent.next(event.target.value);
-    console.log("searched value",this.emitSearchEvent.next(event.target.value));
-  }
- 
+
   fileChangeEvent(event){
     const dialogRef = this.dialog.open(ProfileComponent, {
       width: 'auto',
@@ -131,9 +125,6 @@ export class MyNavComponent implements OnInit,OnDestroy{
         this.getProfilemage();
       });
     });
-  }
-  logout(){
-    sessionStorage.removeItem('token');
   }
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);

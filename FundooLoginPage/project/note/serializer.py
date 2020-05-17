@@ -11,9 +11,8 @@ class LabelSerializer(serializers.ModelSerializer):
         # fields = '__all__'
 class CollaboratorSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Note
-        fields = '__all__'
-        read_only_fields = ['user']
+        model = User
+        fields = ['id', 'mail']
 
 class NoteSerializer(serializers.ModelSerializer):
     class Meta:
@@ -22,7 +21,10 @@ class NoteSerializer(serializers.ModelSerializer):
         # fields = '__all__'
         fields = ['title','note', 'label_note','add_picture', 'is_archived', 'is_bin', 'color',
                   'is_pinned', 'more', 'reminder', 'collaborators','created_on','last_edited']
-    
+        # fields=['title','note']
+      
+        #read_only_fields = ['user']
+
 class SearchSerializer(serializers.ModelSerializer):
     class Meta:
 

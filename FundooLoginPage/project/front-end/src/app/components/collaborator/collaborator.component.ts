@@ -1,7 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
-import { MatDialogRef,MatSnackBar,MatDialog, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { UserService } from '../../services/user.service';
-
 
 @Component({
   selector: 'app-collaborator',
@@ -9,56 +8,69 @@ import { UserService } from '../../services/user.service';
   styleUrls: ['./collaborator.component.scss']
 })
 export class CollaboratorComponent implements OnInit {
-  allUsers
-  email:string;
-  note_id:any;
-  collab_users:any;
-
+  name: string;
+  email: string;
+  searchResultList;
+  collaborator;
+  collaborators: any[];
+  collaboratorBody;
   constructor(public dialogRef: MatDialogRef<CollaboratorComponent>,
-    @Inject(MAT_DIALOG_DATA) public data, public userService: UserService,
-    private snackBar:MatSnackBar) { }
+    @Inject(MAT_DIALOG_DATA) public data, public noteService: UserService) { }
 
-    ngOnInit() {
-      this.userService.get_all_collab_users(this.data).subscribe(
-        data1 => {
-    
-        this.collab_users = data1;
-        console.log("received collab users",data1)
-        },
-        
-        error => {
-        console.log(error);
-        }
-        );
-      
-    }
-  
-    add_new_collaborators(email:string)
-    {
-      let emaildata = {
-        email: email,
+  ngOnInit() {
+    this.data=this.data.note;
+    this.name = localStorage.getItem('firstName');
+    this.email = localStorage.getItem('email');
+    console.log(this.data)
+    this.collaborators = this.data.collaborators
+    if (this.data['id'] == undefined) {
+      if (this.data['collaborators'] == undefined) {
+        this.collaborators = [];
       }
-      console.log(emaildata)
-  
-      this.userService.addcollaborators(emaildata,this.data).subscribe(
-        (data1) => {
-          this.snackBar.open(data1.toString(),'',{
-            duration:3000,
-            verticalPosition:'bottom'
-          });
-       
-        },
-        
-        error => {
-          alert('update failed')
-        
-        });
-     
-     
     }
-    close(){
-      this.dialogRef.close();
+  }
+
+  
+  addCollaborator() {
+    
+    try {
+      if (this.email != this.collaboratorBody.email && this.collaboratorBody.email != '') {
+
+        if (this.data['id'] == undefined) {
+          this.collaborators.push(this.collaboratorBody);
+          this.collaborator = "";
+          console.log("Collaborators",this.collaborators)
+        }
+        else {
+          this.noteService.addCollaborator().subscribe(result => {
+            this.collaborators.push(this.collaboratorBody);
+            this.collaborator = "";
+            // this.snackbar.open("Collaborator added successfully")
+            
+          })
+        }
+      }
+    } catch (error) {
+      console.log("inside addCollab",error)
+      // this.snackbar.open("Error during adding collaborator",'Retry');
     }
-  
-  
+  }
+  setCollaborator(userDetails) {
+    console.log(userDetails)
+    if (this.email !== userDetails.email && userDetails.email != '') {
+      this.collaborator = userDetails.email;
+      console.log(userDetails);
+      this.collaboratorBody = {
+        "firstName": userDetails.firstName,
+        "lastName": userDetails.lastName,
+        "email": userDetails.email,
+        "userId": userDetails.userId
+      }
+    }
+  }
+
+  cancel() {
+    this.dialogRef.close();
+  }
+
 }

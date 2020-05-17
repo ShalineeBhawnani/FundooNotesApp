@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { DataService } from '../../services/data.service';
-import { MyNavComponent } from '../my-nav/my-nav.component';
+
 
 @Component({
   selector: 'app-notedata',
@@ -13,25 +13,26 @@ export class NotedataComponent implements OnInit {
   notes = [
     {   title: ' ',
         note: ' ',
-     }
+        color: ' '}
       ]
   ParentData
   message:string;
-  searchWord: string;
 
-  constructor(private userService: UserService,private dataService:DataService,private nav: MyNavComponent) {
+  constructor(private userService: UserService,private dataService:DataService) {
     
    }
  
   ngOnInit() {
 
-    this.nav.emitSearchEvent.subscribe((search: string) => {
-      console.log("got it",this.searchWord = search);
-      this.searchWord = search;
-    })
+    // this.userService.getAllNote().subscribe(
+    //   data => {
+    //     console.log("my data",data)
+    //     this.notes = data;
+    //     this.ParentData = this.notes
+    //   })
 
     this.getNotes();
-    
+    // this.dataService.currentMessage.subscribe(message => this.message = message)
     this.dataService.currentMessage.subscribe((message)=>{
       console.log("my msg",message)
       if(message=="Note added" || message=="Note Edited")
@@ -53,6 +54,11 @@ export class NotedataComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+  
+  recieveMessageFromDisplay(event){
+    if(event.purpose=="refresh")
+    this.getNotes()
   }
   
   }

@@ -8,8 +8,7 @@
     <div [fxHide.gt-xs]="true" [fxHide]="!openSearhBar" class="mini-search-bar" fxFlexFill>
       <input matInput type="search" placeholder="Search" (keyup)="searchBox($event)"/>
     </div>
-  
-  
+
   <!-- mat search box -->
   <div style="margin-left:4em" fxHide.lt-sm="true" fxLayoutAlign="center" fxLayout="row" class="search-toolbar-div">
     <div fxHide.lt-sm="true" class="search-div" fxLayoutAlign="center center">
@@ -83,7 +82,7 @@
           <!-- <hr width="100%"> -->
           <mat-card-subtitle style="padding-left: 20px;">LABELS</mat-card-subtitle>
           <button mat-button  *ngFor="let label of labels" >
-            <div fxLayout="row wrap" fxLayoutGap =60px (click)="navigateToLabel(label.label)" >
+            <div fxLayout="row wrap" fxLayoutGap =58px (click)="navigateToLabel(label.label)" >
             <mat-icon aria-label="Side nav toggle" >label_outline</mat-icon>
             <a>{{label.label}}</a>
         </div>

@@ -37,7 +37,7 @@ from project.settings import EMAIL_HOST_USER
 from django.core.mail import send_mail
 from snippets.token import token_activation,token_validation,account_activation_token
 from rest_framework.response import Response
-from .serializers import EmailSerializer,LoginSerializer,AllUserSerializer,ProfileUpdate,UserUpdateSerializers, RegistrationSerializer, UserSerializer,ResetPasswordSerializers
+from .serializers import EmailSerializer,LoginSerializer,ProfileUpdate,UserUpdateSerializers, RegistrationSerializer, UserSerializer,ResetPasswordSerializers
 from django_short_url.views import get_surl
 from django_short_url.models import ShortURL
 from django.http import HttpResponse, HttpResponseRedirect , response
@@ -51,6 +51,7 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.models import User, auth
+
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.db.models import Q
@@ -117,7 +118,7 @@ class Login(GenericAPIView):
             
                 rdb.set(user.username, token)
                 print(rdb)
-            
+                rdb.get(user.username)
                 print(rdb.get(user.username))
                 return Response({'details': 'user succesfully loggedin,thakyou','token':token})
                 # return Response({ token })
@@ -347,17 +348,7 @@ class Logout(GenericAPIView):
         except Exception:
             return Response({'details': 'something went wrong while logout'})
 
-class AllUserList(GenericAPIView):
-    print("get all user details ")
-    queryset = User.objects.all()
 
-    def get(self, request, *args, **kwargs):
-        token = request.headers.get('Token')
-        mytoken=jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
-        user=mytoken.get('username')
-        users = User.objects.all().filter(is_active=True)
-        serializer = AllUserSerializer(users, many=True)
-        return Response(serializer.data, status=200)
 # @method_decorator(login_required, name='dispatch') 
 class CreateProfile(GenericAPIView):
     serializer_class = ProfileUpdate

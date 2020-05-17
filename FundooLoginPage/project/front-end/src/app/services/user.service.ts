@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 
+
+
 @Injectable()
 export class UserService {
 
@@ -47,6 +49,8 @@ export class UserService {
 
   label(noteData):Observable<any>
 {
+
+      console.log(localStorage.getItem('token'))
       return this.http.post(this.baseUrl+'/label/', noteData, { headers: {
         'token': localStorage.getItem('token')
       } });
@@ -99,28 +103,20 @@ return this.http.put(this.baseUrl+'/noteupdate/'+note_id,userData,{headers:{
 'token':localStorage.getItem('token')}}
 );
 }
-updateLabel(userData,label_id):Observable<any>
+
+updateLabel(data):Observable<any>
 {
-return this.http.put(this.baseUrl+'/labelupdate/'+label_id,userData,{headers:{
+return this.http.put(this.baseUrl+'/labelupdate/',data,{headers:{
 'token':localStorage.getItem('token')}}
 );
 }
-
-deleteLabel(label_id):Observable<any>{
-
-  return this.http.delete(this.baseUrl+'/labelupdate/'+label_id,{headers:{
-    'token':localStorage.getItem('token')}}
-  );
+deleteLabel(data):Observable<any>
+{
+  return this.http.put(this.baseUrl+'/labelupdate/',data,
+  { headers: {
+    'token': localStorage.getItem('token')
+  } });
 }
-allRegisterdUsers(): Observable<any>
-  {
-
-    return this.http.get(this.baseUrl+'/allusers/', { headers: {
-      'token': localStorage.getItem('token')
-    } });
-  }
-
-
 
 getAllLabel():Observable<any>
 {
@@ -145,9 +141,9 @@ getProfilemage():Observable<any>
   } });
 }
 
-searchNote(data):Observable<any>
+searchNote():Observable<any>
 {
-  return this.http.post(this.baseUrl+'/search/',data,
+  return this.http.get(this.baseUrl+'/search/',
   { headers: {
     'token': localStorage.getItem('token')
   } });
@@ -159,31 +155,12 @@ getReminder():Observable<any>
     'token': localStorage.getItem('token')
   } });
 }
-addcollaborators(userData,data_id): Observable<any>
-  { 
-    console.log("DATA = ",data_id)
-
-    return this.http.post('http://127.0.0.1:8000/collab/'+ data_id,userData,{headers:{
-      'token':localStorage.getItem('token')}}
-    );
-  }
-
- get_all_collab_users(data_id): Observable<any>
-  { 
-   
-    return this.http.get('http://127.0.0.1:8000/collab/'+ data_id,{headers:{
-      'token':localStorage.getItem('token')}}
-    );
-
-  }
-
-addUpdateReminder(userData):Observable<any>
+addCollaborator():Observable<any>
 {
+  return this.http.get(this.baseUrl+'/note/',
+  { headers: {
+    'token': localStorage.getItem('token')
+  } });
+}
 
-      console.log(localStorage.getItem('token'))
-      return this.http.post(this.baseUrl+'/reminder_update/', userData, { headers: {
-        'token': localStorage.getItem('token')
-      } });
-    }
-    
 }
